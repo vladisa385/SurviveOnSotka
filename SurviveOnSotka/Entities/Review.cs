@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SurviveOnSotka.Entities
 {
-    public class Review
+    public class Review : DomainObject
     {
         [Key]
         public Recipe Recipe { get; set; }

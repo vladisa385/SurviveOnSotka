@@ -8,9 +8,8 @@ namespace SurviveOnSotka.Entities
 {
     public class Like
     {
-        [Key]
-        public Recipe Recipe { get; set; }
-        [Key]
-        public User UserWhoGiveLike { get; set; }
+
+        public int IdRecipe { get; set; }
+        public int IdUserWhoGiveLike { get; set; }
     }
 }

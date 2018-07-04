@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.Db;
 
 namespace SurviveOnSotka
 {
@@ -18,6 +20,8 @@ namespace SurviveOnSotka
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
