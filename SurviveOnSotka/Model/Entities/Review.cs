@@ -4,15 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SurviveOnSotka.Model.Entities
 {
-    public class Review : DomainObject
+    public class Review
     {
-        [Key]
+        public Guid IdRecipe { get; set; }
+        public Guid IdUserWhoGiveReview { get; set; }
         public Recipe Recipe { get; set; }
-        [Key]
         public User Author { get; set; }
-        [Required, MinLength(200)]
         public string Text { get; set; }
-        [Required]
         public DateTime DateCreated { get; set; }
         [Required, MinLength(1), MaxLength(5)]
         public int Rate { get; set; }

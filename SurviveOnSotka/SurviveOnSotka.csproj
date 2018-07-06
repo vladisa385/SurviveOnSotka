@@ -7,10 +7,17 @@
   <ItemGroup>
     <Compile Remove="Migrations\20180704200847_FixFirstMigration.cs" />
     <Compile Remove="Migrations\20180704200847_FixFirstMigration.Designer.cs" />
+    <Compile Remove="Migrations\20180706091804_FirstMigration.cs" />
+    <Compile Remove="Migrations\20180706091804_FirstMigration.Designer.cs" />
+    <Compile Remove="Migrations\20180706092551_FirstMigration.cs" />
+    <Compile Remove="Migrations\20180706092551_FirstMigration.Designer.cs" />
+    <Compile Remove="Migrations\20180706094617_First.cs" />
+    <Compile Remove="Migrations\20180706094617_First.Designer.cs" />
+    <Compile Remove="Migrations\20180706094821_First.cs" />
+    <Compile Remove="Migrations\20180706094821_First.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -20,6 +27,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.5.0" />
   </ItemGroup>
 
   <ItemGroup>

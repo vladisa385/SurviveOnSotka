@@ -15,7 +15,6 @@ namespace SurviveOnSotka.Db
         public DbSet<FileModel> FileModels { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Level> Levels { get; set; }
-        public DbSet<Like> Likes { get; set; }
         public DbSet<RateReview> RateReviews { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Review> Reviews { get; set; }
@@ -31,8 +30,9 @@ namespace SurviveOnSotka.Db
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RateReview>().HasKey(u => new { u.IdReview, u.IdUserWhoGiveMark });
-            modelBuilder.Entity<Like>().HasKey(u => new { u.IdRecipe, u.IdUserWhoGiveLike });
             modelBuilder.Entity<IngredientToRecipe>().HasKey(u => new { u.IdRecipe, u.IdIngredient });
+            modelBuilder.Entity<Review>().HasKey(u => new { u.IdRecipe, u.IdUserWhoGiveReview });
+
 
         }
     }
