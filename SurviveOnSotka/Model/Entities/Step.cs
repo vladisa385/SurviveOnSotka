@@ -1,4 +1,4 @@
-﻿namespace SurviveOnSotka.Entities
+﻿namespace SurviveOnSotka.Model.Entities
 {
     public class Step : DomainObject
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.Entities
+namespace SurviveOnSotka.Model.Entities
 {
     public class FileModel : DomainObject
     {

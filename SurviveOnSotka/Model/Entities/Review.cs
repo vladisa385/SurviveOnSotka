@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.Entities
+namespace SurviveOnSotka.Model.Entities
 {
     public class Review : DomainObject
     {

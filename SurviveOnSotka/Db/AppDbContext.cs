@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.Entities;
+using SurviveOnSotka.Model.Entities;
 
 namespace SurviveOnSotka.Db
 {
@@ -17,7 +17,6 @@ namespace SurviveOnSotka.Db
         public DbSet<Level> Levels { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<RateReview> RateReviews { get; set; }
-        public DbSet<Quantity> Quantities { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Tag> Tags { get; set; }
@@ -33,6 +32,8 @@ namespace SurviveOnSotka.Db
         {
             modelBuilder.Entity<RateReview>().HasKey(u => new { u.IdReview, u.IdUserWhoGiveMark });
             modelBuilder.Entity<Like>().HasKey(u => new { u.IdRecipe, u.IdUserWhoGiveLike });
+            modelBuilder.Entity<IngredientToRecipe>().HasKey(u => new { u.IdRecipe, u.IdIngredient });
+
         }
     }
 }
