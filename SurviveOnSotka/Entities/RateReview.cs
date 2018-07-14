@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.Model.Entities
+namespace SurviveOnSotka.Entities
 {
     public class RateReview
     {

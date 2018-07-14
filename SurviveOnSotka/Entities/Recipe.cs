@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.Model.Entities
+namespace SurviveOnSotka.Entities
 {
     public class Recipe : DomainObject
     {
@@ -16,8 +16,8 @@ namespace SurviveOnSotka.Model.Entities
         [Required]
         public DateTime DateCreated { get; set; }
         public Step FirstStep { get; set; }
-        public List<Tag> Tags { get; set; }
-        public List<FileModel> Photos { get; set; }
+        public ICollection<TagsInRecipe> Tags { get; set; }
+        public ICollection<FileModel> Photos { get; set; }
         public DateTime TimeForCooking { get; set; }
         public DateTime TimeForPreparetion { get; set; }
     }

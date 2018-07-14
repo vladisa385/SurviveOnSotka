@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.Model.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.Entities;
 
-namespace SurviveOnSotka.Db
+namespace SurviveOnSotka.DB
 {
     public class AppDbContext : DbContext
     {

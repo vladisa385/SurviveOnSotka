@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.Db;
 using Swashbuckle.AspNetCore.Swagger;
-
+using AutoMapper;
+using SurviveOnSotka.DB;
 
 namespace SurviveOnSotka
 {
@@ -22,6 +22,8 @@ namespace SurviveOnSotka
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAutoMapper(typeof(Startup));
+            //services.AddAutoMapper();
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
             services.AddSwaggerGen(c =>
@@ -51,6 +53,7 @@ namespace SurviveOnSotka
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
             app.UseMvc();
+
 
         }
     }

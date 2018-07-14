@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SurviveOnSotka.Model.Entities
+namespace SurviveOnSotka.Entities
 {
     public class DomainObject
     {

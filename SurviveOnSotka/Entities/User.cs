@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace SurviveOnSotka.Model.Entities
+namespace SurviveOnSotka.Entities
 {
     public class User : IdentityUser
 
