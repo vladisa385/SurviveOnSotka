@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Categories\" />
+  </ItemGroup>
+
 </Project>

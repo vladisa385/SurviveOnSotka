@@ -10,7 +10,7 @@ namespace SurviveOnSotka.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         [Required]
-        public Category Category { get; set; }
+        public ICollection<RecipeInCategories> Categorieses { get; set; }
         [Required]
         public User Author { get; set; }
         [Required]

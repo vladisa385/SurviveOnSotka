@@ -1,11 +1,13 @@
-﻿namespace SurviveOnSotka.Entities
+﻿using System;
+
+namespace SurviveOnSotka.Entities
 {
     public class TagsInRecipe
     {
-        public Recipe Task { get; set; }
-        public int TaskId { get; set; }
+        public Recipe Recipe { get; set; }
+        public Guid RecipeId { get; set; }
 
         public Tag Tag { get; set; }
-        public int TagId { get; set; }
+        public Guid TagId { get; set; }
     }
 }

@@ -7,6 +7,8 @@ namespace SurviveOnSotka.Entities
         [Required]
         public string Name { get; set; }
         [Required]
-        public string Path { get; set; }
+        public string TypeFile { get; set; }
+        [Required]
+        public byte[] BinaryFile { get; set; }
     }
 }

@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
+using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.DbImplementation.Tags;
+using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.Db;
 
 
@@ -22,6 +25,7 @@ namespace SurviveOnSotka
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            RegisterQueriesAndCommands(services);
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
             //services.AddAutoMapper();
@@ -65,5 +69,21 @@ namespace SurviveOnSotka
 
 
         }
+
+        private void RegisterQueriesAndCommands(IServiceCollection services)
+        {
+            services
+                .AddScoped<ICategoryQuery, CategoryQuery>()
+                .AddScoped<ICategoriesListQuery, CategoriesListQuery>()
+                .AddScoped<ICreateCategoryCommand, CreateCategoryCommand>()
+                .AddScoped<IUpdateCategoryCommand, UpdateCategoryCommand>()
+                .AddScoped<IDeleteCategoryCommand, DeleteCategoryCommand>()
+
+                .AddScoped<ITagsListQuery, TagsListQuery>()
+                .AddScoped<IDeleteTagCommand, DeleteTagCommand>()
+                ;
+        }
     }
+
+
 }
