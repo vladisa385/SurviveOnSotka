@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.Entities;
 
-namespace SurviveOnSotka.DB
+namespace SurviveOnSotka.Db
 {
     public class AppDbContext : DbContext
     {

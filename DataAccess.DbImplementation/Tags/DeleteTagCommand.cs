@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DB;
+using SurviveOnSotka.DataAccess.Tags;
+using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
-using TasksManager.DataAccess.Tags;
 using Task = System.Threading.Tasks.Task;
 
-namespace SurviveOnSotka.DataAccessDBImplementation.Tags
+namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
 {
     public class DeleteTagCommand : IDeleteTagCommand
     {

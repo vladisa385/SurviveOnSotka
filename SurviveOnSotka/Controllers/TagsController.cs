@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Tags;
-using TasksManager.DataAccess.Tags;
 
 namespace SurviveOnSotka.Controllers
 {

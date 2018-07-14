@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DB;
+using SurviveOnSotka.DataAccess.Tags;
+using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Tags;
-using TasksManager.DataAccess.Tags;
 
-namespace SurviveOnSotka.DataAccessDBImplementation.Tags
+namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
 {
     public class TagsListQuery : ITagsListQuery
     {

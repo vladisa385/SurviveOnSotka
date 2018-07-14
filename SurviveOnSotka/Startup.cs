@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
-using SurviveOnSotka.DB;
+using SurviveOnSotka.Db;
+
 
 namespace SurviveOnSotka
 {
@@ -28,7 +29,15 @@ namespace SurviveOnSotka
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "App recipes API",
+                    Version = "v1",
+                    Description = "API for movile app about recipe",
+                    TermsOfService = "None",
+                    License = new License { Name = "Use under MIT" },
+                    Contact = new Contact { Name = "vladisa385", Url = "https://github.com/vladisa385" }
+                });
             });
 
         }

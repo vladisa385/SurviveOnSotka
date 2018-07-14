@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Db\SurviveOnSotka.Db.csproj" />
+    <ProjectReference Include="..\Entities\SurviveOnSotka.Entities.csproj" />
+    <ProjectReference Include="..\SurviveOnSotka.DataAccess\SurviveOnSotka.DataAccess.csproj" />
+    <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

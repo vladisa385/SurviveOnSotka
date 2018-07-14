@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Tags;
 
-namespace TasksManager.DataAccess.Tags
+namespace SurviveOnSotka.DataAccess.Tags
 {
     public interface ITagsListQuery
     {
