@@ -14,6 +14,6 @@ namespace SurviveOnSotka.Entities
         public DateTime DateCreated { get; set; }
         [Required, MinLength(1), MaxLength(5)]
         public int Rate { get; set; }
-        public List<FileModel> Photos { get; set; }
+        public string PathToPhotos { get; set; }
     }
 }

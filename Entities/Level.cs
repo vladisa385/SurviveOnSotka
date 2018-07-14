@@ -10,5 +10,7 @@ namespace SurviveOnSotka.Entities
         public int MaxScore { get; set; }
         public Level NextLevel { get; set; }
         public Level LastLevel { get; set; }
+        public string PathToIcon { get; set; }
+
     }
 }

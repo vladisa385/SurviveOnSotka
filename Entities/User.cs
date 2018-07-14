@@ -10,7 +10,7 @@ namespace SurviveOnSotka.Entities
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        public FileModel Avatar { get; set; }
+        public string PathToAvatar { get; set; }
         [Required]
         public Level Level { get; set; }
         [Required]

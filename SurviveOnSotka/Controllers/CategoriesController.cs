@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.ViewModel;
@@ -13,7 +10,7 @@ namespace SurviveOnSotka.Controllers
     [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("GetList")]
         [ProducesResponseType(200, Type = typeof(ListResponse<CategoryResponse>))]
         public async Task<IActionResult> GetCategoriesListAsync(CategoryFilter category, ListOptions options, [FromServices]ICategoriesListQuery query)
         {
@@ -21,7 +18,7 @@ namespace SurviveOnSotka.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         [ProducesResponseType(201, Type = typeof(CategoryResponse))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryRequest category, [FromServices]ICreateCategoryCommand command)
@@ -32,7 +29,7 @@ namespace SurviveOnSotka.Controllers
             return CreatedAtRoute("GetSingleCategory", new { categoryId = response.Id }, response);
         }
 
-        [HttpGet("{categoryId}", Name = "GetSinglecategory")]
+        [HttpGet("Get/{categoryId}", Name = "GetSingleCategory")]
         [ProducesResponseType(200, Type = typeof(CategoryResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetCategoryAsync(Guid categoryId, [FromServices] ICategoryQuery query)
@@ -41,7 +38,7 @@ namespace SurviveOnSotka.Controllers
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
-        [HttpPut("{categoryId}")]
+        [HttpPut("Update/{categoryId}")]
         [ProducesResponseType(200, Type = typeof(CategoryResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -55,7 +52,7 @@ namespace SurviveOnSotka.Controllers
             return response == null ? (IActionResult)NotFound($"category with id: {categoryId} not found") : Ok(response);
         }
 
-        [HttpDelete("{categoryId}")]
+        [HttpDelete("Delete/{categoryId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeletecategoryAsync(Guid categoryId, [FromServices]IDeleteCategoryCommand command)

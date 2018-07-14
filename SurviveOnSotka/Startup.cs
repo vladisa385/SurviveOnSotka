@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.Db;

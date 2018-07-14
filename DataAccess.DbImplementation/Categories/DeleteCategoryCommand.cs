@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using Task = System.Threading.Tasks.Task;
@@ -18,13 +20,17 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
         }
         public async Task ExecuteAsync(Guid categoryId)
         {
-            Category categoryToDelete = _context.Categories.Include("Recipes").FirstOrDefault(p => p.Id == categoryId);
+            var categories = _context.Categories.ToImmutableList();
+            Category categoryToDelete = await _context.Categories.FirstOrDefaultAsync(p => p.Id == categoryId);
             if (categoryToDelete?.Recipies?.Count > 0)
             {
                 throw new CannotDeleteCategoryWithRecipiesException();
             }
+
             if (categoryToDelete != null)
             {
+                if (categoryToDelete.PathToIcon != null)
+                    DeleteFileCommand.Execute(categoryToDelete.PathToIcon);
                 _context.Categories.Remove(categoryToDelete);
                 await _context.SaveChangesAsync();
             }

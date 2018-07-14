@@ -8,4 +8,8 @@
     <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
+
 </Project>
