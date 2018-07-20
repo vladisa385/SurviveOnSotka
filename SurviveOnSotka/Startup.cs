@@ -8,7 +8,9 @@ using AutoMapper;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
+using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.Tags;
+using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.Db;
 
 
@@ -82,6 +84,13 @@ namespace SurviveOnSotka
 
                 .AddScoped<ITagsListQuery, TagsListQuery>()
                 .AddScoped<IDeleteTagCommand, DeleteTagCommand>()
+
+                .AddScoped<ITypeFoodQuery, TypeFoodQuery>()
+                .AddScoped<ITypeFoodsListQuery, TypeFoodsListQuery>()
+                .AddScoped<ICreateTypeFoodCommand, CreateTypeFoodCommand>()
+                .AddScoped<IUpdateTypeFoodCommand, UpdateTypeFoodCommand>()
+                .AddScoped<IDeleteTypeFoodCommand, DeleteTypeFoodCommand>()
+
                 ;
         }
     }

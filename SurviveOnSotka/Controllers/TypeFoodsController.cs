@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel;
+using SurviveOnSotka.ViewModel.TypeFoods;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -13,92 +15,65 @@ namespace SurviveOnSotka.Controllers
     [Route("api/[controller]")]
     public class TypeFoodsController : Controller
     {
-        private readonly AppDbContext _appDbContext;
 
-        public TypeFoodsController(AppDbContext appDbContext)
+        [HttpGet("GetList")]
+        [ProducesResponseType(200, Type = typeof(ListResponse<TypeFoodResponse>))]
+        public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ITypeFoodsListQuery query)
         {
-            _appDbContext = appDbContext;
-
+            var response = await query.RunAsync(typeFood, options);
+            return Ok(response);
         }
 
-        [HttpGet("{typeFoodId}")]
-        [ProducesResponseType(200, Type = typeof(TypeFoodViewModel))]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> GetTypeFoodAsync(Guid typeFoodId)
-        {
-            TypeFood model = await _appDbContext.TypeFoods.FirstOrDefaultAsync(u => u.Id == typeFoodId);
-            TypeFoodViewModel response = new TypeFoodViewModel();
-            return response == null
-                ? (IActionResult)NotFound()
-                : Ok(response);
-        }
-
-        [HttpPost("CreateTypeFood")]
-        [ProducesResponseType(201)]
+        [HttpPost("Create")]
+        [ProducesResponseType(201, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateTypeFoodAsync([FromBody]TypeFoodViewModel newTypeFood)
+        public async Task<IActionResult> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]ICreateTypeFoodCommand command)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-            //var filePath = Path.GetTempFileName();
-            //if (newTypeFood.Avatar.Length > 0)
-            //{
-            //    using (var stream = new FileStream(filePath, FileMode.Create))
-            //    {
-            //        await newTypeFood.Avatar.CopyToAsync(stream);
-            //    }
-            //}
-            //FileModel file = new FileModel { Name = newTypeFood.Avatar.FileName, Path = filePath };
-            //TypeFood typeFood = new TypeFood { Icon = file, Id = new Guid(), Name = newTypeFood.Name };
-            //await _appDbContext.FileModels.AddAsync(file);
-            //await _appDbContext.TypeFoods.AddAsync(typeFood);
-            //await _appDbContext.SaveChangesAsync();
-            return Ok("Ok");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            TypeFoodResponse response = await command.ExecuteAsync(typeFood);
+            return CreatedAtRoute("GetSingleTypeFood", new { typeFoodId = response.Id }, response);
         }
 
-        [HttpGet("All")]
-        [ProducesResponseType(200, Type = typeof(List<TypeFoodViewModel>))]
+        [HttpGet("Get/{typeFoodId}", Name = "GetSingleTypeFood")]
+        [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetTypeFoodsAsync()
+        public async Task<IActionResult> GetTypeFoodAsync(Guid typeFoodId, [FromServices] ITypeFoodQuery query)
         {
-            var allTypeFoods = await _appDbContext.TypeFoods.ToListAsync();
-            return allTypeFoods.Count == 0
-                ? (IActionResult)NotFound()
-                : Ok(allTypeFoods);
+            TypeFoodResponse response = await query.RunAsync(typeFoodId);
+            return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
-        [HttpPut("{typeFoodId}")]
-        [ProducesResponseType(200, Type = typeof(TypeFood))]
+        [HttpPut("Update/{typeFoodId}")]
+        [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateTypeFoodAsync(Guid typeFoodId, [FromBody]TypeFoodViewModel editTypeFood)
+        public async Task<IActionResult> UpdatetypeFoodAsync(Guid typeFoodId, [FromBody] UpdateTypeFoodRequest request, [FromServices] IUpdateTypeFoodCommand command)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-            //TypeFood typeFood = await _appDbContext.TypeFoods.FirstOrDefaultAsync(u => u.Id == typeFoodId);
-            //if (typeFood == null)
-            //    return NotFound();
-            //FileModel file = null;
-            //if (editTypeFood.Avatar != null)
-            //{
-            //    var filePath = Path.GetTempFileName();
-            //    using (var stream = new FileStream(filePath, FileMode.Create))
-            //    {
-            //        await editTypeFood.Avatar.CopyToAsync(stream);
-            //    }
-            //    file = new FileModel { Name = editTypeFood.Avatar.FileName, Path = filePath };
-            //    await _appDbContext.FileModels.AddAsync(file);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            TypeFoodResponse response = await command.ExecuteAsync(typeFoodId, request);
+            return response == null ? (IActionResult)NotFound($"typeFood with id: {typeFoodId} not found") : Ok(response);
+        }
 
-            //typeFood.Name = editTypeFood.Name;
-            //typeFood.Icon = file ?? typeFood.Icon;
-            //_appDbContext.TypeFoods.Update(typeFood);
-            //await _appDbContext.SaveChangesAsync();
-            return Ok("Done");
+        [HttpDelete("Delete/{typeFoodId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> DeletetypeFoodAsync(Guid typeFoodId, [FromServices]IDeleteTypeFoodCommand command)
+        {
+            try
+            {
+                await command.ExecuteAsync(typeFoodId);
+                return NoContent();
+            }
+            catch (CannotDeleteTypeFoodWithIngredientsExeption exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
     }
+
+
 }
