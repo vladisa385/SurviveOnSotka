@@ -35,8 +35,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
                 _context.Entry(foundTypeFood).CurrentValues.SetValues(mappedTypeFood);
                 if (request.Icon != null)
                 {
-                    mappedTypeFood.PathToIcon = _appEnvironment.WebRootPath + "/Files/TypeFoods/" + request.Icon.FileName;
-                    await CreateFileCommand.ExecuteAsync(request.Icon, _appEnvironment.WebRootPath + mappedTypeFood.PathToIcon);
+                    string basedir = _appEnvironment.WebRootPath + "/Files/TypeFoods/";
+                    mappedTypeFood.PathToIcon = basedir + request.Icon.FileName;
+                    await CreateFileCommand.ExecuteAsync(request.Icon, basedir);
                 }
                 await _context.SaveChangesAsync();
             }

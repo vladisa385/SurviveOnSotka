@@ -26,8 +26,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
             await _context.Categories.AddAsync(category);
             if (request.Icon != null)
             {
-                category.PathToIcon = _appEnvironment.WebRootPath + "/Files/Categories/" + request.Icon.FileName;
-                await CreateFileCommand.ExecuteAsync(request.Icon, _appEnvironment.WebRootPath + category.PathToIcon);
+                string basedir = _appEnvironment.WebRootPath + "/Files/Categories/";
+                category.PathToIcon = basedir + request.Icon.FileName;
+                await CreateFileCommand.ExecuteAsync(request.Icon, basedir);
             }
             await _context.SaveChangesAsync();
             return _mapper.Map<Category, CategoryResponse>(category);

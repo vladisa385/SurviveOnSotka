@@ -10,6 +10,5 @@ namespace SurviveOnSotka.Entities
 
         public ICollection<CheapPlace> CheapPlaces { get; set; }
 
-        public int CheapPlacesCount => CheapPlaces?.Count ?? 0;
     }
 }

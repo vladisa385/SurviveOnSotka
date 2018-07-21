@@ -33,8 +33,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
                 _context.Entry(foundCategory).CurrentValues.SetValues(mappedCategory);
                 if (request.Icon != null)
                 {
-                    mappedCategory.PathToIcon = _appEnvironment.WebRootPath + "/Files/Categories/" + request.Icon.FileName;
-                    await CreateFileCommand.ExecuteAsync(request.Icon, _appEnvironment.WebRootPath + mappedCategory.PathToIcon);
+                    string basedir = _appEnvironment.WebRootPath + "/Files/Categories/";
+                    mappedCategory.PathToIcon = basedir + request.Icon.FileName;
+                    await CreateFileCommand.ExecuteAsync(request.Icon, basedir);
                 }
                 await _context.SaveChangesAsync();
             }

@@ -12,6 +12,6 @@ namespace SurviveOnSotka.Entities
         public Category ParentCategory { get; set; }
         public string PathToIcon { get; set; }
         public ICollection<RecipeInCategories> Recipies { get; set; }
-        public int RecipiesCount => Recipies?.Count ?? 0;
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
 namespace SurviveOnSotka.Entities
@@ -18,5 +19,10 @@ namespace SurviveOnSotka.Entities
         [Required]
         public bool Gender { get; set; }
         public string AboutYourself { get; set; }
+
+        public ICollection<Recipe> Recipies { get; set; }
+        public ICollection<Review> Reviews { get; set; }
+        public ICollection<CheapPlace> CheapPlaces { get; set; }
+        public ICollection<RateReview> RateReviews { get; set; }
     }
 }

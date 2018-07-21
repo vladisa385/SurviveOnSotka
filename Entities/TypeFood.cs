@@ -9,6 +9,6 @@ namespace SurviveOnSotka.Entities
         public string Name { get; set; }
         public string PathToIcon { get; set; }
         public ICollection<Ingredient> Ingredients { get; set; }
-        public int IngredientsCount => Ingredients?.Count ?? 0;
+
     }
 }

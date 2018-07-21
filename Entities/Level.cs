@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SurviveOnSotka.Entities
 {
@@ -11,6 +12,7 @@ namespace SurviveOnSotka.Entities
         public Level NextLevel { get; set; }
         public Level LastLevel { get; set; }
         public string PathToIcon { get; set; }
+        public ICollection<User> Users { get; set; }
 
     }
 }
