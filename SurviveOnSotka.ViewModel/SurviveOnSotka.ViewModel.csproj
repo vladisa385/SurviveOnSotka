@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>keys.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
+    <Version>0.0.1</Version>
+    <Company>Vladislav Konyukhov</Company>
+    <Authors>Vladislav Konyukhov</Authors>
+    <Copyright>©Vladislav Konyukhov</Copyright>
+    <PackageProjectUrl>https://github.com/vladisa385/SurviveOnSotka</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/vladisa385/SurviveOnSotka</RepositoryUrl>
+    <RepositoryType>private</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
