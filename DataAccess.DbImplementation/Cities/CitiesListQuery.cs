@@ -3,24 +3,24 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.Cities;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.Categories;
+using SurviveOnSotka.ViewModel.Cities;
 
-namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
+namespace SurviveOnSotka.DataAccess.DbImplementation.Cities
 {
-    public class CategoriesListQuery : ICategoriesListQuery
+    public class CitiesListQuery : ICitiesListQuery
     {
         private readonly AppDbContext _context;
-        private IMapper _mapper;
-        public CategoriesListQuery(AppDbContext tasksContext, IMapper mapper)
+        private readonly IMapper _mapper;
+        public CitiesListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;
             _mapper = mapper;
         }
 
-        private IQueryable<CategoryResponse> ApplyFilter(IQueryable<CategoryResponse> query, CategoryFilter filter)
+        private IQueryable<CityResponse> ApplyFilter(IQueryable<CityResponse> query, CityFilter filter)
         {
             if (filter.Id != null)
             {
@@ -32,25 +32,25 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
                 query = query.Where(p => p.Name.StartsWith(filter.Name));
             }
 
-            if (filter.Recipies != null)
+            if (filter.CheapPlaces != null)
             {
-                if (filter.Recipies.From != null)
+                if (filter.CheapPlaces.From != null)
                 {
-                    query = query.Where(p => p.RecipiesCount >= filter.Recipies.From);
+                    query = query.Where(p => p.CheapPlacesCount >= filter.CheapPlaces.From);
                 }
 
-                if (filter.Recipies.To != null)
+                if (filter.CheapPlaces.To != null)
                 {
-                    query = query.Where(p => p.RecipiesCount <= filter.Recipies.To);
+                    query = query.Where(p => p.CheapPlacesCount <= filter.CheapPlaces.To);
                 }
             }
             return query;
         }
 
-        public async Task<ListResponse<CategoryResponse>> RunAsync(CategoryFilter filter, ListOptions options)
+        public async Task<ListResponse<CityResponse>> RunAsync(CityFilter filter, ListOptions options)
         {
-            IQueryable<CategoryResponse> query = _context.Categories.Include("Recipies")
-                .ProjectTo<CategoryResponse>();
+            IQueryable<CityResponse> query = _context.Cities.Include("CheapPlaces")
+                .ProjectTo<CityResponse>();
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();
             if (options.Sort == null)
@@ -60,7 +60,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 
             query = options.ApplySort(query);
             query = options.ApplyPaging(query);
-            return new ListResponse<CategoryResponse>
+            return new ListResponse<CityResponse>
             {
                 Items = await query.ToListAsync(),
                 Page = options.Page,

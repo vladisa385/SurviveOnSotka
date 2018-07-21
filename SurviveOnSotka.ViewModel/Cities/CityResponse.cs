@@ -4,16 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 
-namespace SurviveOnSotka.ViewModel.TypeFoods
+namespace SurviveOnSotka.ViewModel.Cities
 {
-    public class TypeFoodResponse
+    public class CityResponse
     {
         [Required]
         public Guid Id { get; set; }
         [Required, MinLength(5), MaxLength(12)]
         public string Name { get; set; }
-        public string Icon { get; set; }
         [Required]
-        public int IngredientsCount { get; set; }
+        public int CheapPlacesCount { get; set; }
     }
 }

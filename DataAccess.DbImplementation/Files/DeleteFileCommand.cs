@@ -8,7 +8,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Files
         public static void Execute(string path)
         {
             File.Delete(path);
-
         }
     }
 }

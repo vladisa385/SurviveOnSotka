@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.CheapPlaces;
+using SurviveOnSotka.DataAccess.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
+using SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces;
+using SurviveOnSotka.DataAccess.DbImplementation.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.Tags;
@@ -90,6 +94,14 @@ namespace SurviveOnSotka
                 .AddScoped<ICreateTypeFoodCommand, CreateTypeFoodCommand>()
                 .AddScoped<IUpdateTypeFoodCommand, UpdateTypeFoodCommand>()
                 .AddScoped<IDeleteTypeFoodCommand, DeleteTypeFoodCommand>()
+
+                .AddScoped<ICitiesListQuery, CitiesListQuery>()
+
+                .AddScoped<ICheapPlaceQuery, CheapPlaceQuery>()
+                .AddScoped<ICheapPlacesListQuery, CheapPlacesListQuery>()
+                .AddScoped<ICreateCheapPlaceCommand, CreateCheapPlaceCommand>()
+                .AddScoped<IUpdateCheapPlaceCommand, UpdateCheapPlaceCommand>()
+                .AddScoped<IDeleteCheapPlaceCommand, DeleteCheapPlaceCommand>()
 
                 ;
         }

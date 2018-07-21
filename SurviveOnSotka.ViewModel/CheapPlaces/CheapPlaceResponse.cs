@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using SurviveOnSotka.Entities;
 
-namespace SurviveOnSotka.ViewModel.Categories
+namespace SurviveOnSotka.ViewModel.CheapPlaces
 {
-    public class CategoryResponse
+    public class CheapPlaceResponse
     {
         [Required]
         public Guid Id { get; set; }
@@ -12,9 +14,11 @@ namespace SurviveOnSotka.ViewModel.Categories
         public string Name { get; set; }
         [MinLength(16), MaxLength(64)]
         public string Descriptrion { get; set; }
-        public Guid? ParentCategory { get; set; }
-        public string PathToIcon { get; set; }
         [Required]
-        public int RecipiesCount { get; set; }
+        public Guid CityId { get; set; }
+
+        public Guid UserId { get; set; }
+        public string Address { get; set; }
+        public string PathToPhotos { get; set; }
     }
 }

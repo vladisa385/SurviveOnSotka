@@ -49,7 +49,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 
         public async Task<ListResponse<TypeFoodResponse>> RunAsync(TypeFoodFilter filter, ListOptions options)
         {
-            IQueryable<TypeFoodResponse> query = _context.TypeFoods.Include("Recipes")
+            IQueryable<TypeFoodResponse> query = _context.TypeFoods.Include("Ingredients")
                 .ProjectTo<TypeFoodResponse>();
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();

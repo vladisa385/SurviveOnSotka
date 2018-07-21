@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Categories\" />
+    <Folder Include="CheapPlaces\" />
   </ItemGroup>
 
 </Project>

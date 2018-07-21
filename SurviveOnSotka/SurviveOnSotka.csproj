@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Files\Categories\" />
+    <Folder Include="Files\CheapPlaces\" />
     <Folder Include="Files\TypeFoods\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

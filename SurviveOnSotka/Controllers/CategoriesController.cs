@@ -12,9 +12,9 @@ namespace SurviveOnSotka.Controllers
     {
         [HttpGet("GetList")]
         [ProducesResponseType(200, Type = typeof(ListResponse<CategoryResponse>))]
-        public async Task<IActionResult> GetCategoriesListAsync(CategoryFilter category, ListOptions options, [FromServices]ICategoriesListQuery query)
+        public async Task<IActionResult> GetCategoriesListAsync(CategoryFilter categoryFilter, ListOptions options, [FromServices]ICategoriesListQuery query)
         {
-            var response = await query.RunAsync(category, options);
+            var response = await query.RunAsync(categoryFilter, options);
             return Ok(response);
         }
 
