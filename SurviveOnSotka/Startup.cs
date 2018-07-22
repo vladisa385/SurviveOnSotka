@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.Cities;
@@ -13,9 +14,12 @@ using SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
+using SurviveOnSotka.DataAccess.DbImplementation.Users;
 using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.DataAccess.TypeFoods;
+using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
+using SurviveOnSotka.Entities;
 
 
 namespace SurviveOnSotka
@@ -38,6 +42,9 @@ namespace SurviveOnSotka
             //services.AddAutoMapper();
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+            services.AddIdentity<User, IdentityRole>()
+             .AddEntityFrameworkStores<AppDbContext>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -63,6 +70,7 @@ namespace SurviveOnSotka
             // app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseAuthentication();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -103,6 +111,8 @@ namespace SurviveOnSotka
                 .AddScoped<IUpdateCheapPlaceCommand, UpdateCheapPlaceCommand>()
                 .AddScoped<IDeleteCheapPlaceCommand, DeleteCheapPlaceCommand>()
 
+
+                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 ;
         }
     }

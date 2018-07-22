@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.Db
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<CheapPlace> CheapPlaces { get; set; }
@@ -16,14 +17,15 @@ namespace SurviveOnSotka.Db
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Step> Steps { get; set; }
         public DbSet<TypeFood> TypeFoods { get; set; }
-        public DbSet<User> Users { get; set; }
 
-        public AppDbContext(DbContextOptions options)
+
+        public AppDbContext(DbContextOptions<AppDbContext> options)
            : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<RateReview>().HasKey(u => new { u.IdReview, u.IdUserWhoGiveMark });
             modelBuilder.Entity<IngredientToRecipe>().HasKey(u => new { u.IdRecipe, u.IdIngredient });
             modelBuilder.Entity<Review>().HasKey(u => new { u.IdRecipe, u.IdUserWhoGiveReview });

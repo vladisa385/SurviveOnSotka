@@ -5,15 +5,15 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurviveOnSotka", "SurviveOnSotka\SurviveOnSotka.csproj", "{1D8BCFD0-788C-4462-B744-2A8870047CC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurviveOnSotka.Entities", "Entities\SurviveOnSotka.Entities.csproj", "{8D65AC4E-654C-4CB0-9199-9447C0BE5CD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurviveOnSotka.Entities", "Entities\SurviveOnSotka.Entities.csproj", "{8D65AC4E-654C-4CB0-9199-9447C0BE5CD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurviveOnSotka.Db", "Db\SurviveOnSotka.Db.csproj", "{3A82F6EB-500E-4EB2-9335-EE1E39DC65E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurviveOnSotka.Db", "Db\SurviveOnSotka.Db.csproj", "{3A82F6EB-500E-4EB2-9335-EE1E39DC65E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurviveOnSotka.DataAccess", "SurviveOnSotka.DataAccess\SurviveOnSotka.DataAccess.csproj", "{CA74910D-B6ED-4BD9-B42E-78CCE2176555}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurviveOnSotka.DataAccess", "SurviveOnSotka.DataAccess\SurviveOnSotka.DataAccess.csproj", "{CA74910D-B6ED-4BD9-B42E-78CCE2176555}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurviveOnSotka.DataAccess.DbImplementation", "DataAccess.DbImplementation\SurviveOnSotka.DataAccess.DbImplementation.csproj", "{CA3BDDD3-6FB6-41A5-B6C6-520B2820F506}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurviveOnSotka.DataAccess.DbImplementation", "DataAccess.DbImplementation\SurviveOnSotka.DataAccess.DbImplementation.csproj", "{CA3BDDD3-6FB6-41A5-B6C6-520B2820F506}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurviveOnSotka.ViewModel", "SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.csproj", "{3E188A79-CD74-481D-8F79-DA6C1879DE00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurviveOnSotka.ViewModel", "SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.csproj", "{3E188A79-CD74-481D-8F79-DA6C1879DE00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

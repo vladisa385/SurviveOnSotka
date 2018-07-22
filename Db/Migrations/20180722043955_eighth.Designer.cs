@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SurviveOnSotka.Db;
 
 namespace SurviveOnSotka.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180722043955_eighth")]
+    partial class eighth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -438,13 +440,15 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<bool>("Gender");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
-                    b.Property<Guid?>("LevelId");
+                    b.Property<Guid>("LevelId");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -648,7 +652,8 @@ namespace SurviveOnSotka.Db.Migrations
                 {
                     b.HasOne("SurviveOnSotka.Entities.Level", "Level")
                         .WithMany("Users")
-                        .HasForeignKey("LevelId");
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
