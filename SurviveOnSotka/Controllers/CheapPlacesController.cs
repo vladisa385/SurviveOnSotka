@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.ViewModel;
@@ -9,6 +10,7 @@ using SurviveOnSotka.ViewModel.CheapPlaces;
 
 namespace SurviveOnSotka.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class CheapPlacesController : Controller
     {

@@ -34,6 +34,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
                 UserName = request.Email,
                 CurrentScore = 0
             };
+
             // добавляем пользователя
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -42,7 +43,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
                 throw new CannotCreateUserExeption(result.Errors);
 
             await _signInManager.SignInAsync(user, false);
-
+            await _userManager.AddToRoleAsync(user, "user");
             return _mapper.Map<User, UserResponse>(user);
 
         }

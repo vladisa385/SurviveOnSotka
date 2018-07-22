@@ -56,6 +56,11 @@ namespace SurviveOnSotka
                context.Response.StatusCode = 401;
                return Task.CompletedTask;
            };
+           options.Events.OnRedirectToAccessDenied = context =>
+          {
+              context.Response.StatusCode = 403;
+              return Task.CompletedTask;
+          };
        });
             services.AddSwaggerGen(c =>
             {
@@ -82,7 +87,9 @@ namespace SurviveOnSotka
             // app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseAuthentication();
+            app.UseAuthentication(
+
+                );
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 

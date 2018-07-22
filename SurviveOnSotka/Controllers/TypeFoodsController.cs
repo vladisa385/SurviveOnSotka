@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.TypeFoods;
@@ -11,12 +12,13 @@ using SurviveOnSotka.ViewModel.TypeFoods;
 
 namespace SurviveOnSotka.Controllers
 {
-
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     public class TypeFoodsController : Controller
     {
 
         [HttpGet("GetList")]
+        [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(ListResponse<TypeFoodResponse>))]
         public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ITypeFoodsListQuery query)
         {
@@ -25,6 +27,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(201, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]ICreateTypeFoodCommand command)
@@ -36,6 +39,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{typeFoodId}", Name = "GetSingleTypeFood")]
+        [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetTypeFoodAsync(Guid typeFoodId, [FromServices] ITypeFoodQuery query)
@@ -45,6 +49,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update/{typeFoodId}")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -60,6 +65,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpDelete("Delete/{typeFoodId}")]
         [ProducesResponseType(204)]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeletetypeFoodAsync(Guid typeFoodId, [FromServices]IDeleteTypeFoodCommand command)
         {

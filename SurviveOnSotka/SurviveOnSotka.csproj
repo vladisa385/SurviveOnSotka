@@ -13,6 +13,10 @@
     <PackageProjectUrl>https://github.com/vladisa385/SurviveOnSotka</PackageProjectUrl>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="Files\Categories\" />
     <Folder Include="Files\CheapPlaces\" />

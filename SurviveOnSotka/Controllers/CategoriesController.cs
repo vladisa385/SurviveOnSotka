@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.ViewModel;
@@ -7,10 +8,12 @@ using SurviveOnSotka.ViewModel.Categories;
 
 namespace SurviveOnSotka.Controllers
 {
+
     [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
     {
         [HttpGet("GetList")]
+        [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<CategoryResponse>))]
         public async Task<IActionResult> GetCategoriesListAsync(CategoryFilter categoryFilter, ListOptions options, [FromServices]ICategoriesListQuery query)
         {
@@ -19,6 +22,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(201, Type = typeof(CategoryResponse))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryRequest category, [FromServices]ICreateCategoryCommand command)
@@ -30,6 +34,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{categoryId}", Name = "GetSingleCategory")]
+        [Authorize]
         [ProducesResponseType(200, Type = typeof(CategoryResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetCategoryAsync(Guid categoryId, [FromServices] ICategoryQuery query)
@@ -39,6 +44,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update/{categoryId}")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(200, Type = typeof(CategoryResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -53,6 +59,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpDelete("Delete/{categoryId}")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeletecategoryAsync(Guid categoryId, [FromServices]IDeleteCategoryCommand command)

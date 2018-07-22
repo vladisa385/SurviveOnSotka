@@ -17,6 +17,7 @@ namespace SurviveOnSotka.Controllers
     public class AccountController : Controller
     {
         [HttpGet("GetList")]
+        [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<UserResponse>))]
         public async Task<IActionResult> GetUsersListAsync(UserFilter user, ListOptions options, [FromServices]IUsersListQuery query)
         {
@@ -25,6 +26,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{userId}", Name = "GetSingleUser")]
+        [Authorize]
         [ProducesResponseType(200, Type = typeof(UserResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetUserAsync(string userId, [FromServices] IUserQuery query)
@@ -112,6 +114,7 @@ namespace SurviveOnSotka.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("Delete/{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
