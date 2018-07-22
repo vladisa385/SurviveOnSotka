@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Rewrite;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.Cities;
@@ -37,6 +40,7 @@ namespace SurviveOnSotka
         public void ConfigureServices(IServiceCollection services)
         {
             RegisterQueriesAndCommands(services);
+            services.AddHttpContextAccessor();
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
             //services.AddAutoMapper();
@@ -45,6 +49,14 @@ namespace SurviveOnSotka
             services.AddIdentity<User, IdentityRole>()
              .AddEntityFrameworkStores<AppDbContext>();
 
+            services.ConfigureApplicationCookie(options =>
+       {
+           options.Events.OnRedirectToLogin = context =>
+           {
+               context.Response.StatusCode = 401;
+               return Task.CompletedTask;
+           };
+       });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -80,9 +92,8 @@ namespace SurviveOnSotka
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
             app.UseMvc();
-
-
         }
 
         private void RegisterQueriesAndCommands(IServiceCollection services)
@@ -112,7 +123,14 @@ namespace SurviveOnSotka
                 .AddScoped<IDeleteCheapPlaceCommand, DeleteCheapPlaceCommand>()
 
 
-                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
+                .AddScoped<ICreateUserCommand, CreateUserCommand>()
+                .AddScoped<ILogOffUserCommand, LogOffUserCommand>()
+                .AddScoped<ILoginUserCommand, LoginUserCommand>()
+                .AddScoped<IUpdateUserCommand, UpdateUserCommand>()
+                 .AddScoped<IUserQuery, UserQuery>()
+                .AddScoped<IUsersListQuery, UsersListQuery>()
+                .AddScoped<IDeleteUserCommand, DeleteUserCommand>()
+
                 ;
         }
     }

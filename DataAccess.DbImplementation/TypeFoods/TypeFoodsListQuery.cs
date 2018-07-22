@@ -13,11 +13,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
     public class TypeFoodsListQuery : ITypeFoodsListQuery
     {
         private readonly AppDbContext _context;
-        private IMapper _mapper;
-        public TypeFoodsListQuery(AppDbContext tasksContext, IMapper mapper)
+        public TypeFoodsListQuery(AppDbContext tasksContext)
         {
             _context = tasksContext;
-            _mapper = mapper;
+
         }
 
         private IQueryable<TypeFoodResponse> ApplyFilter(IQueryable<TypeFoodResponse> query, TypeFoodFilter filter)

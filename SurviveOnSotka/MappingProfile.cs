@@ -34,8 +34,14 @@ namespace SurviveOnSotka
             CreateMap<UpdateCheapPlaceRequest, CheapPlace>();
             CreateMap<CreateCheapPlaceRequest, CheapPlace>();
 
-            CreateMap<User, UserResponse>();
+            CreateMap<User, UserResponse>()
+             .ForMember(d => d.RecipiesCount, o => o.MapFrom(src => src.Recipies.Count))
+             .ForMember(d => d.CheapPlacesCount, o => o.MapFrom(src => src.CheapPlaces.Count))
+             .ForMember(d => d.RateReviewsCount, o => o.MapFrom(src => src.RateReviews.Count))
+             .ForMember(d => d.ReviewsCount, o => o.MapFrom(src => src.Reviews.Count))
+;
             CreateMap<CreateUserRequest, User>();
+            CreateMap<UpdateUserRequest, User>();
 
         }
     }

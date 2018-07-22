@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Microsoft.AspNetCore.Http;
 
 namespace SurviveOnSotka.ViewModel.Users
 {
-    public class CreateUserRequest
+    public class LoginUserRequest
     {
         [Required]
         [Display(Name = "Email")]
@@ -18,11 +17,7 @@ namespace SurviveOnSotka.ViewModel.Users
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Required]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Подтвердить пароль")]
-        public string PasswordConfirm { get; set; }
-
+        [Display(Name = "Запомнить?")]
+        public bool RememberMe { get; set; }
     }
 }

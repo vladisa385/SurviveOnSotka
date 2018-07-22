@@ -16,7 +16,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
 
-        public CreateUserCommand(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper)
+        public CreateUserCommand(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -36,7 +39,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             var result = await _userManager.CreateAsync(user, request.Password);
             // установка куки
             if (!result.Succeeded)
-                throw new CannotCreateUser(result.Errors);
+                throw new CannotCreateUserExeption(result.Errors);
 
             await _signInManager.SignInAsync(user, false);
 
