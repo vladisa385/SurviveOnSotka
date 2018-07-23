@@ -26,9 +26,9 @@ namespace SurviveOnSotka.Db
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<RateReview>().HasKey(u => new { u.IdReview, u.IdUserWhoGiveMark });
-            modelBuilder.Entity<IngredientToRecipe>().HasKey(u => new { u.IdRecipe, u.IdIngredient });
-            modelBuilder.Entity<Review>().HasKey(u => new { u.IdRecipe, u.IdUserWhoGiveReview });
+            modelBuilder.Entity<RateReview>().HasKey(u => new { u.ReviewId, u.UserWhoGiveMarkId });
+            modelBuilder.Entity<IngredientToRecipe>().HasKey(u => new { u.RecipeId, u.IngredientId });
+            modelBuilder.Entity<Review>().HasKey(u => new { u.RecipeId, u.UserWhoGiveReviewId });
             modelBuilder.Entity<RecipeInCategories>().HasKey(u => new { u.CategoryId, u.RecipeId });
             modelBuilder.Entity<TagsInRecipe>().HasKey(u => new { u.TagId, u.RecipeId });
 

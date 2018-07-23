@@ -119,7 +119,7 @@ namespace SurviveOnSotka
 
                 .AddScoped<ITypeFoodQuery, TypeFoodQuery>()
                 .AddScoped<ITypeFoodsListQuery, TypeFoodsListQuery>()
-                .AddScoped<ICreateIngredientCommand, CreateIngredientCommand>()
+                .AddScoped<ICreateTypeFoodCommand, CreateTypeFoodCommand>()
                 .AddScoped<IUpdateTypeFoodCommand, UpdateTypeFoodCommand>()
                 .AddScoped<IDeleteTypeFoodCommand, DeleteTypeFoodCommand>()
 

@@ -14,7 +14,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180714184417_third.cs" />
+    <Compile Remove="Migrations\20180720185212_four.cs" />
+    <Compile Remove="Migrations\20180720185732_five.cs" />
+    <Compile Remove="Migrations\20180721190824_six.cs" />
+    <Compile Remove="Migrations\20180721194927_seventh.cs" />
+    <Compile Remove="Migrations\20180722043955_eighth.cs" />
+    <Compile Remove="Migrations\20180722055636_nineth.cs" />
     <Compile Remove="Migrations\20180723051934_10.cs" />
+    <Compile Remove="Migrations\20180723052025_tenth.cs" />
+    <Compile Remove="Migrations\20180723053932_eleventh.cs" />
+    <Compile Remove="Migrations\20180723055634_twelve.cs" />
+    <Compile Remove="Migrations\20180723060822_twelveth.cs" />
   </ItemGroup>
 
   <ItemGroup>

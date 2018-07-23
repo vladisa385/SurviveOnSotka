@@ -11,8 +11,9 @@ namespace SurviveOnSotka.Entities
         public string Description { get; set; }
         [Required]
         public ICollection<RecipeInCategories> Categories { get; set; }
+        public Guid UserId { get; set; }
         [Required]
-        public User Author { get; set; }
+        public User User { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
         public Step FirstStep { get; set; }

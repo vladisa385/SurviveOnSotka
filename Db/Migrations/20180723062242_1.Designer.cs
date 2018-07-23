@@ -10,8 +10,8 @@ using SurviveOnSotka.Db;
 namespace SurviveOnSotka.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180720185732_five")]
-    partial class five
+    [Migration("20180723062242_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,10 +21,122 @@ namespace SurviveOnSotka.Db.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("ProviderKey");
+
+                    b.Property<string>("ProviderDisplayName");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
+
             modelBuilder.Entity("SurviveOnSotka.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("CategoryId");
 
                     b.Property<string>("Descriptrion")
                         .HasMaxLength(64);
@@ -33,13 +145,11 @@ namespace SurviveOnSotka.Db.Migrations
                         .IsRequired()
                         .HasMaxLength(16);
 
-                    b.Property<Guid?>("ParentCategoryId");
-
                     b.Property<string>("PathToIcon");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentCategoryId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -59,9 +169,17 @@ namespace SurviveOnSotka.Db.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<string>("PathToPhotos");
+
+                    b.Property<Guid>("UserId");
+
+                    b.Property<string>("UserId1");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("CheapPlaces");
                 });
@@ -101,25 +219,19 @@ namespace SurviveOnSotka.Db.Migrations
 
             modelBuilder.Entity("SurviveOnSotka.Entities.IngredientToRecipe", b =>
                 {
-                    b.Property<Guid>("IdRecipe");
-
-                    b.Property<Guid>("IdIngredient");
-
-                    b.Property<int>("Amount");
+                    b.Property<Guid>("RecipeId");
 
                     b.Property<Guid>("IngredientId");
 
-                    b.Property<int>("Price");
+                    b.Property<int>("Amount");
 
-                    b.Property<Guid>("RecipeId");
+                    b.Property<int>("Price");
 
                     b.Property<int>("Weight");
 
-                    b.HasKey("IdRecipe", "IdIngredient");
+                    b.HasKey("RecipeId", "IngredientId");
 
                     b.HasIndex("IngredientId");
-
-                    b.HasIndex("RecipeId");
 
                     b.ToTable("IngredientToRecipe");
                 });
@@ -135,6 +247,8 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<int>("MinScore");
 
+                    b.Property<Guid?>("NextLevelId");
+
                     b.Property<string>("PathToIcon");
 
                     b.HasKey("Id");
@@ -148,23 +262,23 @@ namespace SurviveOnSotka.Db.Migrations
 
             modelBuilder.Entity("SurviveOnSotka.Entities.RateReview", b =>
                 {
-                    b.Property<Guid>("IdReview");
+                    b.Property<Guid>("ReviewId");
 
-                    b.Property<Guid>("IdUserWhoGiveMark");
+                    b.Property<Guid>("UserWhoGiveMarkId");
 
                     b.Property<bool>("IsCool");
 
-                    b.Property<Guid?>("ReviewIdRecipe");
+                    b.Property<Guid?>("ReviewRecipeId");
 
-                    b.Property<Guid?>("ReviewIdUserWhoGiveReview");
+                    b.Property<Guid?>("ReviewUserWhoGiveReviewId");
 
-                    b.Property<string>("UserWhoGiveMarkId");
+                    b.Property<string>("UserWhoGiveMarkId1");
 
-                    b.HasKey("IdReview", "IdUserWhoGiveMark");
+                    b.HasKey("ReviewId", "UserWhoGiveMarkId");
 
-                    b.HasIndex("UserWhoGiveMarkId");
+                    b.HasIndex("UserWhoGiveMarkId1");
 
-                    b.HasIndex("ReviewIdRecipe", "ReviewIdUserWhoGiveReview");
+                    b.HasIndex("ReviewRecipeId", "ReviewUserWhoGiveReviewId");
 
                     b.ToTable("RateReviews");
                 });
@@ -174,14 +288,13 @@ namespace SurviveOnSotka.Db.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AuthorId")
-                        .IsRequired();
-
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<string>("Description");
 
                     b.Property<Guid?>("FirstStepId");
+
+                    b.Property<Guid?>("IngredientId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -192,11 +305,18 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<DateTime>("TimeForPreparetion");
 
+                    b.Property<Guid>("UserId");
+
+                    b.Property<string>("UserId1")
+                        .IsRequired();
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
-
                     b.HasIndex("FirstStepId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Recipes");
                 });
@@ -216,9 +336,9 @@ namespace SurviveOnSotka.Db.Migrations
 
             modelBuilder.Entity("SurviveOnSotka.Entities.Review", b =>
                 {
-                    b.Property<Guid>("IdRecipe");
+                    b.Property<Guid>("RecipeId");
 
-                    b.Property<Guid>("IdUserWhoGiveReview");
+                    b.Property<Guid>("UserWhoGiveReviewId");
 
                     b.Property<string>("AuthorId");
 
@@ -229,15 +349,11 @@ namespace SurviveOnSotka.Db.Migrations
                     b.Property<int>("Rate")
                         .HasMaxLength(5);
 
-                    b.Property<Guid?>("RecipeId");
-
                     b.Property<string>("Text");
 
-                    b.HasKey("IdRecipe", "IdUserWhoGiveReview");
+                    b.HasKey("RecipeId", "UserWhoGiveReviewId");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("RecipeId");
 
                     b.ToTable("Reviews");
                 });
@@ -312,31 +428,33 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("ConcurrencyStamp");
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
 
                     b.Property<int>("CurrentScore");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired();
+                    b.Property<string>("FirstName");
 
                     b.Property<bool>("Gender");
 
-                    b.Property<string>("LastName")
-                        .IsRequired();
+                    b.Property<string>("LastName");
 
-                    b.Property<Guid>("LevelId");
+                    b.Property<Guid?>("LevelId");
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("NormalizedEmail");
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedUserName");
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
 
@@ -350,28 +468,86 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("LevelId");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("SurviveOnSotka.Entities.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("SurviveOnSotka.Entities.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SurviveOnSotka.Entities.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("SurviveOnSotka.Entities.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SurviveOnSotka.Entities.Category", b =>
                 {
                     b.HasOne("SurviveOnSotka.Entities.Category", "ParentCategory")
                         .WithMany()
-                        .HasForeignKey("ParentCategoryId");
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("SurviveOnSotka.Entities.CheapPlace", b =>
                 {
                     b.HasOne("SurviveOnSotka.Entities.City", "City")
-                        .WithMany()
+                        .WithMany("CheapPlaces")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SurviveOnSotka.Entities.User", "User")
+                        .WithMany("CheapPlaces")
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("SurviveOnSotka.Entities.Ingredient", b =>
@@ -389,7 +565,7 @@ namespace SurviveOnSotka.Db.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SurviveOnSotka.Entities.Recipe", "Recipe")
-                        .WithMany()
+                        .WithMany("Ingredients")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -404,24 +580,28 @@ namespace SurviveOnSotka.Db.Migrations
             modelBuilder.Entity("SurviveOnSotka.Entities.RateReview", b =>
                 {
                     b.HasOne("SurviveOnSotka.Entities.User", "UserWhoGiveMark")
-                        .WithMany()
-                        .HasForeignKey("UserWhoGiveMarkId");
+                        .WithMany("RateReviews")
+                        .HasForeignKey("UserWhoGiveMarkId1");
 
                     b.HasOne("SurviveOnSotka.Entities.Review", "Review")
                         .WithMany()
-                        .HasForeignKey("ReviewIdRecipe", "ReviewIdUserWhoGiveReview");
+                        .HasForeignKey("ReviewRecipeId", "ReviewUserWhoGiveReviewId");
                 });
 
             modelBuilder.Entity("SurviveOnSotka.Entities.Recipe", b =>
                 {
-                    b.HasOne("SurviveOnSotka.Entities.User", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("SurviveOnSotka.Entities.Step", "FirstStep")
                         .WithMany()
                         .HasForeignKey("FirstStepId");
+
+                    b.HasOne("SurviveOnSotka.Entities.Ingredient")
+                        .WithMany("Recipies")
+                        .HasForeignKey("IngredientId");
+
+                    b.HasOne("SurviveOnSotka.Entities.User", "User")
+                        .WithMany("Recipies")
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SurviveOnSotka.Entities.RecipeInCategories", b =>
@@ -432,7 +612,7 @@ namespace SurviveOnSotka.Db.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SurviveOnSotka.Entities.Recipe", "Recipe")
-                        .WithMany("Categorieses")
+                        .WithMany("Categories")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -440,12 +620,13 @@ namespace SurviveOnSotka.Db.Migrations
             modelBuilder.Entity("SurviveOnSotka.Entities.Review", b =>
                 {
                     b.HasOne("SurviveOnSotka.Entities.User", "Author")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("SurviveOnSotka.Entities.Recipe", "Recipe")
                         .WithMany()
-                        .HasForeignKey("RecipeId");
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SurviveOnSotka.Entities.Step", b =>
@@ -471,9 +652,8 @@ namespace SurviveOnSotka.Db.Migrations
             modelBuilder.Entity("SurviveOnSotka.Entities.User", b =>
                 {
                     b.HasOne("SurviveOnSotka.Entities.Level", "Level")
-                        .WithMany()
-                        .HasForeignKey("LevelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("Users")
+                        .HasForeignKey("LevelId");
                 });
 #pragma warning restore 612, 618
         }

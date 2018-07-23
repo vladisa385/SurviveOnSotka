@@ -6,8 +6,8 @@ namespace SurviveOnSotka.Entities
 {
     public class Review
     {
-        public Guid IdRecipe { get; set; }
-        public Guid IdUserWhoGiveReview { get; set; }
+        public Guid RecipeId { get; set; }
+        public Guid UserWhoGiveReviewId { get; set; }
         public Recipe Recipe { get; set; }
         public User Author { get; set; }
         public string Text { get; set; }

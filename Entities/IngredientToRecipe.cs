@@ -5,8 +5,8 @@ namespace SurviveOnSotka.Entities
 {
     public class IngredientToRecipe
     {
-        public Guid IdRecipe { get; set; }
-        public Guid IdIngredient { get; set; }
+        public Guid RecipeId { get; set; }
+        public Guid IngredientId { get; set; }
         [Required]
         public Recipe Recipe { get; set; }
         [Required]
