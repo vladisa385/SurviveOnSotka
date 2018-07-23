@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 
-namespace SurviveOnSotka.Entities
+namespace SurviveOnSotka.ViewModel.Levels
 {
-    public class Level : DomainObject
+    public class CreateLevelRequest
     {
         [Required]
         public int MinScore { get; set; }
@@ -13,10 +15,6 @@ namespace SurviveOnSotka.Entities
         public string Name { get; set; }
         public Guid? NextLevelId { get; set; }
         public Guid? LastLevelId { get; set; }
-        public Level NextLevel { get; set; }
-        public Level LastLevel { get; set; }
-        public string PathToIcon { get; set; }
-        public ICollection<User> Users { get; set; }
-
+        public IFormFile Icon { get; set; }
     }
 }

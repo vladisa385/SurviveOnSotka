@@ -19,7 +19,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
         }
         public async Task ExecuteAsync(Guid typeFoodId)
         {
-            var categories = _context.TypeFoods.ToImmutableList();
             TypeFood typeFoodToDelete = await _context.TypeFoods.FirstOrDefaultAsync(p => p.Id == typeFoodId);
             if (typeFoodToDelete?.Ingredients?.Count > 0)
             {

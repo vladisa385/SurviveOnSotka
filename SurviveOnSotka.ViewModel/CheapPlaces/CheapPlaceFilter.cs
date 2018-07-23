@@ -10,5 +10,6 @@ namespace SurviveOnSotka.ViewModel.CheapPlaces
         public string Description { get; set; }
         public string Address { get; set; }
         public Guid? CityId { get; set; }
+        public string UserId { get; set; }
     }
 }

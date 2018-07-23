@@ -16,10 +16,12 @@ using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
+using SurviveOnSotka.DataAccess.DbImplementation.Levels;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.DbImplementation.Users;
 using SurviveOnSotka.DataAccess.Ingredients;
+using SurviveOnSotka.DataAccess.Levels;
 using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.DataAccess.Users;
@@ -137,6 +139,12 @@ namespace SurviveOnSotka
                 .AddScoped<ICreateIngredientCommand, CreateIngredientCommand>()
                 .AddScoped<IUpdateIngredientCommand, UpdateIngredientCommand>()
                 .AddScoped<IDeleteIngredientCommand, DeleteIngredientCommand>()
+
+                .AddScoped<ILevelQuery, LevelQuery>()
+                .AddScoped<ILevelsListQuery, LevelsListQuery>()
+                .AddScoped<ICreateLevelCommand, CreateLevelCommand>()
+                .AddScoped<IUpdateLevelCommand, UpdateLevelCommand>()
+                .AddScoped<IDeleteLevelCommand, DeleteLevelCommand>()
 
                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 .AddScoped<ILogOffUserCommand, LogOffUserCommand>()

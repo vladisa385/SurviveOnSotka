@@ -61,6 +61,10 @@ namespace SurviveOnSotka.Controllers
             {
                 return BadRequest(exception.Message);
             }
+            catch (ThisRequestNotFromOwnerException exception)
+            {
+                return StatusCode(403);
+            }
 
 
         }
@@ -68,10 +72,19 @@ namespace SurviveOnSotka.Controllers
         [HttpDelete("Delete/{cheapPlaceId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> DeleteCheapPlaceAsync(Guid cheapPlaceId, [FromServices]IDeleteCheapPlaceCommand command)
         {
-            await command.ExecuteAsync(cheapPlaceId);
-            return NoContent();
+            try
+            {
+                await command.ExecuteAsync(cheapPlaceId);
+                return NoContent();
+            }
+            catch (ThisRequestNotFromOwnerException)
+            {
+                return StatusCode(403);
+            }
+
         }
     }
 }

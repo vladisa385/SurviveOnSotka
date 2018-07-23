@@ -16,8 +16,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
     public class UpdateUserCommand : IUpdateUserCommand
     {
         private readonly UserManager<User> _userManager;
-        private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMapper _mapper;
         private readonly IHostingEnvironment _appEnvironment;
         public UpdateUserCommand(UserManager<User> userManager,
             IMapper mapper,

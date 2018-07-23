@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using SurviveOnSotka.ViewModel;
+using SurviveOnSotka.ViewModel.Levels;
+
+namespace SurviveOnSotka.DataAccess.Levels
+{
+    public interface ILevelsListQuery
+    {
+        Task<ListResponse<LevelResponse>> RunAsync(LevelFilter filter, ListOptions options);
+
+    }
+}

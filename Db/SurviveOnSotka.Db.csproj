@@ -26,6 +26,15 @@
     <Compile Remove="Migrations\20180723053932_eleventh.cs" />
     <Compile Remove="Migrations\20180723055634_twelve.cs" />
     <Compile Remove="Migrations\20180723060822_twelveth.cs" />
+    <Compile Remove="Migrations\20180723062242_1.cs" />
+    <Compile Remove="Migrations\20180723093517_2.cs" />
+    <Compile Remove="Migrations\20180723102338_3.cs" />
+    <Compile Remove="Migrations\20180723103046_1.cs" />
+    <Compile Remove="Migrations\20180723103442_1.cs" />
+    <Compile Remove="Migrations\20180723104419_1.cs" />
+    <Compile Remove="Migrations\20180723104821_1.cs" />
+    <Compile Remove="Migrations\20180723104859_1.cs" />
+    <Compile Remove="Migrations\20180723105927_1.cs" />
   </ItemGroup>
 
   <ItemGroup>

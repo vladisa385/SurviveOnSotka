@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace SurviveOnSotka.Entities
+namespace SurviveOnSotka.ViewModel.Levels
 {
-    public class Level : DomainObject
+    public class LevelResponse
     {
+        [Required]
+        public Guid Id { get; set; }
         [Required]
         public int MinScore { get; set; }
         [Required]
@@ -13,10 +16,8 @@ namespace SurviveOnSotka.Entities
         public string Name { get; set; }
         public Guid? NextLevelId { get; set; }
         public Guid? LastLevelId { get; set; }
-        public Level NextLevel { get; set; }
-        public Level LastLevel { get; set; }
         public string PathToIcon { get; set; }
-        public ICollection<User> Users { get; set; }
-
+        [Required]
+        public int UsersCount { get; set; }
     }
 }

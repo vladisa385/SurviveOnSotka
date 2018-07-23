@@ -21,6 +21,7 @@
     <Folder Include="Files\Categories\" />
     <Folder Include="Files\CheapPlaces\" />
     <Folder Include="Files\Ingredients\" />
+    <Folder Include="Files\Files\" />
     <Folder Include="Files\TypeFoods\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

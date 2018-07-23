@@ -14,7 +14,7 @@ namespace SurviveOnSotka.ViewModel.CheapPlaces
         [Required]
         public Guid CityId { get; set; }
 
-        public Guid? UserId { get; set; }
+
         public ICollection<IFormFile> Photos { get; set; }
 
     }

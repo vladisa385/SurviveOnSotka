@@ -4,7 +4,9 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Users;
+using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Users;
 
@@ -15,24 +17,27 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
+        private readonly AppDbContext _context;
 
         public CreateUserCommand(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IMapper mapper)
+            IMapper mapper, AppDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _context = context;
         }
         public async Task<UserResponse> ExecuteAsync(CreateUserRequest request)
         {
-
+            var levelForBeginner = await _context.Levels.FirstAsync(u => u.MinScore == 0);
             User user = new User
             {
                 Email = request.Email,
                 UserName = request.Email,
-                CurrentScore = 0
+                CurrentScore = 0,
+                Level = levelForBeginner
             };
 
             // добавляем пользователя
