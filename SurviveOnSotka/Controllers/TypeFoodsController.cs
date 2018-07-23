@@ -12,13 +12,13 @@ using SurviveOnSotka.ViewModel.TypeFoods;
 
 namespace SurviveOnSotka.Controllers
 {
-    [Authorize(Roles = "admin")]
+
     [Route("api/[controller]")]
     public class TypeFoodsController : Controller
     {
 
         [HttpGet("GetList")]
-        [Authorize(Roles = "user")]
+        [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<TypeFoodResponse>))]
         public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ITypeFoodsListQuery query)
         {

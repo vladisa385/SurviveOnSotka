@@ -15,9 +15,11 @@ using SurviveOnSotka.DataAccess.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Cities;
+using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.DbImplementation.Users;
+using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.DataAccess.Users;
@@ -117,7 +119,7 @@ namespace SurviveOnSotka
 
                 .AddScoped<ITypeFoodQuery, TypeFoodQuery>()
                 .AddScoped<ITypeFoodsListQuery, TypeFoodsListQuery>()
-                .AddScoped<ICreateTypeFoodCommand, CreateTypeFoodCommand>()
+                .AddScoped<ICreateIngredientCommand, CreateIngredientCommand>()
                 .AddScoped<IUpdateTypeFoodCommand, UpdateTypeFoodCommand>()
                 .AddScoped<IDeleteTypeFoodCommand, DeleteTypeFoodCommand>()
 
@@ -129,6 +131,12 @@ namespace SurviveOnSotka
                 .AddScoped<IUpdateCheapPlaceCommand, UpdateCheapPlaceCommand>()
                 .AddScoped<IDeleteCheapPlaceCommand, DeleteCheapPlaceCommand>()
 
+
+                .AddScoped<IIngredientQuery, IngredientQuery>()
+                .AddScoped<IIngredientsListQuery, IngredientsListQuery>()
+                .AddScoped<ICreateIngredientCommand, CreateIngredientCommand>()
+                .AddScoped<IUpdateIngredientCommand, UpdateIngredientCommand>()
+                .AddScoped<IDeleteIngredientCommand, DeleteIngredientCommand>()
 
                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 .AddScoped<ILogOffUserCommand, LogOffUserCommand>()

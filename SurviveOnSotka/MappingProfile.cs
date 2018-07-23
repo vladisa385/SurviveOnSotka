@@ -4,6 +4,7 @@ using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Categories;
 using SurviveOnSotka.ViewModel.CheapPlaces;
 using SurviveOnSotka.ViewModel.Cities;
+using SurviveOnSotka.ViewModel.Ingredients;
 using SurviveOnSotka.ViewModel.TypeFoods;
 using SurviveOnSotka.ViewModel.Users;
 
@@ -42,6 +43,12 @@ namespace SurviveOnSotka
 ;
             CreateMap<CreateUserRequest, User>();
             CreateMap<UpdateUserRequest, User>();
+
+            CreateMap<Ingredient, IngredientResponse>()
+                .ForMember(d => d.RecipiesCount, o => o.MapFrom(src => src.Recipies.Count));
+
+            CreateMap<UpdateIngredientRequest, Ingredient>();
+            CreateMap<CreateIngredientRequest, Ingredient>();
 
         }
     }
