@@ -20,5 +20,9 @@ namespace SurviveOnSotka.ViewModel.CheapPlaces
         public string UserId { get; set; }
         public string Address { get; set; }
         public string PathToPhotos { get; set; }
+        public int? Likes { get; set; }
+
+        public int? DisLikes { get; set; }
+
     }
 }

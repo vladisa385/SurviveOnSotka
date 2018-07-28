@@ -28,6 +28,7 @@ namespace SurviveOnSotka.Db
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<RateReview>().HasKey(u => new { u.ReviewId, u.UserWhoGiveMarkId });
+            modelBuilder.Entity<RateCheapPlace>().HasKey(u => new { u.CheapPlaceId, u.UserWhoGiveMarkId });
             modelBuilder.Entity<IngredientToRecipe>().HasKey(u => new { u.RecipeId, u.IngredientId });
             modelBuilder.Entity<Review>().HasKey(u => new { u.RecipeId, u.AuthorId });
             modelBuilder.Entity<RecipeInCategories>().HasKey(u => new { u.CategoryId, u.RecipeId });

@@ -36,11 +36,11 @@ namespace SurviveOnSotka.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             CityResponse response = await command.ExecuteAsync(city);
-            return CreatedAtRoute("GetSingleCity", new { CityId = response.Id }, response);
+            return CreatedAtRoute("GetSingleCity", new { cityId = response.Id }, response);
         }
 
 
-        [HttpGet("Get/{levelId}", Name = "GetSingleCity")]
+        [HttpGet("Get/{cityId}", Name = "GetSingleCity")]
         [Authorize]
         [ProducesResponseType(200, Type = typeof(CityResponse))]
         [ProducesResponseType(404)]
@@ -50,7 +50,7 @@ namespace SurviveOnSotka.Controllers
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
-        [HttpPut("Update/{CityId}")]
+        [HttpPut("Update/{cityId}")]
         [Authorize(Roles = "admin")]
         [ProducesResponseType(200, Type = typeof(CityResponse))]
         [ProducesResponseType(404)]
@@ -65,7 +65,7 @@ namespace SurviveOnSotka.Controllers
             return response == null ? (IActionResult)NotFound($"City with id: {cityId} not found") : Ok(response);
         }
 
-        [HttpDelete("Delete/{CityId}")]
+        [HttpDelete("Delete/{cityId}")]
         [ProducesResponseType(204)]
         [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]

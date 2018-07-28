@@ -11,5 +11,7 @@ namespace SurviveOnSotka.ViewModel.CheapPlaces
         public string Address { get; set; }
         public Guid? CityId { get; set; }
         public string UserId { get; set; }
+        public RangeFilter<int> Likes { get; set; }
+        public RangeFilter<int> DisLikes { get; set; }
     }
 }

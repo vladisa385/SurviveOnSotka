@@ -22,7 +22,13 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 
         public async Task<UserResponse> RunAsync(string userId)
         {
-            UserResponse response = await _userManager.Users
+
+            UserResponse response = await _userManager.Users.Include("Recipies")
+                 .Include("Recipies")
+                .Include("Reviews")
+                .Include("CheapPlaces")
+                .Include("RateReviews")
+                 .Include("RateCheapPlaces")
                 .ProjectTo<UserResponse>()
                 .FirstOrDefaultAsync(p => p.Id == userId);
             return response;

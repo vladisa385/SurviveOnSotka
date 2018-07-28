@@ -9,7 +9,7 @@ using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Cities
 {
-    public class DeleteCityCommand:IDeleteCityCommand
+    public class DeleteCityCommand : IDeleteCityCommand
 
     {
 

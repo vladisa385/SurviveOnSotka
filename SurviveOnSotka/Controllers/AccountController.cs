@@ -88,7 +88,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
         [Authorize]
-        public async Task<IActionResult> ChangeUserPassword(UpdateUserRequest user, [FromServices] IUpdateUserCommand command)
+        public async Task<IActionResult> ChangeUserPassword(ChangePasswordUserRequest user, [FromServices] IChangeUserPasswordCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

@@ -99,6 +99,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
                 .Include("Reviews")
                 .Include("CheapPlaces")
                 .Include("RateReviews")
+                 .Include("RateCheapPlaces")
                 .ProjectTo<UserResponse>();
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();

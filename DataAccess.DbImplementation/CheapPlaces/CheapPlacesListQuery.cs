@@ -43,6 +43,30 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces
             {
                 query = query.Where(p => p.Address.Contains(filter.Address));
             }
+            if (filter.Likes != null)
+            {
+                if (filter.Likes.From != null)
+                {
+                    query = query.Where(p => p.Likes >= filter.Likes.From);
+                }
+
+                if (filter.Likes.To != null)
+                {
+                    query = query.Where(p => p.Likes <= filter.Likes.To);
+                }
+            }
+            if (filter.DisLikes != null)
+            {
+                if (filter.DisLikes.From != null)
+                {
+                    query = query.Where(p => p.DisLikes >= filter.DisLikes.From);
+                }
+
+                if (filter.DisLikes.To != null)
+                {
+                    query = query.Where(p => p.DisLikes <= filter.DisLikes.To);
+                }
+            }
             return query;
         }
 

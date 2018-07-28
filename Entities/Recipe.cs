@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace SurviveOnSotka.Entities
@@ -19,17 +20,20 @@ namespace SurviveOnSotka.Entities
         [Required]
         public DateTime DateCreated { get; set; }
         public Guid FirstStepId { get; set; }
-        public ICollection<Step> Steps { get; set; }
         public ICollection<TagsInRecipe> Tags { get; set; }
         public string PathToPhotos { get; set; }
         public DateTime TimeForCooking { get; set; }
         public DateTime TimeForPreparetion { get; set; }
-        public double Rate {
+        public double Rate
+        {
             get
             {
-                return Reviews.Average(u=>u.Rate);
+                return Reviews.Average(u => u.Rate);
 
-            } }
+            }
+        }
         public ICollection<IngredientToRecipe> Ingredients { get; set; }
+        [Required]
+        public ICollection<Step> Steps { get; set; }
     }
 }
