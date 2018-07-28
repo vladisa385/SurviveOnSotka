@@ -6,8 +6,13 @@ using SurviveOnSotka.ViewModel.CheapPlaces;
 using SurviveOnSotka.ViewModel.Cities;
 using SurviveOnSotka.ViewModel.Ingredients;
 using SurviveOnSotka.ViewModel.Levels;
+using SurviveOnSotka.ViewModel.RateCheapPlaces;
+using SurviveOnSotka.ViewModel.RateReviews;
+using SurviveOnSotka.ViewModel.Recipies;
+using SurviveOnSotka.ViewModel.Review;
 using SurviveOnSotka.ViewModel.TypeFoods;
 using SurviveOnSotka.ViewModel.Users;
+
 
 namespace SurviveOnSotka
 {
@@ -31,6 +36,8 @@ namespace SurviveOnSotka
 
             CreateMap<City, CityResponse>()
                .ForMember(d => d.CheapPlacesCount, o => o.MapFrom(src => src.CheapPlaces.Count));
+            CreateMap<CreateCityRequest, City>();
+            CreateMap<UpdateCityRequest, City>();
 
             CreateMap<CheapPlace, CheapPlaceResponse>();
             CreateMap<UpdateCheapPlaceRequest, CheapPlace>();
@@ -55,6 +62,22 @@ namespace SurviveOnSotka
             CreateMap<Level, LevelResponse>();
             CreateMap<UpdateLevelRequest, Level>();
             CreateMap<CreateLevelRequest, Level>();
+
+            CreateMap<Recipe, RecipeResponse>();
+            CreateMap<UpdateRecipeRequest, Recipe>();
+            CreateMap<CreateRecipeRequest, Recipe>();
+
+            CreateMap<Review, ReviewResponse>();
+            CreateMap<UpdateReviewRequest, Review>();
+            CreateMap<CreateRecipeRequest, Review>();
+
+            CreateMap<RateReview, RateReviewResponse>();
+            CreateMap<UpdateRateReviewRequest, RateReview>();
+            CreateMap<CreateRateReviewRequest, RateReview>();
+
+            CreateMap<RateCheapPlace, RateCheapPlaceResponse>();
+            CreateMap<UpdateRateCheapPlaceRequest, RateCheapPlace>();
+            CreateMap<CreateRateCheapPlaceRequest, RateCheapPlace>();
 
         }
     }

@@ -31,8 +31,20 @@ namespace SurviveOnSotka.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            LevelResponse response = await command.ExecuteAsync(level);
-            return CreatedAtRoute("GetSingleLevel", new { levelId = response.Id }, response);
+            try
+            {
+                LevelResponse response = await command.ExecuteAsync(level);
+                return CreatedAtRoute("GetSingleLevel", new { levelId = response.Id }, response);
+            }
+            catch (CannotCreateOrUpdateLevelWithThisGuidLastLevelException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (CannotCreateOrUpdateLevelWithThisGuidNextLevelException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
         }
 
         [HttpGet("Get/{levelId}", Name = "GetSingleLevel")]
@@ -56,8 +68,19 @@ namespace SurviveOnSotka.Controllers
             {
                 return BadRequest(ModelState);
             }
-            LevelResponse response = await command.ExecuteAsync(levelId, request);
-            return response == null ? (IActionResult)NotFound($"level with id: {levelId} not found") : Ok(response);
+            try
+            {
+                LevelResponse response = await command.ExecuteAsync(levelId, request);
+                return response == null ? (IActionResult)NotFound($"level with id: {levelId} not found") : Ok(response);
+            }
+            catch (CannotCreateOrUpdateLevelWithThisGuidLastLevelException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (CannotCreateOrUpdateLevelWithThisGuidNextLevelException exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpDelete("Delete/{levelId}")]

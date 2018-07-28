@@ -24,11 +24,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
         {
 
             User userToDelete = await _userManager.Users.FirstOrDefaultAsync(p => p.Id == userId);
-            //if (userToDelete?.Ingredients?.Count > 0)
-            //{
-            //    throw new CannotDeleteUserWithIngredientsExeption();
-            //}
-
+        
             if (userToDelete != null)
             {
                 if (userToDelete.PathToAvatar != null)

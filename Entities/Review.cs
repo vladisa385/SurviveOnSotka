@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace SurviveOnSotka.Entities
 {
@@ -16,5 +17,14 @@ namespace SurviveOnSotka.Entities
         public int Rate { get; set; }
         public string PathToPhotos { get; set; }
         public ICollection<RateReview> RateReviews { get; set; }
+
+        public int Likes
+        {
+            get { return RateReviews.Count(u => u.IsCool == true); }
+        }
+        public int DisLikes
+        {
+            get { return RateReviews.Count(u => u.IsCool==false); }
+        }
     }
 }

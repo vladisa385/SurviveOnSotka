@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace SurviveOnSotka.Entities
 {
@@ -11,16 +12,24 @@ namespace SurviveOnSotka.Entities
         public string Description { get; set; }
         [Required]
         public ICollection<RecipeInCategories> Categories { get; set; }
+        [Required]
+        public ICollection<Review> Reviews { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
         public Guid FirstStepId { get; set; }
-        public Step FirstStep { get; set; }
+        public ICollection<Step> Steps { get; set; }
         public ICollection<TagsInRecipe> Tags { get; set; }
-        public ICollection<IngredientToRecipe> Ingredients { get; set; }
         public string PathToPhotos { get; set; }
         public DateTime TimeForCooking { get; set; }
         public DateTime TimeForPreparetion { get; set; }
+        public double Rate {
+            get
+            {
+                return Reviews.Average(u=>u.Rate);
+
+            } }
+        public ICollection<IngredientToRecipe> Ingredients { get; set; }
     }
 }

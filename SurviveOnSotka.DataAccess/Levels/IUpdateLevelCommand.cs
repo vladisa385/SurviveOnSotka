@@ -6,7 +6,7 @@ namespace SurviveOnSotka.DataAccess.Levels
 {
     public interface IUpdateLevelCommand
     {
-        Task<LevelResponse> ExecuteAsync(Guid typeFoodId, UpdateLevelRequest request);
+        Task<LevelResponse> ExecuteAsync(Guid cityId, UpdateLevelRequest request);
 
     }
 }

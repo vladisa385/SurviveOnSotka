@@ -25,5 +25,61 @@ namespace SurviveOnSotka.Controllers
             var response = await query.RunAsync(filterCity, options);
             return Ok(response);
         }
+
+
+        [HttpPost("Create")]
+        [Authorize(Roles = "admin")]
+        [ProducesResponseType(201, Type = typeof(CityResponse))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateCityAsync([FromBody] CreateCityRequest city, [FromServices]ICreateCityCommand command)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            CityResponse response = await command.ExecuteAsync(city);
+            return CreatedAtRoute("GetSingleCity", new { CityId = response.Id }, response);
+        }
+
+
+        [HttpGet("Get/{levelId}", Name = "GetSingleCity")]
+        [Authorize]
+        [ProducesResponseType(200, Type = typeof(CityResponse))]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetCityAsync(Guid cityId, [FromServices] ICityQuery query)
+        {
+            CityResponse response = await query.RunAsync(cityId);
+            return response == null ? (IActionResult)NotFound() : Ok(response);
+        }
+
+        [HttpPut("Update/{CityId}")]
+        [Authorize(Roles = "admin")]
+        [ProducesResponseType(200, Type = typeof(CityResponse))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> UpdateCityAsync(Guid cityId, [FromBody] UpdateCityRequest request, [FromServices] IUpdateCityCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            CityResponse response = await command.ExecuteAsync(cityId, request);
+            return response == null ? (IActionResult)NotFound($"City with id: {cityId} not found") : Ok(response);
+        }
+
+        [HttpDelete("Delete/{CityId}")]
+        [ProducesResponseType(204)]
+        [Authorize(Roles = "admin")]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> DeleteCityAsync(Guid cityId, [FromServices]IDeleteCityCommand command)
+        {
+            try
+            {
+                await command.ExecuteAsync(cityId);
+                return NoContent();
+            }
+            catch (CannotDeleteCityWithCheapPlacesExeption exception)
+            {
+                return BadRequest(exception.Message);
+            }
+        }
     }
 }

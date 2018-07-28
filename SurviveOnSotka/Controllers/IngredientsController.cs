@@ -32,8 +32,16 @@ namespace SurviveOnSotka.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            IngredientResponse response = await command.ExecuteAsync(ingredient);
-            return CreatedAtRoute("GetSingleIngredient", new { ingredientId = response.Id }, response);
+            try
+            {
+                IngredientResponse response = await command.ExecuteAsync(ingredient);
+                return CreatedAtRoute("GetSingleIngredient", new { ingredientId = response.Id }, response);
+            }
+            catch (CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
         [HttpGet("Get/{ingredientId}", Name = "GetSingleIngredient")]
@@ -57,8 +65,17 @@ namespace SurviveOnSotka.Controllers
             {
                 return BadRequest(ModelState);
             }
-            IngredientResponse response = await command.ExecuteAsync(ingredientId, request);
-            return response == null ? (IActionResult)NotFound($"ingredient with id: {ingredientId} not found") : Ok(response);
+
+            try
+            {
+                IngredientResponse response = await command.ExecuteAsync(ingredientId, request);
+                return response == null ? (IActionResult)NotFound($"ingredient with id: {ingredientId} not found") : Ok(response);
+            }
+            catch (CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
         [HttpDelete("Delete/{ingredientId}")]

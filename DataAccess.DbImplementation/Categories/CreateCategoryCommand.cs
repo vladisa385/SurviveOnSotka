@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using SurviveOnSotka.DataAccess.Categories;
@@ -22,6 +23,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
         }
         public async Task<CategoryResponse> ExecuteAsync(CreateCategoryRequest request)
         {
+            if (!_context.Categories.Any(u => u.Id == request.IdParentCategory))
+            {
+                throw new CannotCreateOrUpdateCategoryWithThisIParentCategoryGuidException();
+            }
             var category = _mapper.Map<CreateCategoryRequest, Category>(request);
             await _context.Categories.AddAsync(category);
             if (request.Icon != null)

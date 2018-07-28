@@ -36,7 +36,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             {
                 Email = request.Email,
                 UserName = request.Email,
-                CurrentScore = 0,
+
                 Level = levelForBeginner
             };
 

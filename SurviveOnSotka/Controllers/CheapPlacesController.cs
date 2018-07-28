@@ -61,7 +61,7 @@ namespace SurviveOnSotka.Controllers
             {
                 return BadRequest(exception.Message);
             }
-            catch (ThisRequestNotFromOwnerException exception)
+            catch (ThisRequestNotFromOwnerException)
             {
                 return StatusCode(403);
             }

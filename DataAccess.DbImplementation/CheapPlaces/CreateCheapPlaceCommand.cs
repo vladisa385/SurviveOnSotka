@@ -36,7 +36,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces
             }
             var cheapPlace = _mapper.Map<CreateCheapPlaceRequest, CheapPlace>(request);
             var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            currentUser.CurrentScore += 100;
             cheapPlace.User = currentUser;
             cheapPlace.UserId = currentUser.Id;
             await _context.CheapPlaces.AddAsync(cheapPlace);

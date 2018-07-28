@@ -8,7 +8,9 @@ namespace SurviveOnSotka.Entities
     {
         [Required, MinLength(5), MaxLength(12)]
         public string Name { get; set; }
-        public Guid? TypeFoodId { get; set; }
+        [Required]
+        public Guid TypeFoodId { get; set; }
+        [Required]
         public TypeFood TypeFood { get; set; }
         public string PathToIcon { get; set; }
         public ICollection<IngredientToRecipe> Recipies { get; set; }

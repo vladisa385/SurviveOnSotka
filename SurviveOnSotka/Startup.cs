@@ -17,16 +17,26 @@ using SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
 using SurviveOnSotka.DataAccess.DbImplementation.Levels;
+using SurviveOnSotka.DataAccess.DbImplementation.RateCheapPlaces;
+using SurviveOnSotka.DataAccess.DbImplementation.RateReview;
+using SurviveOnSotka.DataAccess.DbImplementation.Recipies;
+using SurviveOnSotka.DataAccess.DbImplementation.Reviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.DbImplementation.Users;
 using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.DataAccess.Levels;
+using SurviveOnSotka.DataAccess.RateCheapPlaces;
+using SurviveOnSotka.DataAccess.RateReviews;
+using SurviveOnSotka.DataAccess.Recipies;
+using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
+using ICreateCheapPlaceCommand = SurviveOnSotka.DataAccess.CheapPlaces.ICreateCheapPlaceCommand;
+using IUpdateCheapPlaceCommand = SurviveOnSotka.DataAccess.CheapPlaces.IUpdateCheapPlaceCommand;
 
 
 namespace SurviveOnSotka
@@ -89,6 +99,7 @@ namespace SurviveOnSotka
                 app.UseDeveloperExceptionPage();
             }
             // app.UseAuthentication();
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication(
@@ -126,6 +137,10 @@ namespace SurviveOnSotka
                 .AddScoped<IDeleteTypeFoodCommand, DeleteTypeFoodCommand>()
 
                 .AddScoped<ICitiesListQuery, CitiesListQuery>()
+                 .AddScoped<ICityQuery, CityQuery>()
+                .AddScoped<ICreateCityCommand, CreateCityCommand>()
+                .AddScoped<IUpdateCityCommand, UpdateCityCommand>()
+                .AddScoped<IDeleteCityCommand, DeleteCityCommand>()
 
                 .AddScoped<ICheapPlaceQuery, CheapPlaceQuery>()
                 .AddScoped<ICheapPlacesListQuery, CheapPlacesListQuery>()
@@ -149,11 +164,36 @@ namespace SurviveOnSotka
                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 .AddScoped<ILogOffUserCommand, LogOffUserCommand>()
                 .AddScoped<ILoginUserCommand, LoginUserCommand>()
+                .AddScoped<IChangeUserPasswordCommand, ChangeUserPasswordCommand>()
                 .AddScoped<IUpdateUserCommand, UpdateUserCommand>()
                  .AddScoped<IUserQuery, UserQuery>()
                 .AddScoped<IUsersListQuery, UsersListQuery>()
                 .AddScoped<IDeleteUserCommand, DeleteUserCommand>()
+                .AddScoped<IUpdateUserLevelCommand, UpdateUserLevelCommand>()
 
+                .AddScoped<IRecipeQuery, RecipeQuery>()
+                .AddScoped<IRecipiesListQuery, RecipiesListQuery>()
+                .AddScoped<ICreateRecipeCommand, CreateRecipeCommand>()
+                .AddScoped<IUpdateRecipeCommand, UpdateRecipeCommand>()
+                .AddScoped<IDeleteRecipeCommand, DeleteRecipeCommand>()
+
+                .AddScoped<IReviewQuery, ReviewQuery>()
+                .AddScoped<IReviewsListQuery, ReviewsListQuery>()
+                .AddScoped<ICreateReviewCommand, CreateReviewCommand>()
+                .AddScoped<IUpdateReviewCommand, UpdateReviewCommand>()
+                .AddScoped<IDeleteReviewCommand, DeleteReviewCommand>()
+
+                 .AddScoped<IRateReviewQuery, RateReviewQuery>()
+                .AddScoped<IRateReviewsListQuery, RateReviewsListQuery>()
+                .AddScoped<ICreateRateReviewCommand, CreateRateReviewCommand>()
+                .AddScoped<IUpdateRateReviewCommand, UpdateRateReviewCommand>()
+                .AddScoped<IDeleteRateReviewCommand, DeleteRateReviewCommand>()
+
+                  .AddScoped<IRateCheapPlaceQuery, RateCheapPlaceQuery>()
+                .AddScoped<IRateCheapPlacesListQuery, RateCheapPlacesListQuery>()
+                .AddScoped<ICreateRateCheapPlaceCommand, CreateRateCheapPlaceCommand>()
+                .AddScoped<IUpdateRateCheapPlaceCommand, UpdateRateCheapPlaceCommand>()
+                .AddScoped<IDeleteRateCheapPlaceCommand, DeleteRateCheapPlaceCommand>()
                 ;
         }
     }

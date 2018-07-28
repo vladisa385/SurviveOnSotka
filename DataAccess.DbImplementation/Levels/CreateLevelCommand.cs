@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,6 +25,20 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Levels
         }
         public async Task<LevelResponse> ExecuteAsync(CreateLevelRequest request)
         {
+            if (request.NextLevelId != null)
+            {
+                if (!_context.Levels.Any(u => u.NextLevelId == request.NextLevelId))
+                {
+                    throw new CannotCreateOrUpdateLevelWithThisGuidNextLevelException();
+                }
+            }
+            if (request.LastLevelId != null)
+            {
+                if (!_context.Levels.Any(u => u.LastLevelId == request.LastLevelId))
+                {
+                    throw new CannotCreateOrUpdateLevelWithThisGuidLastLevelException();
+                }
+            }
             var level = _mapper.Map<CreateLevelRequest, Entities.Level>(request);
             await _context.Levels.AddAsync(level);
             if (request.Icon != null)

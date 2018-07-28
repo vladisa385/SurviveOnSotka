@@ -84,7 +84,30 @@ namespace SurviveOnSotka.Controllers
 
         }
 
+        [HttpPost("ChangeUserPassword")]
+        [ProducesResponseType(201, Type = typeof(UserResponse))]
+        [ProducesResponseType(400)]
+        [Authorize]
+        public async Task<IActionResult> ChangeUserPassword(UpdateUserRequest user, [FromServices] IUpdateUserCommand command)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try
+            {
+                UserResponse response = await command.ExecuteAsync(user);
+                return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
 
+            }
+            catch (CannotChangePasswordExeption exception)
+            {
+                foreach (var error in exception.Errors)
+                {
+                    ModelState.AddModelError(exception.Message, error.Description);
+                }
+                return BadRequest(ModelState);
+            }
+
+        }
         [HttpPost("Login")]
         [ProducesResponseType(200, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
@@ -130,5 +153,17 @@ namespace SurviveOnSotka.Controllers
                 return BadRequest(exception.Message);
             }
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete("UpdateUserLevel/{userId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateUserLevelAsync(string userId, [FromServices]IUpdateUserLevelCommand command)
+        {
+            UserResponse response = await command.ExecuteAsync(userId);
+            return response == null ? (IActionResult)NotFound($"User with id: {userId} not found") : Ok(response);
+
+        }
+
     }
 }

@@ -29,8 +29,16 @@ namespace SurviveOnSotka.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            CategoryResponse response = await command.ExecuteAsync(category);
-            return CreatedAtRoute("GetSingleCategory", new { categoryId = response.Id }, response);
+            try
+            {
+                CategoryResponse response = await command.ExecuteAsync(category);
+                return CreatedAtRoute("GetSingleCategory", new { categoryId = response.Id }, response);
+            }
+            catch (CannotCreateOrUpdateCategoryWithThisIParentCategoryGuidException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+           
         }
 
         [HttpGet("Get/{categoryId}", Name = "GetSingleCategory")]
@@ -54,8 +62,17 @@ namespace SurviveOnSotka.Controllers
             {
                 return BadRequest(ModelState);
             }
-            CategoryResponse response = await command.ExecuteAsync(categoryId, request);
-            return response == null ? (IActionResult)NotFound($"category with id: {categoryId} not found") : Ok(response);
+
+            try
+            {
+                CategoryResponse response = await command.ExecuteAsync(categoryId, request);
+                return response == null ? (IActionResult)NotFound($"category with id: {categoryId} not found") : Ok(response);
+            }
+            catch (CannotCreateOrUpdateCategoryWithThisIParentCategoryGuidException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+           
         }
 
         [HttpDelete("Delete/{categoryId}")]

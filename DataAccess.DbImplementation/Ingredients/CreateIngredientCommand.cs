@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.Db;
@@ -24,6 +26,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
         }
         public async Task<IngredientResponse> ExecuteAsync(CreateIngredientRequest request)
         {
+            if (!_context.TypeFoods.Any(u => u.Id == request.TypeFoodId))
+            {
+                throw new CannotCreateOrUpdateCheapPlaceWithCurrentGuidCity();
+            }
             var ingredient = _mapper.Map<CreateIngredientRequest, Ingredient>(request);
             await _context.Ingredients.AddAsync(ingredient);
             if (request.Icon != null)

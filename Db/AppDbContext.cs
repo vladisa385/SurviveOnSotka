@@ -12,6 +12,7 @@ namespace SurviveOnSotka.Db
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Level> Levels { get; set; }
         public DbSet<RateReview> RateReviews { get; set; }
+        public DbSet<RateCheapPlace> RateCheaplaces { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Tag> Tags { get; set; }

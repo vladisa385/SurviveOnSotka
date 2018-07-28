@@ -35,6 +35,7 @@ namespace SurviveOnSotka
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseWebRoot("static")
                 .Build();
     }
 }
