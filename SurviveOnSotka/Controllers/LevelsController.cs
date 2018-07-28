@@ -10,6 +10,7 @@ using SurviveOnSotka.ViewModel.Levels;
 
 namespace SurviveOnSotka.Controllers
 {
+    [ProducesResponseType(401)]
     [Route("api/[controller]")]
     public class LevelsController : Controller
     {
@@ -27,6 +28,7 @@ namespace SurviveOnSotka.Controllers
         [Authorize(Roles = "admin")]
         [ProducesResponseType(201, Type = typeof(LevelResponse))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> CreateLevelAsync([FromBody] CreateLevelRequest level, [FromServices]ICreateLevelCommand command)
         {
             if (!ModelState.IsValid)
@@ -62,6 +64,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(200, Type = typeof(LevelResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> UpdatelevelAsync(Guid levelId, [FromBody] UpdateLevelRequest request, [FromServices] IUpdateLevelCommand command)
         {
             if (!ModelState.IsValid)
@@ -86,6 +89,7 @@ namespace SurviveOnSotka.Controllers
         [HttpDelete("Delete/{levelId}")]
         [ProducesResponseType(204)]
         [Authorize(Roles = "admin")]
+        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeletelevelAsync(Guid levelId, [FromServices]IDeleteLevelCommand command)
         {

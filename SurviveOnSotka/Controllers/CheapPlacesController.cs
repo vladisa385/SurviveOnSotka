@@ -11,6 +11,7 @@ using SurviveOnSotka.ViewModel.CheapPlaces;
 namespace SurviveOnSotka.Controllers
 {
     [Authorize]
+    [ProducesResponseType(401)]
     [Route("api/[controller]")]
     public class CheapPlacesController : Controller
     {

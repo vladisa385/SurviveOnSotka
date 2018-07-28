@@ -13,7 +13,7 @@ using SurviveOnSotka.ViewModel.Cities;
 
 namespace SurviveOnSotka.Controllers
 {
-
+    [ProducesResponseType(401)]
     [Route("api/[controller]")]
     public class CitiesController : ControllerBase
     {
@@ -29,6 +29,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPost("Create")]
         [Authorize(Roles = "admin")]
+        [ProducesResponseType(403)]
         [ProducesResponseType(201, Type = typeof(CityResponse))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateCityAsync([FromBody] CreateCityRequest city, [FromServices]ICreateCityCommand command)
@@ -52,6 +53,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPut("Update/{cityId}")]
         [Authorize(Roles = "admin")]
+        [ProducesResponseType(403)]
         [ProducesResponseType(200, Type = typeof(CityResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -67,6 +69,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpDelete("Delete/{cityId}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(403)]
         [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeleteCityAsync(Guid cityId, [FromServices]IDeleteCityCommand command)

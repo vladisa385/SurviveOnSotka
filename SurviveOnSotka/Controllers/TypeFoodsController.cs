@@ -12,7 +12,7 @@ using SurviveOnSotka.ViewModel.TypeFoods;
 
 namespace SurviveOnSotka.Controllers
 {
-
+    [ProducesResponseType(401)]
     [Route("api/[controller]")]
     public class TypeFoodsController : Controller
     {
@@ -29,6 +29,7 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("Create")]
         [Authorize(Roles = "admin")]
         [ProducesResponseType(201, Type = typeof(TypeFoodResponse))]
+        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]ICreateTypeFoodCommand command)
         {
@@ -52,6 +53,7 @@ namespace SurviveOnSotka.Controllers
         [Authorize(Roles = "admin")]
         [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> UpdatetypeFoodAsync(Guid typeFoodId, [FromBody] UpdateTypeFoodRequest request, [FromServices] IUpdateTypeFoodCommand command)
         {
@@ -66,6 +68,7 @@ namespace SurviveOnSotka.Controllers
         [HttpDelete("Delete/{typeFoodId}")]
         [ProducesResponseType(204)]
         [Authorize(Roles = "admin")]
+        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeletetypeFoodAsync(Guid typeFoodId, [FromServices]IDeleteTypeFoodCommand command)
         {

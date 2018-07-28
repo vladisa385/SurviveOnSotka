@@ -11,6 +11,7 @@ using SurviveOnSotka.ViewModel.Ingredients;
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
+    [ProducesResponseType(401)]
     [Authorize]
     public class IngredientsController : Controller
     {
@@ -26,6 +27,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPost("Create")]
         [Authorize(Roles = "admin")]
+        [ProducesResponseType(403)]
         [ProducesResponseType(201, Type = typeof(IngredientResponse))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices]ICreateIngredientCommand command)
@@ -41,7 +43,7 @@ namespace SurviveOnSotka.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
 
         [HttpGet("Get/{ingredientId}", Name = "GetSingleIngredient")]
@@ -58,6 +60,7 @@ namespace SurviveOnSotka.Controllers
         [Authorize(Roles = "admin")]
         [ProducesResponseType(200, Type = typeof(IngredientResponse))]
         [ProducesResponseType(404)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> UpdateingredientAsync(Guid ingredientId, [FromBody] UpdateIngredientRequest request, [FromServices] IUpdateIngredientCommand command)
         {
@@ -75,13 +78,14 @@ namespace SurviveOnSotka.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
 
         [HttpDelete("Delete/{ingredientId}")]
         [ProducesResponseType(204)]
         [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]
+        [ProducesResponseType(403)]
         public async Task<IActionResult> DeleteingredientAsync(Guid ingredientId, [FromServices]IDeleteIngredientCommand command)
         {
             try

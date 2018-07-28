@@ -18,6 +18,7 @@ namespace SurviveOnSotka.Controllers
     {
         [HttpGet("GetList")]
         [Authorize]
+        [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(ListResponse<UserResponse>))]
         public async Task<IActionResult> GetUsersListAsync(UserFilter user, ListOptions options, [FromServices]IUsersListQuery query)
         {
@@ -28,6 +29,7 @@ namespace SurviveOnSotka.Controllers
         [HttpGet("Get/{userId}", Name = "GetSingleUser")]
         [Authorize]
         [ProducesResponseType(200, Type = typeof(UserResponse))]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetUserAsync(string userId, [FromServices] IUserQuery query)
         {
@@ -62,6 +64,7 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("UpdateUser")]
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [Authorize]
         public async Task<IActionResult> UpdateUser(UpdateUserRequest user, [FromServices] IUpdateUserCommand command)
         {
@@ -87,6 +90,7 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("ChangeUserPassword")]
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [Authorize]
         public async Task<IActionResult> ChangeUserPassword(ChangePasswordUserRequest user, [FromServices] IChangeUserPasswordCommand command)
         {
@@ -130,6 +134,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPost("LogOff")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
         [Authorize]
         public async Task<IActionResult> LogOff([FromServices] ILogOffUserCommand command)
         {
@@ -140,6 +145,8 @@ namespace SurviveOnSotka.Controllers
         [Authorize(Roles = "admin")]
         [HttpDelete("Delete/{userId}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeleteUserAsync(string userId, [FromServices]IDeleteUserCommand command)
         {
@@ -157,6 +164,8 @@ namespace SurviveOnSotka.Controllers
         [Authorize(Roles = "admin")]
         [HttpDelete("UpdateUserLevel/{userId}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> UpdateUserLevelAsync(string userId, [FromServices]IUpdateUserLevelCommand command)
         {
