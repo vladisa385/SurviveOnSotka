@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using SurviveOnSotka.DataAccess.Reviews;
-using SurviveOnSotka.ViewModel.Review;
+using SurviveOnSotka.ViewModel.Reviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
-    public class ReviewQuery:IReviewQuery
+    public class ReviewQuery : IReviewQuery
     {
         public Task<ReviewResponse> RunAsync(Guid reviewId)
         {

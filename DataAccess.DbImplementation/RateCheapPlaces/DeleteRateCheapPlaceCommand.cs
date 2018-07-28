@@ -2,16 +2,38 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.RateCheapPlaces;
+using SurviveOnSotka.Db;
+using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateCheapPlaces
 {
     public class DeleteRateCheapPlaceCommand : IDeleteRateCheapPlaceCommand
 
     {
-        public Task ExecuteAsync(Guid rateCheapPlaceId)
+        private readonly AppDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public DeleteRateCheapPlaceCommand(AppDbContext context, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task ExecuteAsync(Guid cheapPlaceId)
+        {
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            RateCheapPlace rateCheapPlaceToDelete = await _context.RateCheaplaces.FirstOrDefaultAsync(p => p.CheapPlaceId == cheapPlaceId && p.UserWhoGiveMarkId == currentUser.Id);
+            if (rateCheapPlaceToDelete != null)
+            {
+                _context.RateCheaplaces.Remove(rateCheapPlaceToDelete);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

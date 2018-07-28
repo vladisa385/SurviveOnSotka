@@ -13,7 +13,8 @@ namespace SurviveOnSotka.Entities
         public User Author { get; set; }
         public string Text { get; set; }
         public DateTime DateCreated { get; set; }
-        [Required, MinLength(1), MaxLength(5)]
+        [Required]
+        [Range(1, 5)]
         public int Rate { get; set; }
         public string PathToPhotos { get; set; }
         public ICollection<RateReview> RateReviews { get; set; }
@@ -24,7 +25,7 @@ namespace SurviveOnSotka.Entities
         }
         public int DisLikes
         {
-            get { return RateReviews.Count(u => u.IsCool==false); }
+            get { return RateReviews.Count(u => u.IsCool == false); }
         }
     }
 }

@@ -9,7 +9,7 @@ using SurviveOnSotka.ViewModel.Levels;
 using SurviveOnSotka.ViewModel.RateCheapPlaces;
 using SurviveOnSotka.ViewModel.RateReviews;
 using SurviveOnSotka.ViewModel.Recipies;
-using SurviveOnSotka.ViewModel.Review;
+using SurviveOnSotka.ViewModel.Reviews;
 using SurviveOnSotka.ViewModel.TypeFoods;
 using SurviveOnSotka.ViewModel.Users;
 

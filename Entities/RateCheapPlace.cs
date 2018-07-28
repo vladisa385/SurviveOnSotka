@@ -14,6 +14,5 @@ namespace SurviveOnSotka.Entities
         [Required]
         public bool IsCool { get; set; }
 
-        public ICollection<RateCheapPlace> RateCheapPlaces { get; set; }
     }
 }

@@ -19,9 +19,8 @@ namespace SurviveOnSotka.Entities
         public User User { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
-        public Guid FirstStepId { get; set; }
-        public ICollection<TagsInRecipe> Tags { get; set; }
         public string PathToPhotos { get; set; }
+        public ICollection<TagsInRecipe> Tags { get; set; }
         public DateTime TimeForCooking { get; set; }
         public DateTime TimeForPreparetion { get; set; }
         public double Rate
