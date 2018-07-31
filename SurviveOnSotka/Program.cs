@@ -11,7 +11,7 @@ namespace SurviveOnSotka
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
             using (var scope = host.Services.CreateScope())
@@ -21,7 +21,7 @@ namespace SurviveOnSotka
                 {
                     var userManager = services.GetRequiredService<UserManager<User>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await RoleInitializer.InitializeAsync(userManager, rolesManager);
+                    RoleInitializer.InitializeAsync(userManager, rolesManager);
                 }
                 catch (Exception ex)
                 {

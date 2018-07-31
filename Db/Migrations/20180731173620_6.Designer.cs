@@ -10,8 +10,8 @@ using SurviveOnSotka.Db;
 namespace SurviveOnSotka.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180731144407_5")]
-    partial class _5
+    [Migration("20180731173620_6")]
+    partial class _6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -304,9 +304,9 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<string>("PathToPhotos");
 
-                    b.Property<DateTime>("TimeForCooking");
+                    b.Property<TimeSpan>("TimeForCooking");
 
-                    b.Property<DateTime>("TimeForPreparetion");
+                    b.Property<TimeSpan>("TimeForPreparetion");
 
                     b.Property<string>("UserId");
 

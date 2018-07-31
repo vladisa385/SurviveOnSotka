@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
-using SurviveOnSotka.DataAccess.Reviews;
+
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Reviews;
-using SurviveOnSotka.ViewModel.Reviews;
+
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {

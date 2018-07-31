@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.Extensions.Logging;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.Cities;
@@ -46,6 +48,7 @@ namespace SurviveOnSotka
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -110,6 +113,23 @@ namespace SurviveOnSotka
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+                context.Database.EnsureCreated();
+                var services = serviceScope.ServiceProvider;
+                try
+                {
+                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    RoleInitializer.InitializeAsync(userManager, rolesManager).GetAwaiter();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while seeding the database.");
+                }
+            }
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
