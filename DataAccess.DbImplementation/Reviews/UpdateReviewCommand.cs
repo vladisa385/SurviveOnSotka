@@ -37,7 +37,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 
         public async Task<ReviewResponse> ExecuteAsync(Guid reviewId, UpdateReviewRequest request)
         {
-            Review foundReview = await _context.Reviews.Include(t => t.Author).FirstOrDefaultAsync(t => t.Id == reviewId);
+            Review foundReview = await _context.Reviews.Include(t => t.Author).Include(t => t.Recipe).FirstOrDefaultAsync(t => t.Id == reviewId);
 
 
             if (foundReview != null)
@@ -49,8 +49,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
                 Review mappedReview = _mapper.Map<UpdateReviewRequest, Review>(request);
                 mappedReview.Id = reviewId;
                 mappedReview.Author = currentUser;
+                mappedReview.AuthorId = currentUser.Id;
                 mappedReview.Recipe = foundReview.Recipe;
-
+                mappedReview.RecipeId = foundReview.RecipeId;
                 _context.Entry(foundReview).CurrentValues.SetValues(mappedReview);
                 if (request.Photos != null)
                 {

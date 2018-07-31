@@ -21,11 +21,19 @@ namespace SurviveOnSotka.Entities
 
         public int Likes
         {
-            get { return RateReviews.Count(u => u.IsCool == true); }
+            get
+            {
+                if (RateReviews == null) return 0;
+                return RateReviews.Count(u => u.IsCool == true);
+            }
         }
         public int DisLikes
         {
-            get { return RateReviews.Count(u => u.IsCool == false); }
+            get
+            {
+                if (RateReviews == null) return 0;
+                return RateReviews.Count(u => u.IsCool == false);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Microsoft.CodeAnalysis;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Categories;
@@ -39,7 +40,11 @@ namespace SurviveOnSotka
             CreateMap<CreateCityRequest, City>();
             CreateMap<UpdateCityRequest, City>();
 
-            CreateMap<CheapPlace, CheapPlaceResponse>();
+            CreateMap<CheapPlace, CheapPlaceResponse>().
+                ForMember(d => d.Author, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.User))).
+            ForMember(d => d.Likes, o => o.MapFrom(src => src.RateCheapPlaces.Count(u => u.IsCool == true))).
+            ForMember(d => d.DisLikes, o => o.MapFrom(src => src.RateCheapPlaces.Count(u => u.IsCool != true)));
+
             CreateMap<UpdateCheapPlaceRequest, CheapPlace>();
             CreateMap<CreateCheapPlaceRequest, CheapPlace>();
 
@@ -63,12 +68,16 @@ namespace SurviveOnSotka
             CreateMap<UpdateLevelRequest, Level>();
             CreateMap<CreateLevelRequest, Level>();
 
-            CreateMap<Recipe, RecipeResponse>();
+            CreateMap<Recipe, RecipeResponse>().
+            ForMember(d => d.User, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.User)));
+
             CreateMap<UpdateRecipeRequest, Recipe>();
             CreateMap<CreateRecipeRequest, Recipe>();
 
             CreateMap<Review, ReviewResponse>().
-                ForMember(d => d.Author, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.Author))); ;
+                ForMember(d => d.Author, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.Author))).
+                ForMember(d => d.Likes, o => o.MapFrom(src => src.RateReviews.Count(u => u.IsCool == true))).
+            ForMember(d => d.DisLikes, o => o.MapFrom(src => src.RateReviews.Count(u => u.IsCool != true)));
             CreateMap<UpdateReviewRequest, Review>();
             CreateMap<CreateReviewRequest, Review>();
 
@@ -77,6 +86,7 @@ namespace SurviveOnSotka
             CreateMap<CreateRateReviewRequest, RateReview>();
 
             CreateMap<RateCheapPlace, RateCheapPlaceResponse>();
+
             CreateMap<UpdateRateCheapPlaceRequest, RateCheapPlace>();
             CreateMap<CreateRateCheapPlaceRequest, RateCheapPlace>();
 
