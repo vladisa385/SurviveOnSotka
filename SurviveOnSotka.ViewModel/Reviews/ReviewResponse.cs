@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using SurviveOnSotka.Entities;
+using SurviveOnSotka.ViewModel.Users;
 
 namespace SurviveOnSotka.ViewModel.Reviews
 {
@@ -13,7 +14,7 @@ namespace SurviveOnSotka.ViewModel.Reviews
         [Required]
         public Guid RecipeId { get; set; }
         [Required]
-        public string AuthorId { get; set; }
+        public UserResponse Author { get; set; }
         [Required]
         public string Text { get; set; }
         public DateTime DateCreated { get; set; }

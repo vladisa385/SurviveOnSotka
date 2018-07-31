@@ -12,7 +12,7 @@ namespace SurviveOnSotka.Db
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Level> Levels { get; set; }
         public DbSet<RateReview> RateReviews { get; set; }
-        public DbSet<RateCheapPlace> RateCheaplaces { get; set; }
+        public DbSet<RateCheapPlace> RateCheapPlaces { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Tag> Tags { get; set; }
@@ -30,7 +30,6 @@ namespace SurviveOnSotka.Db
             modelBuilder.Entity<RateReview>().HasKey(u => new { u.ReviewId, u.UserWhoGiveMarkId });
             modelBuilder.Entity<RateCheapPlace>().HasKey(u => new { u.CheapPlaceId, u.UserWhoGiveMarkId });
             modelBuilder.Entity<IngredientToRecipe>().HasKey(u => new { u.RecipeId, u.IngredientId });
-            modelBuilder.Entity<Review>().HasKey(u => new { u.RecipeId, u.AuthorId });
             modelBuilder.Entity<RecipeInCategories>().HasKey(u => new { u.CategoryId, u.RecipeId });
             modelBuilder.Entity<TagsInRecipe>().HasKey(u => new { u.TagId, u.RecipeId });
 

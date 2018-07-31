@@ -28,10 +28,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateCheapPlaces
         public async Task ExecuteAsync(Guid cheapPlaceId)
         {
             var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            RateCheapPlace rateCheapPlaceToDelete = await _context.RateCheaplaces.FirstOrDefaultAsync(p => p.CheapPlaceId == cheapPlaceId && p.UserWhoGiveMarkId == currentUser.Id);
+            RateCheapPlace rateCheapPlaceToDelete = await _context.RateCheapPlaces.FirstOrDefaultAsync(p => p.CheapPlaceId == cheapPlaceId && p.UserWhoGiveMarkId == currentUser.Id);
             if (rateCheapPlaceToDelete != null)
             {
-                _context.RateCheaplaces.Remove(rateCheapPlaceToDelete);
+                _context.RateCheapPlaces.Remove(rateCheapPlaceToDelete);
                 await _context.SaveChangesAsync();
             }
         }

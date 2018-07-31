@@ -13,11 +13,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces
     public class CheapPlacesListQuery : ICheapPlacesListQuery
     {
         private readonly AppDbContext _context;
-        private IMapper _mapper;
-        public CheapPlacesListQuery(AppDbContext tasksContext, IMapper mapper)
+        public CheapPlacesListQuery(AppDbContext tasksContext)
         {
             _context = tasksContext;
-            _mapper = mapper;
         }
 
         private IQueryable<CheapPlaceResponse> ApplyFilter(IQueryable<CheapPlaceResponse> query, CheapPlaceFilter filter)

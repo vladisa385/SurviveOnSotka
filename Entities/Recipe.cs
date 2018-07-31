@@ -21,12 +21,13 @@ namespace SurviveOnSotka.Entities
         public DateTime DateCreated { get; set; }
         public string PathToPhotos { get; set; }
         public ICollection<TagsInRecipe> Tags { get; set; }
-        public DateTime TimeForCooking { get; set; }
-        public DateTime TimeForPreparetion { get; set; }
+        public TimeSpan TimeForCooking { get; set; }
+        public TimeSpan TimeForPreparetion { get; set; }
         public double Rate
         {
             get
             {
+                if (Reviews == null) return 0;
                 return Reviews.Average(u => u.Rate);
 
             }

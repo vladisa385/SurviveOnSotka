@@ -37,6 +37,7 @@
     <Compile Remove="Migrations\20180723105927_1.cs" />
     <Compile Remove="Migrations\20180723110529_1.cs" />
     <Compile Remove="Migrations\20180728061657_3.cs" />
+    <Compile Remove="Migrations\20180729080534_4.cs" />
   </ItemGroup>
 
   <ItemGroup>

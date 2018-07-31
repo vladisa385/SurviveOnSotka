@@ -18,7 +18,7 @@ using SurviveOnSotka.DataAccess.DbImplementation.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
 using SurviveOnSotka.DataAccess.DbImplementation.Levels;
 using SurviveOnSotka.DataAccess.DbImplementation.RateCheapPlaces;
-using SurviveOnSotka.DataAccess.DbImplementation.RateReview;
+using SurviveOnSotka.DataAccess.DbImplementation.RateReviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Recipies;
 using SurviveOnSotka.DataAccess.DbImplementation.Reviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
@@ -183,8 +183,8 @@ namespace SurviveOnSotka
                 .AddScoped<IUpdateReviewCommand, UpdateReviewCommand>()
                 .AddScoped<IDeleteReviewCommand, DeleteReviewCommand>()
 
-                 .AddScoped<IRateReviewQuery, RateReviewQuery>()
-                .AddScoped<IRateReviewsListQuery, RateReviewsListQuery>()
+                .AddScoped<IRateReviewQuery, RateReviewQuery>()
+                 .AddScoped<IRateReviewsListQuery, RateReviewsListQuery>()
                 .AddScoped<ICreateRateReviewCommand, CreateRateReviewCommand>()
                 .AddScoped<IUpdateRateReviewCommand, UpdateRateReviewCommand>()
                 .AddScoped<IDeleteRateReviewCommand, DeleteRateReviewCommand>()

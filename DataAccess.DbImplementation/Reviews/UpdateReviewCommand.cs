@@ -2,16 +2,67 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.Reviews;
+using SurviveOnSotka.DataAccess.DbImplementation.Files;
+using SurviveOnSotka.DataAccess.Reviews;
+using SurviveOnSotka.Db;
+using SurviveOnSotka.Entities;
+using SurviveOnSotka.ViewModel.Reviews;
 using SurviveOnSotka.ViewModel.Reviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
     public class UpdateReviewCommand : IUpdateReviewCommand
     {
-        public Task<ReviewResponse> ExecuteAsync(Guid reviewId, UpdateReviewRequest request)
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IHostingEnvironment _appEnvironment;
+        private readonly UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public UpdateReviewCommand(IHostingEnvironment appEnvironment, AppDbContext context, IMapper mapper, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
-            throw new NotImplementedException();
+            _appEnvironment = appEnvironment;
+            _context = context;
+            _mapper = mapper;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<ReviewResponse> ExecuteAsync(Guid reviewId, UpdateReviewRequest request)
+        {
+            Review foundReview = await _context.Reviews.Include(t => t.Author).FirstOrDefaultAsync(t => t.Id == reviewId);
+
+
+            if (foundReview != null)
+            {
+                var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+                var isAdmin = await _userManager.IsInRoleAsync(currentUser, "admin");
+                if (foundReview.Author != currentUser && !isAdmin)
+                    throw new ThisRequestNotFromOwnerException();
+                Review mappedReview = _mapper.Map<UpdateReviewRequest, Review>(request);
+                mappedReview.Id = reviewId;
+                mappedReview.Author = currentUser;
+                mappedReview.Recipe = foundReview.Recipe;
+
+                _context.Entry(foundReview).CurrentValues.SetValues(mappedReview);
+                if (request.Photos != null)
+                {
+                    foreach (var photo in request.Photos)
+                    {
+
+                        await CreateFileCommand.ExecuteAsync(photo, foundReview.PathToPhotos);
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
+            return _mapper.Map<Review, ReviewResponse>(foundReview);
         }
     }
 }

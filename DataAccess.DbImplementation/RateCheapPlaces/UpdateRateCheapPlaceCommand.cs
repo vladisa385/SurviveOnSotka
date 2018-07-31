@@ -34,7 +34,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateCheapPlaces
         public async Task<RateCheapPlaceResponse> ExecuteAsync(Guid cheapPlaceId, UpdateRateCheapPlaceRequest request)
         {
             var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            RateCheapPlace rateCheapPlace = await _context.RateCheaplaces.FirstOrDefaultAsync(
+            RateCheapPlace rateCheapPlace = await _context.RateCheapPlaces.FirstOrDefaultAsync(
                 u => u.CheapPlaceId == cheapPlaceId &&
                      u.UserWhoGiveMarkId == currentUser.Id);
             if (rateCheapPlace != null)

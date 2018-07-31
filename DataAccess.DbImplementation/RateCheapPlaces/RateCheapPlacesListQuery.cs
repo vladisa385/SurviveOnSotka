@@ -43,7 +43,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateCheapPlaces
 
         public async Task<ListResponse<RateCheapPlaceResponse>> RunAsync(RateCheapPlaceFilter filter, ListOptions options)
         {
-            IQueryable<RateCheapPlaceResponse> query = _context.RateCheaplaces
+            IQueryable<RateCheapPlaceResponse> query = _context.RateCheapPlaces
                 .ProjectTo<RateCheapPlaceResponse>();
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();

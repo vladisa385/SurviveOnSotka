@@ -18,9 +18,10 @@ namespace SurviveOnSotka.Controllers
     {
 
         [HttpGet("GetList")]
-        [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(ListResponse<RateCheapPlaceResponse>))]
-        public async Task<IActionResult> GetRateCheapPlacesListAsync(RateCheapPlaceFilter rateCheapPlace, ListOptions options, [FromServices]IRateCheapPlacesListQuery query)
+        public async Task<IActionResult> GetRateCheapPlacesListAsync(RateCheapPlaceFilter rateCheapPlace,
+            ListOptions options,
+            [FromServices]IRateCheapPlacesListQuery query)
         {
             var response = await query.RunAsync(rateCheapPlace, options);
             return Ok(response);
@@ -38,17 +39,17 @@ namespace SurviveOnSotka.Controllers
 
             if (response == null)
                 return NotFound();
-            return CreatedAtRoute("GetSingleRateCheapPlace", new { rateCheapPlaceId = response.CheapPlaceId }, response);
+            return CreatedAtRoute("GetSingleRateCheapPlace", new { cheapPlaceId = response.CheapPlaceId }, response);
 
         }
 
-        [HttpGet("Get/{rateCheapPlaceId}", Name = "GetSingleRateCheapPlace")]
+        [HttpGet("Get/{cheapPlaceId}", Name = "GetSingleRateCheapPlace")]
         [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(RateCheapPlaceResponse))]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetRateCheapPlaceAsync(Guid rateCheapPlaceId, [FromServices] IRateCheapPlaceQuery query)
+        public async Task<IActionResult> GetRateCheapPlaceAsync(Guid cheapPlaceId, [FromServices] IRateCheapPlaceQuery query)
         {
-            RateCheapPlaceResponse response = await query.RunAsync(rateCheapPlaceId);
+            RateCheapPlaceResponse response = await query.RunAsync(cheapPlaceId);
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
@@ -56,22 +57,22 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(200, Type = typeof(RateCheapPlaceResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateRateCheapPlaceAsync(Guid rateCheapPlaceId, [FromBody] UpdateRateCheapPlaceRequest request, [FromServices] IUpdateRateCheapPlaceCommand command)
+        public async Task<IActionResult> UpdateRateCheapPlaceAsync(Guid cheapPlaceId, [FromBody] UpdateRateCheapPlaceRequest request, [FromServices] IUpdateRateCheapPlaceCommand command)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            RateCheapPlaceResponse response = await command.ExecuteAsync(rateCheapPlaceId, request);
-            return response == null ? (IActionResult)NotFound($"rateCheapPlace with id: {rateCheapPlaceId} not found") : Ok(response);
+            RateCheapPlaceResponse response = await command.ExecuteAsync(cheapPlaceId, request);
+            return response == null ? (IActionResult)NotFound($"rateCheapPlace with id: {cheapPlaceId} not found") : Ok(response);
         }
 
-        [HttpDelete("Delete/{rateCheapPlaceId}")]
+        [HttpDelete("Delete/{cheapPlaceId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteRateCheapPlaceAsync(Guid rateCheapPlaceId, [FromServices]IDeleteRateCheapPlaceCommand command)
+        public async Task<IActionResult> DeleteRateCheapPlaceAsync(Guid cheapPlaceId, [FromServices]IDeleteRateCheapPlaceCommand command)
         {
-            await command.ExecuteAsync(rateCheapPlaceId);
+            await command.ExecuteAsync(cheapPlaceId);
             return NoContent();
         }
     }

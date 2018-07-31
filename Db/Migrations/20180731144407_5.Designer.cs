@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SurviveOnSotka.Db;
 
 namespace SurviveOnSotka.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180731144407_5")]
+    partial class _5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,9 +304,9 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<string>("PathToPhotos");
 
-                    b.Property<TimeSpan>("TimeForCooking");
+                    b.Property<DateTime>("TimeForCooking");
 
-                    b.Property<TimeSpan>("TimeForPreparetion");
+                    b.Property<DateTime>("TimeForPreparetion");
 
                     b.Property<string>("UserId");
 

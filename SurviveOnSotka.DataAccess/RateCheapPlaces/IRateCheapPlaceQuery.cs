@@ -6,6 +6,6 @@ namespace SurviveOnSotka.DataAccess.RateCheapPlaces
 {
     public interface IRateCheapPlaceQuery
     {
-        Task<RateCheapPlaceResponse> RunAsync(Guid rateCheapPlaceId);
+        Task<RateCheapPlaceResponse> RunAsync(Guid cheapPlaceId);
     }
 }

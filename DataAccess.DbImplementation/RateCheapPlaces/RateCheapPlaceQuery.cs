@@ -32,7 +32,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateCheapPlaces
         {
             var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
 
-            RateCheapPlaceResponse response = await _context.RateCheaplaces
+            RateCheapPlaceResponse response = await _context.RateCheapPlaces
                 .ProjectTo<RateCheapPlaceResponse>()
                 .FirstOrDefaultAsync(p => p.CheapPlaceId == cheapPlaceId &&
                                           p.UserWhoGiveMarkId == currentUser.Id

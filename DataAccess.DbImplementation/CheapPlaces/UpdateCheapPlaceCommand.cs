@@ -51,11 +51,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces
                 _context.Entry(foundCheapPlace).CurrentValues.SetValues(mappedCheapPlace);
                 if (request.Photos != null)
                 {
-                    foundCheapPlace.PathToPhotos = _appEnvironment.WebRootPath + "/Files/CheapPlaces/" + request.Name;
                     foreach (var photo in request.Photos)
                     {
 
-                        await CreateFileCommand.ExecuteAsync(photo, _appEnvironment.WebRootPath + foundCheapPlace.PathToPhotos);
+                        await CreateFileCommand.ExecuteAsync(photo, foundCheapPlace.PathToPhotos);
                     }
                 }
                 await _context.SaveChangesAsync();

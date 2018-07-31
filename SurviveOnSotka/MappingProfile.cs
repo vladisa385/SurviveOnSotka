@@ -67,9 +67,10 @@ namespace SurviveOnSotka
             CreateMap<UpdateRecipeRequest, Recipe>();
             CreateMap<CreateRecipeRequest, Recipe>();
 
-            CreateMap<Review, ReviewResponse>();
+            CreateMap<Review, ReviewResponse>().
+                ForMember(d => d.Author, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.Author))); ;
             CreateMap<UpdateReviewRequest, Review>();
-            CreateMap<CreateRecipeRequest, Review>();
+            CreateMap<CreateReviewRequest, Review>();
 
             CreateMap<RateReview, RateReviewResponse>();
             CreateMap<UpdateRateReviewRequest, RateReview>();

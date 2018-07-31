@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using SurviveOnSotka.Entities;
+using SurviveOnSotka.ViewModel.IngredientToRecipe;
+using SurviveOnSotka.ViewModel.Steps;
 
 namespace SurviveOnSotka.ViewModel.Recipies
 {
@@ -15,25 +17,17 @@ namespace SurviveOnSotka.ViewModel.Recipies
         [Required]
         public int CategoriesCount { get; set; }
         [Required]
-        public ICollection<Review> Reviews { get; set; }
-        public string UserId { get; set; }
+        public int ReviewsCount { get; set; }
         public User User { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
         public string PathToPhotos { get; set; }
         public ICollection<TagsInRecipe> Tags { get; set; }
-        public DateTime TimeForCooking { get; set; }
-        public DateTime TimeForPreparetion { get; set; }
-        public double Rate
-        {
-            get
-            {
-                return Reviews.Average(u => u.Rate);
-
-            }
-        }
-        public ICollection<IngredientToRecipe> Ingredients { get; set; }
+        public TimeSpan TimeForCooking { get; set; }
+        public TimeSpan TimeForPreparetion { get; set; }
+        public double Rate { get; set; }
+        public ICollection<IngredientToRecipeResponce> Ingredients { get; set; }
         [Required]
-        public ICollection<Step> Steps { get; set; }
+        public ICollection<StepResponse> Steps { get; set; }
     }
 }

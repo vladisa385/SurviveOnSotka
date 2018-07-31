@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using SurviveOnSotka.Entities;
+using SurviveOnSotka.ViewModel.IngredientToRecipe;
 
 namespace SurviveOnSotka.ViewModel.Recipies
 {
@@ -14,12 +15,12 @@ namespace SurviveOnSotka.ViewModel.Recipies
         public RangeFilter<int> Categories { get; set; }
         public RangeFilter<int> Reviews { get; set; }
         public string UserId { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime TimeForCooking { get; set; }
-        public DateTime TimeForPreparetion { get; set; }
+        public RangeFilter<DateTime> DateCreated { get; set; }
+        public RangeFilter<TimeSpan> TimeForCooking { get; set; }
+        public RangeFilter<TimeSpan> TimeForPreparetion { get; set; }
         public RangeFilter<int> Rate { get; set; }
-        public ICollection<IngredientToRecipe> Tags { get; set; }
-        public ICollection<IngredientToRecipe> Ingredients { get; set; }
+        public ICollection<CreateIngredientToRecipeRequest> Tags { get; set; }
+        public ICollection<string> IdIngredients { get; set; }
 
     }
 }

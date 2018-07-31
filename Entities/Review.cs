@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SurviveOnSotka.Entities
 {
-    public class Review
+    public class Review : DomainObject
     {
         public Guid RecipeId { get; set; }
         public Recipe Recipe { get; set; }
