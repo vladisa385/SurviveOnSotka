@@ -8,6 +8,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Files
     {
         public static async Task ExecuteAsync(IFormFile file, string path)
         {
+            Directory.CreateDirectory(path);
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);

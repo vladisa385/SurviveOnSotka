@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Files
 {
-    public class DeleteFiles
+    public class DeleteFilesCommand
     {
         public static void Execute(string path)
         {

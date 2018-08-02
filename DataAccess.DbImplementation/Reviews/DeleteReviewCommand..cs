@@ -39,7 +39,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
                 if (reviewToDelete.Author != currentUser && !isAdmin)
                     throw new ThisRequestNotFromOwnerException();
                 if (reviewToDelete.PathToPhotos != null)
-                    DeleteFileCommand.Execute(reviewToDelete.PathToPhotos);
+                    DeleteFilesCommand.Execute(reviewToDelete.PathToPhotos);
                 _context.Reviews.Remove(reviewToDelete);
                 await _context.SaveChangesAsync();
             }

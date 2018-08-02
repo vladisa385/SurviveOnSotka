@@ -38,7 +38,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 if (recipeToDelete.User != currentUser && !isAdmin)
                     throw new ThisRequestNotFromOwnerException();
                 if (recipeToDelete.PathToPhotos != null)
-                    DeleteFileCommand.Execute(recipeToDelete.PathToPhotos);
+                    DeleteFilesCommand.Execute(recipeToDelete.PathToPhotos);
                 _context.Recipes.Remove(recipeToDelete);
                 await _context.SaveChangesAsync();
             }
