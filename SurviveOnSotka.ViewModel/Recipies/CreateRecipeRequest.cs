@@ -13,6 +13,7 @@ namespace SurviveOnSotka.ViewModel.Recipies
     {
         [Required, MinLength(5)]
         public string Name { get; set; }
+        [Required, MinLength(100)]
         public string Description { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }

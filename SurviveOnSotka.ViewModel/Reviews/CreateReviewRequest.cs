@@ -8,7 +8,9 @@ namespace SurviveOnSotka.ViewModel.Reviews
 {
     public class CreateReviewRequest
     {
+        [Required, MinLength(100)]
         public string Text { get; set; }
+        [Required]
         public DateTime DateCreated { get; set; }
         [Required, Range(1, 5)]
         public int Rate { get; set; }

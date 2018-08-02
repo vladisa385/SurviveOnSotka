@@ -11,6 +11,7 @@ namespace SurviveOnSotka.Entities
         public Recipe Recipe { get; set; }
         public string AuthorId { get; set; }
         public User Author { get; set; }
+        [Required, MinLength(100)]
         public string Text { get; set; }
         public DateTime DateCreated { get; set; }
         [Required]

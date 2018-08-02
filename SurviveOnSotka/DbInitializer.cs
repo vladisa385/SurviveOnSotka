@@ -10,14 +10,14 @@ using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka
 {
-    public class RoleInitializer
+    public class DbInitializer
     {
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             //var adminEmail = configuration["AdminLogin"];
             //var password = configuration["AdminPassword"];
 
-            string adminEmail = "vladisa375@gmail.com";
+            string adminEmail = "Vladisa375@gmail.com";
             string password = "Vladball45@";
             if (await roleManager.FindByNameAsync("admin") == null)
             {

@@ -10,8 +10,8 @@ using SurviveOnSotka.Db;
 namespace SurviveOnSotka.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180731173620_6")]
-    partial class _6
+    [Migration("20180802151619_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -201,8 +201,7 @@ namespace SurviveOnSotka.Db.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(12);
+                        .IsRequired();
 
                     b.Property<string>("PathToIcon");
 
@@ -245,7 +244,9 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<int>("MinScore");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
                     b.Property<Guid?>("NextLevelId");
 
@@ -297,7 +298,8 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -345,7 +347,8 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.Property<Guid>("RecipeId");
 
-                    b.Property<string>("Text");
+                    b.Property<string>("Text")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -364,8 +367,6 @@ namespace SurviveOnSotka.Db.Migrations
                     b.Property<string>("Description");
 
                     b.Property<int>("NumberStep");
-
-                    b.Property<string>("PathToPhoto");
 
                     b.Property<Guid>("RecipeId");
 

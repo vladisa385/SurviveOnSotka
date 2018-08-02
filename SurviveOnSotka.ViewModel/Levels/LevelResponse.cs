@@ -13,6 +13,7 @@ namespace SurviveOnSotka.ViewModel.Levels
         public int MinScore { get; set; }
         [Required]
         public int MaxScore { get; set; }
+        [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }
         public Guid? NextLevelId { get; set; }
         public Guid? LastLevelId { get; set; }

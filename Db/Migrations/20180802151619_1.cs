@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SurviveOnSotka.Db.Migrations
 {
-    public partial class _6 : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,7 +62,7 @@ namespace SurviveOnSotka.Db.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     MinScore = table.Column<int>(nullable: false),
                     MaxScore = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 40, nullable: false),
                     NextLevelId = table.Column<Guid>(nullable: true),
                     LastLevelId = table.Column<Guid>(nullable: true),
                     PathToIcon = table.Column<string>(nullable: true)
@@ -166,7 +166,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 12, nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     TypeFoodId = table.Column<Guid>(nullable: false),
                     PathToIcon = table.Column<string>(nullable: true)
                 },
@@ -301,7 +301,7 @@ namespace SurviveOnSotka.Db.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     PathToPhotos = table.Column<string>(nullable: true),
@@ -402,7 +402,7 @@ namespace SurviveOnSotka.Db.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     RecipeId = table.Column<Guid>(nullable: false),
                     AuthorId = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Rate = table.Column<int>(nullable: false),
                     PathToPhotos = table.Column<string>(nullable: true)
@@ -431,7 +431,6 @@ namespace SurviveOnSotka.Db.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     NumberStep = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    PathToPhoto = table.Column<string>(nullable: true),
                     RecipeId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>

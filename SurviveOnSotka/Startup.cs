@@ -8,7 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Logging;
 using SurviveOnSotka.DataAccess.Categories;
@@ -56,6 +58,9 @@ namespace SurviveOnSotka
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             RegisterQueriesAndCommands(services);
             services.AddHttpContextAccessor();
             services.AddMvc();
@@ -101,8 +106,12 @@ namespace SurviveOnSotka
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
             // app.UseAuthentication();
-
+            app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication(
@@ -117,18 +126,6 @@ namespace SurviveOnSotka
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
                 context.Database.EnsureCreated();
-                var services = serviceScope.ServiceProvider;
-                try
-                {
-                    var userManager = services.GetRequiredService<UserManager<User>>();
-                    var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    RoleInitializer.InitializeAsync(userManager, rolesManager).GetAwaiter();
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
-                }
             }
             app.UseSwaggerUI(c =>
             {

@@ -13,6 +13,7 @@ namespace SurviveOnSotka.ViewModel.Recipies
         public Guid Id { get; set; }
         [Required, MinLength(5)]
         public string Name { get; set; }
+        [Required, MinLength(100)]
         public string Description { get; set; }
         [Required]
         public int CategoriesCount { get; set; }
