@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
+using Elmah.Io.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -59,7 +60,11 @@ namespace SurviveOnSotka
         public void ConfigureServices(IServiceCollection services)
         {
 
-
+            services.AddElmahIo(o =>
+            {
+                o.ApiKey = "b9e4017a87b944cca841366342d02e89";
+                o.LogId = new Guid("7fd15f9f-c859-4c8f-9913-4add9fa832c4");
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             RegisterQueriesAndCommands(services);
             services.AddHttpContextAccessor();
@@ -112,6 +117,7 @@ namespace SurviveOnSotka
             }
             // app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseElmahIo();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication(
@@ -120,13 +126,7 @@ namespace SurviveOnSotka
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            // specifying the Swagger JSON endpoint.
-            //using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            //{
-            //    var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-            //    context.Database.EnsureCreated();
-            //}
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
