@@ -10,6 +10,5 @@ namespace SurviveOnSotka.ViewModel.Steps
 
         public int NumberStep { get; set; }
         public string Description { get; set; }
-        public IFormFile Photo { get; set; }
     }
 }
