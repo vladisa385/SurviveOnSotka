@@ -23,12 +23,13 @@ namespace SurviveOnSotka.ViewModel.Recipies
         [Required]
         public DateTime DateCreated { get; set; }
         public string PathToPhotos { get; set; }
-        public ICollection<TagsInRecipe> Tags { get; set; }
+        public ICollection<string> Tags { get; set; }
         public TimeSpan TimeForCooking { get; set; }
         public TimeSpan TimeForPreparetion { get; set; }
         public double Rate { get; set; }
         public ICollection<IngredientToRecipeResponce> Ingredients { get; set; }
         [Required]
         public ICollection<StepResponse> Steps { get; set; }
+
     }
 }

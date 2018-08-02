@@ -22,5 +22,6 @@ namespace SurviveOnSotka.ViewModel.Recipies
         public ICollection<UpdateIngredientToRecipe> Ingredients { get; set; }
         public ICollection<IFormFile> Photos { get; set; }
         public ICollection<UpdateStepRequest> Steps { get; set; }
+        public ICollection<string> Tags { get; set; }
     }
 }
