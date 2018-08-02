@@ -17,7 +17,7 @@ namespace SurviveOnSotka
             //var adminEmail = configuration["AdminLogin"];
             //var password = configuration["AdminPassword"];
 
-            string adminEmail = "Vladisa375@gmail.com";
+            string adminEmail = "vladisa375@gmail.com";
             string password = "Vladball45@";
             if (await roleManager.FindByNameAsync("admin") == null)
             {
