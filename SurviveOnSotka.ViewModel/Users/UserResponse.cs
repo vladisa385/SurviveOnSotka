@@ -20,6 +20,7 @@ namespace SurviveOnSotka.ViewModel.Users
         public string LastName { get; set; }
         public string PathToAvatar { get; set; }
         public Guid? IdLevel { get; set; }
+        [Required]
         public int CurrentScore =>
                                    RecipiesCount * Level.PointsForRecipe +
                                    ReviewsCount * Level.PointsForReview +
@@ -31,10 +32,15 @@ namespace SurviveOnSotka.ViewModel.Users
         public bool Gender { get; set; }
         [MinLength(100), MaxLength(1000)]
         public string AboutYourself { get; set; }
+        [Required]
         public int RecipiesCount { get; set; }
+        [Required]
         public int ReviewsCount { get; set; }
+        [Required]
         public int CheapPlacesCount { get; set; }
+        [Required]
         public int RateReviewsCount { get; set; }
+        [Required]
         public int RateCheapPlacesCount { get; set; }
 
     }

@@ -8,7 +8,9 @@ namespace SurviveOnSotka.ViewModel.Tags
     {
         [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }
+        [Required]
         public int Id { get; set; }
-        public ICollection<TagsInRecipe> Recipies { get; set; }
+        [Required]
+        public int RecipiesCount { get; set; }
     }
 }

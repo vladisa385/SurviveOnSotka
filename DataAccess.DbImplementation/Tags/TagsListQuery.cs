@@ -46,6 +46,18 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
             {
                 query = query.Where(t => t.Name.StartsWith(filter.Name));
             }
+            if (filter.RecepiesCount != null)
+            {
+                if (filter.RecepiesCount.From != null)
+                {
+                    query = query.Where(p => p.RecipiesCount >= filter.RecepiesCount.From);
+                }
+
+                if (filter.RecepiesCount.To != null)
+                {
+                    query = query.Where(p => p.RecipiesCount <= filter.RecepiesCount.To);
+                }
+            }
             return query;
         }
     }
