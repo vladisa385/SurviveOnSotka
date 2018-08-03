@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
@@ -44,8 +45,15 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                     throw new ThisRequestNotFromOwnerException();
                 Recipe mappedRecipe = _mapper.Map<UpdateRecipeRequest, Recipe>(request);
                 mappedRecipe.Id = recipeId;
-                foreach (var ingredientToRecipe in mappedRecipe.Ingredients)
+                foreach (var ingredientToRecipe in mappedRecipe.Ingredients.ToList())
                 {
+
+                    if (_context.Ingredients.AnyAsync(
+                            u => u.Id == ingredientToRecipe.IngredientId).Result == false)
+                    {
+                        mappedRecipe.Ingredients.Remove(ingredientToRecipe);
+                        continue;
+                    }
                     ingredientToRecipe.Recipe = mappedRecipe;
                 }
                 _context.Entry(foundRecipe).CurrentValues.SetValues(mappedRecipe);

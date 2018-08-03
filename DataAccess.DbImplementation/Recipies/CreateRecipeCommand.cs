@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Db;
@@ -32,8 +34,15 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
         public async Task<RecipeResponse> ExecuteAsync(CreateRecipeRequest request)
         {
             var recipe = _mapper.Map<CreateRecipeRequest, Recipe>(request);
-            foreach (var ingredientToRecipe in recipe.Ingredients)
+            foreach (var ingredientToRecipe in recipe.Ingredients.ToList())
             {
+
+                if (_context.Ingredients.AnyAsync(
+                        u => u.Id == ingredientToRecipe.IngredientId).Result == false)
+                {
+                    recipe.Ingredients.Remove(ingredientToRecipe);
+                    continue;
+                }
                 ingredientToRecipe.Recipe = recipe;
             }
             var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
