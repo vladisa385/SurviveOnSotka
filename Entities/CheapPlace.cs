@@ -11,7 +11,7 @@ namespace SurviveOnSotka.Entities
     {
         [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }
-        [Required, MinLength(200), MaxLength(500)]
+        [Required, MinLength(200), MaxLength(2000)]
         public string Description { get; set; }
         [Required]
         public City City { get; set; }

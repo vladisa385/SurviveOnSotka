@@ -8,7 +8,7 @@ namespace SurviveOnSotka.ViewModel.Reviews
 {
     public class CreateReviewRequest
     {
-        [Required, MinLength(100), MaxLength(1000)]
+        [Required, MinLength(100), MaxLength(2000)]
         public string Text { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
