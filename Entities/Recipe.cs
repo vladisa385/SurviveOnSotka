@@ -9,7 +9,7 @@ namespace SurviveOnSotka.Entities
     {
         [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }
-        [Required, MinLength(100), MaxLength(400)]
+        [Required, MinLength(100), MaxLength(1000)]
         public string Description { get; set; }
         public ICollection<RecipeInCategories> Categories { get; set; }
         public ICollection<Review> Reviews { get; set; }

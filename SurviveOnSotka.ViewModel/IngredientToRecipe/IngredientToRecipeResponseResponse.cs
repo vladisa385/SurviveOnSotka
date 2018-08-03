@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SurviveOnSotka.ViewModel.IngredientToRecipe
 {
-    public class UpdateIngredientToRecipe
+    public class IngredientToRecipeResponse
     {
-        public Guid RecipeId { get; set; }
         public Guid IngredientId { get; set; }
         [Range(0, int.MaxValue)]
         public int Amount { get; set; }
@@ -15,4 +14,3 @@ namespace SurviveOnSotka.ViewModel.IngredientToRecipe
         public int Weight { get; set; }
     }
 }
-

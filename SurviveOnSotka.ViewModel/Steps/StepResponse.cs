@@ -8,7 +8,7 @@ namespace SurviveOnSotka.ViewModel.Steps
         [Required] public Guid Id { get; set; }
         [Range(0, int.MaxValue)] public int NumberStep { get; set; }
 
-        [Required, MinLength(100), MaxLength(400)]
+        [Required, MinLength(100), MaxLength(1000)]
         public string Description { get; set; }
 
         [Required]

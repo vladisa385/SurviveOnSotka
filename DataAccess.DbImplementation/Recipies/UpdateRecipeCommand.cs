@@ -44,6 +44,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                     throw new ThisRequestNotFromOwnerException();
                 Recipe mappedRecipe = _mapper.Map<UpdateRecipeRequest, Recipe>(request);
                 mappedRecipe.Id = recipeId;
+                foreach (var ingredientToRecipe in mappedRecipe.Ingredients)
+                {
+                    ingredientToRecipe.Recipe = mappedRecipe;
+                }
                 _context.Entry(foundRecipe).CurrentValues.SetValues(mappedRecipe);
                 if (request.Photos != null)
                 {

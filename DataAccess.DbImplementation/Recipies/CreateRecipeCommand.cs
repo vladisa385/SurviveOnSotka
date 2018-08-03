@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
         public async Task<RecipeResponse> ExecuteAsync(CreateRecipeRequest request)
         {
             var recipe = _mapper.Map<CreateRecipeRequest, Recipe>(request);
+            foreach (var ingredientToRecipe in recipe.Ingredients)
+            {
+                ingredientToRecipe.Recipe = recipe;
+            }
             var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
             recipe.User = currentUser;
             recipe.UserId = currentUser.Id;

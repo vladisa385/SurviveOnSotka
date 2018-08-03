@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using SurviveOnSotka.Entities;
+using SurviveOnSotka.ViewModel.Users;
 
 namespace SurviveOnSotka.ViewModel.CheapPlaces
 {
@@ -15,7 +16,7 @@ namespace SurviveOnSotka.ViewModel.CheapPlaces
         [Required]
         public Guid CityId { get; set; }
         [Required]
-        public User Author { get; set; }
+        public UserResponse Author { get; set; }
         [Required, MinLength(5), MaxLength(100)]
         public string Address { get; set; }
         public string PathToPhotos { get; set; }

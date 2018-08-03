@@ -7,7 +7,7 @@ namespace SurviveOnSotka.Entities
     {
         [Range(0, int.MaxValue)]
         public int NumberStep { get; set; }
-        [Required, MinLength(100), MaxLength(400)]
+        [Required, MinLength(100), MaxLength(1000)]
         public string Description { get; set; }
         [Required]
         public Recipe Recipe { get; set; }
