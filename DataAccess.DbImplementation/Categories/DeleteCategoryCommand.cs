@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Immutable;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.IngredientToRecipe;
 
 namespace SurviveOnSotka.ViewModel.Recipies

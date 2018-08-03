@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Microsoft.AspNetCore.Http;
-using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.IngredientToRecipe;
 using SurviveOnSotka.ViewModel.Steps;
 

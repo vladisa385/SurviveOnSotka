@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -42,7 +39,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             foundUser.Gender = request.Gender;
             if (request.Avatar != null)
             {
-                string basedir = _appEnvironment.WebRootPath + "/Files/Users/";
+                string basedir = _appEnvironment.WebRootPath + "/Users/";
                 foundUser.PathToAvatar = basedir + request.Avatar.FileName;
                 await CreateFileCommand.ExecuteAsync(request.Avatar, basedir);
             }

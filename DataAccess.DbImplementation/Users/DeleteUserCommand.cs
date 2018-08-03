@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Users;
-using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
@@ -24,7 +19,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
         {
 
             User userToDelete = await _userManager.Users.FirstOrDefaultAsync(p => p.Id == userId);
-        
+
             if (userToDelete != null)
             {
                 if (userToDelete.PathToAvatar != null)

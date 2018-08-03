@@ -1,5 +1,4 @@
 ﻿using System;
-using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.ViewModel.CheapPlaces
 {

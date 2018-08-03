@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using AutoMapper;
-using Microsoft.CodeAnalysis;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Categories;
 using SurviveOnSotka.ViewModel.CheapPlaces;

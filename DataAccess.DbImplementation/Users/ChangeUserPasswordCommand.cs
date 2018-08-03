@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +9,7 @@ using SurviveOnSotka.ViewModel.Users;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
-    public class ChangeUserPasswordCommand:IChangeUserPasswordCommand
+    public class ChangeUserPasswordCommand : IChangeUserPasswordCommand
     {
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -36,7 +33,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             {
 
                 throw new CannotChangePasswordExeption(result.Errors);
-               
+
             }
             return _mapper.Map<User, UserResponse>(foundUser);
 

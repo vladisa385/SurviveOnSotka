@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.TypeFoods;
-using SurviveOnSotka.Db;
-using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.TypeFoods;
 

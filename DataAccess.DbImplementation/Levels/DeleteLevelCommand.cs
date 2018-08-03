@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Levels;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Levels
 {

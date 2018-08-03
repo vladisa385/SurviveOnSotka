@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Levels;
-using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Levels;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Levels

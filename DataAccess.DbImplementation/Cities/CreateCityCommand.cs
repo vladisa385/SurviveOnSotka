@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using SurviveOnSotka.DataAccess.Cities;
-using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Cities;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Cities
 {
-    public class CreateCityCommand:ICreateCityCommand
+    public class CreateCityCommand : ICreateCityCommand
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;

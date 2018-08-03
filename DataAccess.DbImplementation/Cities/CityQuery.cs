@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +9,7 @@ using SurviveOnSotka.ViewModel.Cities;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Cities
 {
-    public class CityQuery:ICityQuery
+    public class CityQuery : ICityQuery
     {
         private readonly AppDbContext _context;
         public CityQuery(AppDbContext dbContext)

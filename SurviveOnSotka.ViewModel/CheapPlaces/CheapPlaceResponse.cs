@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.ViewModel.CheapPlaces

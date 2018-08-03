@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using SurviveOnSotka.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SurviveOnSotka.ViewModel.Tags
 {

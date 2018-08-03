@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.DataAccess.Cities;
-using SurviveOnSotka.DataAccess.DbImplementation.Cities;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Cities;
 

@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Users;
-using SurviveOnSotka.Db;
-
-using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Users;
 

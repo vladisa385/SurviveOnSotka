@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.RateCheapPlaces;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
