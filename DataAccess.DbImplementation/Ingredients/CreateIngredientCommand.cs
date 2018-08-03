@@ -28,7 +28,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
         {
             if (!_context.TypeFoods.Any(u => u.Id == request.TypeFoodId))
             {
-                throw new CannotCreateOrUpdateCheapPlaceWithCurrentGuidCity();
+                throw new CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException();
             }
             var ingredient = _mapper.Map<CreateIngredientRequest, Ingredient>(request);
             await _context.Ingredients.AddAsync(ingredient);

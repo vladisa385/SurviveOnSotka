@@ -10,6 +10,5 @@ namespace SurviveOnSotka.ViewModel.Steps
         [Required, MinLength(100), MaxLength(400)]
         public string Description { get; set; }
 
-        [Required] public Guid RecipeId { get; set; }
     }
 }
