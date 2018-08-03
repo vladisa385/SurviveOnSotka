@@ -11,9 +11,9 @@ namespace SurviveOnSotka.ViewModel.Recipies
     public class RecipeResponse
     {
         public Guid Id { get; set; }
-        [Required, MinLength(5)]
+        [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }
-        [Required, MinLength(100)]
+        [Required, MinLength(100), MaxLength(400)]
         public string Description { get; set; }
         [Required]
         public int CategoriesCount { get; set; }
@@ -27,6 +27,7 @@ namespace SurviveOnSotka.ViewModel.Recipies
         public TimeSpan TimeForCooking { get; set; }
         public TimeSpan TimeForPreparetion { get; set; }
         public double Rate { get; set; }
+        [Required]
         public ICollection<IngredientToRecipeResponce> Ingredients { get; set; }
         [Required]
         public ICollection<StepResponse> Steps { get; set; }

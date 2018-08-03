@@ -10,9 +10,9 @@ namespace SurviveOnSotka.ViewModel.Recipies
 {
     public class UpdateRecipeRequest
     {
-        [Required, MinLength(5)]
+        [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }
-        [Required, MinLength(100)]
+        [Required, MinLength(100), MaxLength(400)]
         public string Description { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }

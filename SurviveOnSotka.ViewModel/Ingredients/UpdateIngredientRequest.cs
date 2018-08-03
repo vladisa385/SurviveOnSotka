@@ -6,7 +6,7 @@ namespace SurviveOnSotka.ViewModel.Ingredients
 {
     public class UpdateIngredientRequest
     {
-        [Required, MinLength(5), MaxLength(16)]
+        [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }
         public IFormFile Icon { get; set; }
         [Required]

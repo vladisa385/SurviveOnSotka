@@ -9,8 +9,9 @@ namespace SurviveOnSotka.Entities
     public class User : IdentityUser
 
     {
-
+        [MinLength(5), MaxLength(40)]
         public string FirstName { get; set; }
+        [MinLength(5), MaxLength(40)]
         public string LastName { get; set; }
         public string PathToAvatar { get; set; }
         public Guid? LevelId { get; set; }
@@ -36,6 +37,7 @@ namespace SurviveOnSotka.Entities
         }
 
         public bool Gender { get; set; }
+        [MinLength(100), MaxLength(1000)]
         public string AboutYourself { get; set; }
 
         public ICollection<Recipe> Recipies { get; set; }

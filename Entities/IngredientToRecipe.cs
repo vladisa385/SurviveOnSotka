@@ -11,8 +11,11 @@ namespace SurviveOnSotka.Entities
         public Recipe Recipe { get; set; }
         [Required]
         public Ingredient Ingredient { get; set; }
+        [Range(1, int.MaxValue)]
         public int Amount { get; set; }
+        [Range(0, int.MaxValue)]
         public int Price { get; set; }
+        [Range(1, int.MaxValue)]
         public int Weight { get; set; }
     }
 }

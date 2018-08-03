@@ -8,13 +8,11 @@ namespace SurviveOnSotka.Entities
 {
     public class Recipe : DomainObject
     {
-        [Required, MinLength(5)]
+        [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }
-        [Required, MinLength(100)]
+        [Required, MinLength(100), MaxLength(400)]
         public string Description { get; set; }
-        [Required]
         public ICollection<RecipeInCategories> Categories { get; set; }
-        [Required]
         public ICollection<Review> Reviews { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
@@ -33,6 +31,7 @@ namespace SurviveOnSotka.Entities
 
             }
         }
+        [Required]
         public ICollection<IngredientToRecipe> Ingredients { get; set; }
         [Required]
         public ICollection<Step> Steps { get; set; }

@@ -14,9 +14,9 @@ namespace SurviveOnSotka.ViewModel.Users
 
         [Required]
         public string Email { get; set; }
-        [Required]
+        [MinLength(5), MaxLength(40)]
         public string FirstName { get; set; }
-        [Required]
+        [MinLength(5), MaxLength(40)]
         public string LastName { get; set; }
         public string PathToAvatar { get; set; }
         public Guid? IdLevel { get; set; }
@@ -29,6 +29,7 @@ namespace SurviveOnSotka.ViewModel.Users
 
         [Required]
         public bool Gender { get; set; }
+        [MinLength(100), MaxLength(1000)]
         public string AboutYourself { get; set; }
         public int RecipiesCount { get; set; }
         public int ReviewsCount { get; set; }

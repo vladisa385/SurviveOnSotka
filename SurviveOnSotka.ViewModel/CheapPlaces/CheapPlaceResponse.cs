@@ -10,14 +10,14 @@ namespace SurviveOnSotka.ViewModel.CheapPlaces
     {
         [Required]
         public Guid Id { get; set; }
-        [Required, MinLength(5), MaxLength(12)]
+        [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }
-        [MinLength(16), MaxLength(64)]
+        [MinLength(200), MaxLength(500)]
         public string Descriptrion { get; set; }
         [Required]
         public Guid CityId { get; set; }
-
         public User Author { get; set; }
+        [Required, MinLength(5), MaxLength(100)]
         public string Address { get; set; }
         public string PathToPhotos { get; set; }
         public int? Likes { get; set; }

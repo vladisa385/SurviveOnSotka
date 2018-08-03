@@ -8,7 +8,7 @@ namespace SurviveOnSotka.ViewModel.TypeFoods
 {
     public class CreateTypeFoodRequest
     {
-        [Required, MinLength(5), MaxLength(16)]
+        [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }
         public IFormFile Icon { get; set; }
     }

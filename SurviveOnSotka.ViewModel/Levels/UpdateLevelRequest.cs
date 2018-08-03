@@ -9,8 +9,10 @@ namespace SurviveOnSotka.ViewModel.Levels
     public class UpdateLevelRequest
     {
         [Required]
+        [Range(0, int.MaxValue)]
         public int MinScore { get; set; }
         [Required]
+        [Range(0, int.MaxValue)]
         public int MaxScore { get; set; }
         [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }

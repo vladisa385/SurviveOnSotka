@@ -8,7 +8,7 @@ namespace SurviveOnSotka.ViewModel.Categories
     {
         [Required]
         public Guid Id { get; set; }
-        [Required, MinLength(5), MaxLength(12)]
+        [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }
         [MinLength(16), MaxLength(64)]
         public string Descriptrion { get; set; }

@@ -10,7 +10,7 @@ namespace SurviveOnSotka.ViewModel.TypeFoods
     {
         [Required]
         public Guid Id { get; set; }
-        [Required, MinLength(5), MaxLength(12)]
+        [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }
         public string Icon { get; set; }
         [Required]

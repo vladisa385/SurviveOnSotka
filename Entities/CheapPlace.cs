@@ -9,9 +9,9 @@ namespace SurviveOnSotka.Entities
     public class CheapPlace : DomainObject
 
     {
-        [Required, MinLength(5)]
+        [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }
-        [Required, MinLength(200)]
+        [Required, MinLength(200), MaxLength(500)]
         public string Description { get; set; }
         [Required]
         public City City { get; set; }
@@ -21,6 +21,7 @@ namespace SurviveOnSotka.Entities
         public string UserId { get; set; }
 
         public User User { get; set; }
+        [Required, MinLength(5), MaxLength(100)]
         public string Address { get; set; }
         public string PathToPhotos { get; set; }
         public ICollection<RateCheapPlace> RateCheapPlaces { get; set; }
