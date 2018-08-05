@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -44,6 +45,25 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                     continue;
                 }
                 ingredientToRecipe.Recipe = recipe;
+            }
+            recipe.Tags = new List<TagsInRecipe>();
+            foreach (var tag in request.Tags)
+            {
+                var newTag = await _context.Tags.Include("Recipies").FirstOrDefaultAsync(u => u.Name == tag);
+                if (newTag == null)
+                {
+                    //такого тега нет в системе, создадим
+                    newTag = new Tag { Name = tag, Recipies = new List<TagsInRecipe>() };
+                    await _context.Tags.AddAsync(newTag);
+                }
+                TagsInRecipe tit = new TagsInRecipe
+                {
+                    Recipe = recipe,
+                    Tag = newTag
+                };
+                recipe.Tags.Add(tit);
+                newTag.Recipies.Add(tit);
+                await _context.TagsInRecipies.AddAsync(tit);
             }
             var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
             recipe.User = currentUser;

@@ -23,5 +23,8 @@ namespace SurviveOnSotka.ViewModel.Recipies
         public ICollection<IFormFile> Photos { get; set; }
         [Required]
         public ICollection<CreateStepRequest> Steps { get; set; }
+
+        public ICollection<string> Tags { get; set; }
+
     }
 }

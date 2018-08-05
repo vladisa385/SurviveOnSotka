@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
@@ -15,7 +16,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
         {
             _userManager = userManager;
         }
-        public async Task ExecuteAsync(string userId)
+        public async Task ExecuteAsync(Guid userId)
         {
 
             User userToDelete = await _userManager.Users.FirstOrDefaultAsync(p => p.Id == userId);

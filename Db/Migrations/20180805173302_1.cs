@@ -12,7 +12,7 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -27,7 +27,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 16, nullable: false),
+                    Name = table.Column<string>(maxLength: 40, nullable: false),
                     Descriptrion = table.Column<string>(maxLength: 64, nullable: true),
                     ParentCategoryId = table.Column<Guid>(nullable: true),
                     PathToIcon = table.Column<string>(nullable: true)
@@ -48,7 +48,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +83,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 12, nullable: false)
+                    Name = table.Column<string>(maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,7 +95,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 12, nullable: false),
+                    Name = table.Column<string>(maxLength: 40, nullable: false),
                     PathToIcon = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -109,7 +109,7 @@ namespace SurviveOnSotka.Db.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -128,7 +128,7 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -143,12 +143,12 @@ namespace SurviveOnSotka.Db.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 40, nullable: true),
+                    LastName = table.Column<string>(maxLength: 40, nullable: true),
                     PathToAvatar = table.Column<string>(nullable: true),
                     LevelId = table.Column<Guid>(nullable: true),
                     Gender = table.Column<bool>(nullable: false),
-                    AboutYourself = table.Column<string>(nullable: true)
+                    AboutYourself = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -166,7 +166,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     TypeFoodId = table.Column<Guid>(nullable: false),
                     PathToIcon = table.Column<string>(nullable: true)
                 },
@@ -187,7 +187,7 @@ namespace SurviveOnSotka.Db.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -209,7 +209,7 @@ namespace SurviveOnSotka.Db.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -226,8 +226,8 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -250,7 +250,7 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -271,11 +271,11 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Description = table.Column<string>(maxLength: 2000, nullable: false),
                     CityId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
+                    Address = table.Column<string>(maxLength: 100, nullable: false),
                     PathToPhotos = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -300,9 +300,9 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: false),
+                    UserId = table.Column<Guid>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     PathToPhotos = table.Column<string>(nullable: true),
                     TimeForCooking = table.Column<TimeSpan>(nullable: false),
@@ -324,7 +324,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     CheapPlaceId = table.Column<Guid>(nullable: false),
-                    UserWhoGiveMarkId = table.Column<string>(nullable: false),
+                    UserWhoGiveMarkId = table.Column<Guid>(nullable: false),
                     IsCool = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -401,8 +401,8 @@ namespace SurviveOnSotka.Db.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     RecipeId = table.Column<Guid>(nullable: false),
-                    AuthorId = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: false),
+                    AuthorId = table.Column<Guid>(nullable: true),
+                    Text = table.Column<string>(maxLength: 2000, nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Rate = table.Column<int>(nullable: false),
                     PathToPhotos = table.Column<string>(nullable: true)
@@ -430,7 +430,7 @@ namespace SurviveOnSotka.Db.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     NumberStep = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 1000, nullable: false),
                     RecipeId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -473,7 +473,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     ReviewId = table.Column<Guid>(nullable: false),
-                    UserWhoGiveMarkId = table.Column<string>(nullable: false),
+                    UserWhoGiveMarkId = table.Column<Guid>(nullable: false),
                     IsCool = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

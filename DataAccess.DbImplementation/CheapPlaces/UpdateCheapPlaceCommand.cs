@@ -33,7 +33,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces
         public async Task<CheapPlaceResponse> ExecuteAsync(Guid cheapPlaceId, UpdateCheapPlaceRequest request)
         {
 
-            if (!_context.Cities.Any(u => u.Id == request.CityId))
+            if (request.CityId != null && !_context.Cities.Any(u => u.Id == request.CityId))
             {
                 throw new CannotCreateOrUpdateCheapPlaceWithCurrentGuidCity();
             }

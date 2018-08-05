@@ -104,6 +104,36 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                     query = query.Where(p => p.TimeForPreparetion <= filter.TimeForPreparetion.To);
                 }
             }
+
+            if (filter.Tags != null)
+            {
+                foreach (var tag in filter.Tags)
+                {
+                    query = query.Where(u => u.Tags.Any(y => y == tag));
+                }
+            }
+            //if (filter.Ingredients != null)
+            //{
+            //    foreach (var ingredient in filter.Ingredients)
+            //    {
+
+            //        query = query.Where(u => u.Ingredients.Any(y =>
+            //            ingredient.Id == filter.Id
+            //            &&
+            //            ingredient.Amount.From == null || y.Amount >= ingredient.Amount.From
+            //            &&
+            //            ingredient.Amount.To == null || y.Amount >= ingredient.Amount.To
+            //            &&
+            //            ingredient.Price.From == null || y.Amount >= ingredient.Price.From
+            //            &&
+            //            ingredient.Price.To == null || y.Amount >= ingredient.Price.To
+            //            &&
+            //            ingredient.Amount.From == null || y.Amount >= ingredient.Amount.From
+            //            &&
+            //            ingredient.Amount.To == null || y.Amount >= ingredient.Amount.To
+            //            ));
+            //    }
+            //}
             return query;
 
 

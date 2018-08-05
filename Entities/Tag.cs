@@ -5,8 +5,14 @@ namespace SurviveOnSotka.Entities
 {
     public class Tag : DomainObject
     {
-        [Required, MinLength(5), MaxLength(40)]
+        [Required, MinLength(3), MaxLength(40)]
         public string Name { get; set; }
-        public ICollection<TagsInRecipe> Recipes { get; set; }
+        public ICollection<TagsInRecipe> Recipies { get; set; }
+        public ICollection<TagsInCheapPlaces> CheapPlaces { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

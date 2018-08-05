@@ -18,7 +18,7 @@ namespace SurviveOnSotka.Entities
         [Required]
         public Guid CityId { get; set; }
 
-        public string UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         public User User { get; set; }
         [Required, MinLength(5), MaxLength(100)]

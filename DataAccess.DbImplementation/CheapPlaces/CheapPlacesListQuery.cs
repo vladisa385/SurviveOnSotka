@@ -23,7 +23,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces
             {
                 query = query.Where(p => p.Id == filter.Id);
             }
-
+            if (filter.UserId != null)
+            {
+                query = query.Where(p => p.Author.Id == filter.UserId);
+            }
             if (filter.Name != null)
             {
                 query = query.Where(p => p.Name.StartsWith(filter.Name));
@@ -62,6 +65,13 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces
                 if (filter.DisLikes.To != null)
                 {
                     query = query.Where(p => p.DisLikes <= filter.DisLikes.To);
+                }
+            }
+            if (filter.Tags != null)
+            {
+                foreach (var tag in filter.Tags)
+                {
+                    query = query.Where(u => u.Tags.Any(y => y == tag));
                 }
             }
             return query;

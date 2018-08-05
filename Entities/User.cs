@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SurviveOnSotka.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<Guid>
 
     {
         [MinLength(5), MaxLength(40)]

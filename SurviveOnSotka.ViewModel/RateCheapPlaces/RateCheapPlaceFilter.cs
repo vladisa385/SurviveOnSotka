@@ -6,6 +6,6 @@ namespace SurviveOnSotka.ViewModel.RateCheapPlaces
     {
         public Guid? CheapPlaceId { get; set; }
         public bool? IsCool { get; set; }
-        public string UserWhoGiveMarkId { get; set; }
+        public Guid? UserWhoGiveMarkId { get; set; }
     }
 }

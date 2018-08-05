@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Users;
@@ -21,7 +22,7 @@ namespace SurviveOnSotka.ViewModel.CheapPlaces
         public string Address { get; set; }
         public string PathToPhotos { get; set; }
         public int? Likes { get; set; }
-
+        public ICollection<string> Tags { get; set; }
         public int? DisLikes { get; set; }
 
     }

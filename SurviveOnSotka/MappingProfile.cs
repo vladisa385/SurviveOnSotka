@@ -64,9 +64,8 @@ namespace SurviveOnSotka
                 .ForMember(d => d.LevelId, o => o.MapFrom(src => src.LevelId))
                 .ForMember(d => d.Gender, o => o.MapFrom(src => src.Gender))
                 .ForMember(d => d.AboutYourself, o => o.MapFrom(src => src.AboutYourself))
-
                  .ForMember(d => d.LastName, o => o.MapFrom(src => src.LastName))
-                  .ForMember(d => d.Gender, o => o.MapFrom(src => src.Gender))
+                 .ForMember(d => d.Gender, o => o.MapFrom(src => src.Gender))
 
 
 
@@ -95,11 +94,12 @@ namespace SurviveOnSotka
             CreateMap<CreateIngredientToRecipeRequest, IngredientToRecipe>()
                    .ForMember(u => u.RecipeId, pt => pt.Ignore());
             CreateMap<Recipe, RecipeResponse>().
-            ForMember(d => d.User, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.User)));
-
-            CreateMap<UpdateRecipeRequest, Recipe>();
-            CreateMap<CreateRecipeRequest, Recipe>();
-
+            ForMember(d => d.User, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.User)))
+              .ForMember(dest => dest.Tags, opt => opt.MapFrom(so => so.Tags.Select(t => t.Tag.Name).ToList()));
+            CreateMap<UpdateRecipeRequest, Recipe>().
+            ForMember(d => d.Tags, pt => pt.Ignore());
+            CreateMap<CreateRecipeRequest, Recipe>().
+            ForMember(d => d.Tags, pt => pt.Ignore());
             CreateMap<Review, ReviewResponse>().
                 ForMember(d => d.Author, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.Author))).
                 ForMember(d => d.Likes, o => o.MapFrom(src => src.RateReviews.Count(u => u.IsCool == true))).
@@ -115,6 +115,7 @@ namespace SurviveOnSotka
 
             CreateMap<UpdateRateCheapPlaceRequest, RateCheapPlace>();
             CreateMap<CreateRateCheapPlaceRequest, RateCheapPlace>();
+
 
         }
     }

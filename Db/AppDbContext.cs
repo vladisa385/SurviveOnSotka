@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.Db
 {
-    public class AppDbContext : IdentityDbContext<User>
+    public class AppDbContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<CheapPlace> CheapPlaces { get; set; }
@@ -18,7 +20,8 @@ namespace SurviveOnSotka.Db
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Step> Steps { get; set; }
         public DbSet<TypeFood> TypeFoods { get; set; }
-
+        public DbSet<TagsInRecipe> TagsInRecipies { get; set; }
+        public DbSet<TagsInCheapPlaces> TagsInCheapPlaces { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
            : base(options)
@@ -32,7 +35,7 @@ namespace SurviveOnSotka.Db
             modelBuilder.Entity<IngredientToRecipe>().HasKey(u => new { u.RecipeId, u.IngredientId });
             modelBuilder.Entity<RecipeInCategories>().HasKey(u => new { u.CategoryId, u.RecipeId });
             modelBuilder.Entity<TagsInRecipe>().HasKey(u => new { u.TagId, u.RecipeId });
-
+            modelBuilder.Entity<TagsInCheapPlaces>().HasKey(u => new { u.TagId, u.CheapPlaceId });
 
         }
     }

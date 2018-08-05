@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             _userManager = userManager;
         }
 
-        public async Task<UserResponse> RunAsync(string userId)
+        public async Task<UserResponse> RunAsync(Guid userId)
         {
 
             UserResponse response = await _userManager.Users.Include("Recipies")

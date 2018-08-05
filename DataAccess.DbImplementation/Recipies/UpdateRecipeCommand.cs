@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -34,7 +35,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 
         public async Task<RecipeResponse> ExecuteAsync(Guid recipeId, UpdateRecipeRequest request)
         {
-            Recipe foundRecipe = await _context.Recipes.Include(t => t.User).FirstOrDefaultAsync(t => t.Id == recipeId);
+            Recipe foundRecipe = await _context.Recipes.Include("User").FirstOrDefaultAsync(t => t.Id == recipeId);
 
 
             if (foundRecipe != null)
@@ -57,6 +58,26 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                     ingredientToRecipe.Recipe = mappedRecipe;
                 }
                 _context.Entry(foundRecipe).CurrentValues.SetValues(mappedRecipe);
+                foundRecipe.Tags = new List<TagsInRecipe>();
+                foreach (var tag in request.Tags)
+                {
+                    var newTag = await _context.Tags.Include("Recipies").FirstOrDefaultAsync(u => u.Name == tag);
+                    if (newTag == null)
+                    {
+                        //такого тега нет в системе, создадим
+                        newTag = new Tag { Name = tag, Recipies = new List<TagsInRecipe>() };
+                        await _context.Tags.AddAsync(newTag);
+                    }
+                    TagsInRecipe tit = new TagsInRecipe
+                    {
+                        Recipe = foundRecipe,
+                        Tag = newTag
+                    };
+                    foundRecipe.Tags.Add(tit);
+                    newTag.Recipies.Add(tit);
+                    await _context.TagsInRecipies.AddAsync(tit);
+
+                }
                 if (request.Photos != null)
                 {
                     foreach (var photo in request.Photos)

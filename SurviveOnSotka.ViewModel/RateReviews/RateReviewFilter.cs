@@ -6,6 +6,6 @@ namespace SurviveOnSotka.ViewModel.RateReviews
     {
         public Guid? ReviewId { get; set; }
         public bool? IsCool { get; set; }
-        public string UserWhoGiveMarkId { get; set; }
+        public Guid? UserWhoGiveMarkId { get; set; }
     }
 }

@@ -45,7 +45,18 @@
     <Compile Remove="Migrations\20180731173620_6.cs" />
     <Compile Remove="Migrations\20180802142255_7.cs" />
     <Compile Remove="Migrations\20180802142526_7.cs" />
+    <Compile Remove="Migrations\20180802151619_1.cs" />
     <Compile Remove="Migrations\20180803025317_2.cs" />
+    <Compile Remove="Migrations\20180803025554_2.cs" />
+    <Compile Remove="Migrations\20180803031136_3.cs" />
+    <Compile Remove="Migrations\20180803040606_4.cs" />
+    <Compile Remove="Migrations\20180803044420_5.cs" />
+    <Compile Remove="Migrations\20180803044735_6.cs" />
+    <Compile Remove="Migrations\20180805172710_1.cs" />
+    <Compile Remove="Migrations\20180805173058_1.cs" />
+    <Compile Remove="Migrations\20180805193339_3.cs" />
+    <Compile Remove="Migrations\20180805193516_3.cs" />
+    <Compile Remove="Migrations\20180805193559_3.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -31,5 +31,7 @@ namespace SurviveOnSotka.ViewModel.Recipies
         [Required]
         public ICollection<StepResponse> Steps { get; set; }
 
+        public ICollection<string> Tags { get; set; }
+
     }
 }

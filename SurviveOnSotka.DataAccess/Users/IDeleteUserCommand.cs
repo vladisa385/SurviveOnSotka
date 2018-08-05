@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.Users
 {
     public interface IDeleteUserCommand
     {
-        Task ExecuteAsync(string userId);
+        Task ExecuteAsync(Guid userId);
     }
 }

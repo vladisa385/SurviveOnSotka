@@ -26,7 +26,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(200, Type = typeof(UserResponse))]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetUserAsync(string userId, [FromServices] IUserQuery query)
+        public async Task<IActionResult> GetUserAsync(Guid userId, [FromServices] IUserQuery query)
         {
             UserResponse response = await query.RunAsync(userId);
             return response == null ? (IActionResult)NotFound() : Ok(response);
@@ -143,7 +143,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteUserAsync(string userId, [FromServices]IDeleteUserCommand command)
+        public async Task<IActionResult> DeleteUserAsync(Guid userId, [FromServices]IDeleteUserCommand command)
         {
             try
             {
