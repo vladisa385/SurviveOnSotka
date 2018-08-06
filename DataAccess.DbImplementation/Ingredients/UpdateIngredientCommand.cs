@@ -27,7 +27,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
         }
         public async Task<IngredientResponse> ExecuteAsync(Guid typefoodId, UpdateIngredientRequest request)
         {
-            if (request.TypeFoodId != null && !_context.TypeFoods.Any(u => u.Id == request.TypeFoodId))
+            if (request.TypeFoodId != null && !_context.TypeFoods.AnyAsync(u => u.Id == request.TypeFoodId).Result)
             {
                 throw new CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException();
             }

@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.Db;
@@ -30,7 +31,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces
         }
         public async Task<CheapPlaceResponse> ExecuteAsync(CreateCheapPlaceRequest request)
         {
-            if (!_context.Cities.Any(u => u.Id == request.CityId))
+            if (!_context.Cities.AnyAsync(u => u.Id == request.CityId).Result)
             {
                 throw new CannotCreateOrUpdateCheapPlaceWithCurrentGuidCity();
             }
