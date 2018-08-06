@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Levels;
 using SurviveOnSotka.Db;
@@ -24,14 +25,14 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Levels
         {
             if (request.NextLevelId != null)
             {
-                if (!_context.Levels.Any(u => u.NextLevelId == request.NextLevelId))
+                if (!_context.Levels.AnyAsync(u => u.NextLevelId == request.NextLevelId).Result)
                 {
                     throw new CannotCreateOrUpdateLevelWithThisGuidNextLevelException();
                 }
             }
             if (request.LastLevelId != null)
             {
-                if (!_context.Levels.Any(u => u.LastLevelId == request.LastLevelId))
+                if (!_context.Levels.AnyAsync(u => u.LastLevelId == request.LastLevelId).Result)
                 {
                     throw new CannotCreateOrUpdateLevelWithThisGuidLastLevelException();
                 }

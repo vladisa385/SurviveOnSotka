@@ -58,6 +58,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                     ingredientToRecipe.Recipe = mappedRecipe;
                 }
                 _context.Entry(foundRecipe).CurrentValues.SetValues(mappedRecipe);
+                foundRecipe.User = currentUser;
+                foundRecipe.UserId = currentUser.Id;
                 foundRecipe.Tags = new List<TagsInRecipe>();
                 foreach (var tag in request.Tags)
                 {

@@ -26,7 +26,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
         }
         public async Task<CategoryResponse> ExecuteAsync(Guid categoryId, UpdateCategoryRequest request)
         {
-            if (!_context.Categories.Any(u => u.Id == request.IdParentCategory))
+            if (!_context.Categories.AnyAsync(u => u.Id == request.IdParentCategory).Result)
             {
                 throw new CannotCreateOrUpdateCategoryWithThisIParentCategoryGuidException();
             }

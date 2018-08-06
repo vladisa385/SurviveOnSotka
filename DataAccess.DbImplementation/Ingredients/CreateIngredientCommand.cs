@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Ingredients;
@@ -26,7 +27,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
         }
         public async Task<IngredientResponse> ExecuteAsync(CreateIngredientRequest request)
         {
-            if (!_context.TypeFoods.Any(u => u.Id == request.TypeFoodId))
+            if (!_context.TypeFoods.AnyAsync(u => u.Id == request.TypeFoodId).Result)
             {
                 throw new CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException();
             }
