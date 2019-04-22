@@ -34,7 +34,7 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("Register")]
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Register(CreateUserRequest user, [FromServices] ICreateUserCommand command)
+        public async Task<IActionResult> Register([FromBody]CreateUserRequest user, [FromServices] ICreateUserCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -61,7 +61,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [Authorize]
-        public async Task<IActionResult> UpdateUser(UpdateUserRequest user, [FromServices] IUpdateUserCommand command)
+        public async Task<IActionResult> UpdateUser([FromBody]UpdateUserRequest user, [FromServices] IUpdateUserCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -87,7 +87,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [Authorize]
-        public async Task<IActionResult> ChangeUserPassword(ChangePasswordUserRequest user, [FromServices] IChangeUserPasswordCommand command)
+        public async Task<IActionResult> ChangeUserPassword([FromBody]ChangePasswordUserRequest user, [FromServices] IChangeUserPasswordCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -110,7 +110,7 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("Login")]
         [ProducesResponseType(200, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Login(LoginUserRequest user, [FromServices] ILoginUserCommand command)
+        public async Task<IActionResult> Login([FromBody]LoginUserRequest user, [FromServices] ILoginUserCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
