@@ -56,19 +56,13 @@ namespace SurviveOnSotka
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddElmahIo(o =>
-            {
-                o.ApiKey = "b9e4017a87b944cca841366342d02e89";
-                o.LogId = new Guid("7fd15f9f-c859-4c8f-9913-4add9fa832c4");
-            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             RegisterQueriesAndCommands(services);
             services.AddHttpContextAccessor();
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
-            //services.AddAutoMapper();
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connection));
             services.AddIdentity<User, Role>()
              .AddEntityFrameworkStores<AppDbContext>();
 
@@ -113,7 +107,6 @@ namespace SurviveOnSotka
             }
             // app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseElmahIo();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication(

@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace SurviveOnSotka.Db.Migrations
 {
-    public partial class _1 : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -108,7 +108,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     RoleId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -186,7 +186,7 @@ namespace SurviveOnSotka.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     UserId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -345,6 +345,30 @@ namespace SurviveOnSotka.Db.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TagsInCheapPlaces",
+                columns: table => new
+                {
+                    CheapPlaceId = table.Column<Guid>(nullable: false),
+                    TagId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TagsInCheapPlaces", x => new { x.TagId, x.CheapPlaceId });
+                    table.ForeignKey(
+                        name: "FK_TagsInCheapPlaces_CheapPlaces_CheapPlaceId",
+                        column: x => x.CheapPlaceId,
+                        principalTable: "CheapPlaces",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TagsInCheapPlaces_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IngredientToRecipe",
                 columns: table => new
                 {
@@ -445,7 +469,7 @@ namespace SurviveOnSotka.Db.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TagsInRecipe",
+                name: "TagsInRecipies",
                 columns: table => new
                 {
                     RecipeId = table.Column<Guid>(nullable: false),
@@ -453,15 +477,15 @@ namespace SurviveOnSotka.Db.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TagsInRecipe", x => new { x.TagId, x.RecipeId });
+                    table.PrimaryKey("PK_TagsInRecipies", x => new { x.TagId, x.RecipeId });
                     table.ForeignKey(
-                        name: "FK_TagsInRecipe_Recipes_RecipeId",
+                        name: "FK_TagsInRecipies_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TagsInRecipe_Tags_TagId",
+                        name: "FK_TagsInRecipies_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
@@ -502,8 +526,7 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -534,8 +557,7 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_ParentCategoryId",
@@ -566,8 +588,7 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "IX_Levels_LastLevelId",
                 table: "Levels",
                 column: "LastLevelId",
-                unique: true,
-                filter: "[LastLevelId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RateCheapPlaces_UserWhoGiveMarkId",
@@ -605,8 +626,13 @@ namespace SurviveOnSotka.Db.Migrations
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TagsInRecipe_RecipeId",
-                table: "TagsInRecipe",
+                name: "IX_TagsInCheapPlaces_CheapPlaceId",
+                table: "TagsInCheapPlaces",
+                column: "CheapPlaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TagsInRecipies_RecipeId",
+                table: "TagsInRecipies",
                 column: "RecipeId");
         }
 
@@ -643,7 +669,10 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "Steps");
 
             migrationBuilder.DropTable(
-                name: "TagsInRecipe");
+                name: "TagsInCheapPlaces");
+
+            migrationBuilder.DropTable(
+                name: "TagsInRecipies");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -652,13 +681,13 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "CheapPlaces");
-
-            migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "CheapPlaces");
 
             migrationBuilder.DropTable(
                 name: "Tags");
@@ -667,10 +696,10 @@ namespace SurviveOnSotka.Db.Migrations
                 name: "TypeFoods");
 
             migrationBuilder.DropTable(
-                name: "Cities");
+                name: "Recipes");
 
             migrationBuilder.DropTable(
-                name: "Recipes");
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

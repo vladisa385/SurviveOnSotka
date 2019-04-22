@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <Authors>Vladislav Konyukhov</Authors>
     <Version>0.0.1</Version>
     <RepositoryUrl>https://github.com/vladisa385/SurviveOnSotka</RepositoryUrl>
@@ -54,13 +54,16 @@
     <Compile Remove="Migrations\20180803044735_6.cs" />
     <Compile Remove="Migrations\20180805172710_1.cs" />
     <Compile Remove="Migrations\20180805173058_1.cs" />
+    <Compile Remove="Migrations\20180805173302_1.cs" />
+    <Compile Remove="Migrations\20180805184710_2.cs" />
     <Compile Remove="Migrations\20180805193339_3.cs" />
     <Compile Remove="Migrations\20180805193516_3.cs" />
     <Compile Remove="Migrations\20180805193559_3.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
