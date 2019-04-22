@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,8 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
-using Elmah.Io.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.DataAccess.CheapPlaces;
@@ -109,9 +106,7 @@ namespace SurviveOnSotka
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseAuthentication(
-
-                );
+            app.UseAuthentication();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -195,7 +190,7 @@ namespace SurviveOnSotka
                 .AddScoped<IUpdateRateReviewCommand, UpdateRateReviewCommand>()
                 .AddScoped<IDeleteRateReviewCommand, DeleteRateReviewCommand>()
 
-                  .AddScoped<IRateCheapPlaceQuery, RateCheapPlaceQuery>()
+                 .AddScoped<IRateCheapPlaceQuery, RateCheapPlaceQuery>()
                 .AddScoped<IRateCheapPlacesListQuery, RateCheapPlacesListQuery>()
                 .AddScoped<ICreateRateCheapPlaceCommand, CreateRateCheapPlaceCommand>()
                 .AddScoped<IUpdateRateCheapPlaceCommand, UpdateRateCheapPlaceCommand>()

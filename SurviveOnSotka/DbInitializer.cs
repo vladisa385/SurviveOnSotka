@@ -8,7 +8,7 @@ namespace SurviveOnSotka
     {
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
-            //var adminEmail = configuration["AdminLogin"];
+            // var adminEmail = configuration["AdminLogin"];
             //var password = configuration["AdminPassword"];
 
             string adminEmail = "vladisa375@gmail.com";

@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.Db;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.IngredientToRecipe;
 using SurviveOnSotka.ViewModel.Steps;
 using SurviveOnSotka.ViewModel.Users;
