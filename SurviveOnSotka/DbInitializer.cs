@@ -15,7 +15,7 @@ namespace SurviveOnSotka
             string password = "Vladball45@";
             if (await roleManager.FindByNameAsync("admin") == null)
             {
-                await roleManager.CreateAsync(new Role()
+                await roleManager.CreateAsync(new Role
                 {
                     Name = "admin"
                 });

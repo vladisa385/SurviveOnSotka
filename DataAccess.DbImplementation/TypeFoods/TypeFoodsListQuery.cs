@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.TypeFoods;
@@ -12,10 +13,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
     public class TypeFoodsListQuery : ITypeFoodsListQuery
     {
         private readonly AppDbContext _context;
-        public TypeFoodsListQuery(AppDbContext tasksContext)
+        private readonly IMapper _mapper;
+        public TypeFoodsListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;
-
+            _mapper = mapper;
         }
 
         private IQueryable<TypeFoodResponse> ApplyFilter(IQueryable<TypeFoodResponse> query, TypeFoodFilter filter)
@@ -48,7 +50,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
         public async Task<ListResponse<TypeFoodResponse>> RunAsync(TypeFoodFilter filter, ListOptions options)
         {
             IQueryable<TypeFoodResponse> query = _context.TypeFoods.Include("Ingredients")
-                .ProjectTo<TypeFoodResponse>();
+                .ProjectTo<TypeFoodResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();
             if (options.Sort == null)

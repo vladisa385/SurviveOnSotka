@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
-
+using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 
@@ -35,7 +34,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
                 var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
                 var isAdmin = await _userManager.IsInRoleAsync(currentUser, "admin");
                 if (reviewToDelete.Author != currentUser && !isAdmin)
-                    throw new ThisRequestNotFromOwnerException();
+                    throw new ThisRequestNotFromOwnerException(null);
                 if (reviewToDelete.PathToPhotos != null)
                     DeleteFilesCommand.Execute(reviewToDelete.PathToPhotos);
                 _context.Reviews.Remove(reviewToDelete);

@@ -21,7 +21,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
         }
         public async Task<ListResponse<TagResponse>> RunAsync(TagFilter filter, ListOptions options)
         {
-            IQueryable<TagResponse> query = _context.Tags.ProjectTo<TagResponse>();
+            IQueryable<TagResponse> query = _context.Tags.ProjectTo<TagResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             if (options.Sort == null)
             {

@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Recipies;
+using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Recipies;
@@ -43,7 +43,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
                 var isAdmin = await _userManager.IsInRoleAsync(currentUser, "admin");
                 if (foundRecipe.User != currentUser && !isAdmin)
-                    throw new ThisRequestNotFromOwnerException();
+                    throw new ThisRequestNotFromOwnerException(null);
                 Recipe mappedRecipe = _mapper.Map<UpdateRecipeRequest, Recipe>(request);
                 mappedRecipe.Id = recipeId;
                 foreach (var ingredientToRecipe in mappedRecipe.Ingredients.ToList())

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,12 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
     public class UserQuery : IUserQuery
     {
         private readonly UserManager<User> _userManager;
+        private readonly IMapper _mapper;
 
-        public UserQuery(UserManager<User> userManager)
+        public UserQuery(UserManager<User> userManager, IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<UserResponse> RunAsync(Guid userId)
@@ -27,7 +30,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
                 .Include("CheapPlaces")
                 .Include("RateReviews")
                  .Include("RateCheapPlaces")
-                .ProjectTo<UserResponse>()
+                .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(p => p.Id == userId);
             return response;
         }

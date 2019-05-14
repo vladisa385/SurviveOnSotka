@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Reviews;
@@ -12,10 +13,12 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
     public class ReviewsListQuery : IReviewsListQuery
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ReviewsListQuery(AppDbContext context)
+        public ReviewsListQuery(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
@@ -82,7 +85,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
         public async Task<ListResponse<ReviewResponse>> RunAsync(ReviewFilter filter, ListOptions options)
         {
             IQueryable<ReviewResponse> query = _context.Reviews.Include("Ingredients")
-                .ProjectTo<ReviewResponse>();
+                .ProjectTo<ReviewResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();
             if (options.Sort == null)

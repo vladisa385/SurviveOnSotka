@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Ingredients;
@@ -12,10 +13,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
     public class IngredientsListQuery : IIngredientsListQuery
     {
         private readonly AppDbContext _context;
-        public IngredientsListQuery(AppDbContext tasksContext)
+        private readonly IMapper _mapper;
+        public IngredientsListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;
-
+            _mapper = mapper;
         }
 
         private IQueryable<IngredientResponse> ApplyFilter(IQueryable<IngredientResponse> query, IngredientFilter filter)
@@ -48,7 +50,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
         public async Task<ListResponse<IngredientResponse>> RunAsync(IngredientFilter filter, ListOptions options)
         {
             IQueryable<IngredientResponse> query = _context.Ingredients.Include("Recipies")
-                .ProjectTo<IngredientResponse>();
+                .ProjectTo<IngredientResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();
             if (options.Sort == null)

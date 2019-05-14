@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SurviveOnSotka.Db;
 
 namespace SurviveOnSotka.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190514113302_one")]
+    partial class one
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,6 +127,52 @@ namespace SurviveOnSotka.Db.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("SurviveOnSotka.Entities.CheapPlace", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<Guid>("CityId");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PathToPhotos");
+
+                    b.Property<Guid?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CheapPlaces");
+                });
+
+            modelBuilder.Entity("SurviveOnSotka.Entities.City", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
             modelBuilder.Entity("SurviveOnSotka.Entities.Ingredient", b =>
                 {
                     b.Property<Guid>("Id")
@@ -162,6 +210,49 @@ namespace SurviveOnSotka.Db.Migrations
                     b.HasIndex("IngredientId");
 
                     b.ToTable("IngredientToRecipe");
+                });
+
+            modelBuilder.Entity("SurviveOnSotka.Entities.Level", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("LastLevelId");
+
+                    b.Property<int>("MaxScore");
+
+                    b.Property<int>("MinScore");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<Guid?>("NextLevelId");
+
+                    b.Property<string>("PathToIcon");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LastLevelId")
+                        .IsUnique()
+                        .HasFilter("[LastLevelId] IS NOT NULL");
+
+                    b.ToTable("Levels");
+                });
+
+            modelBuilder.Entity("SurviveOnSotka.Entities.RateCheapPlace", b =>
+                {
+                    b.Property<Guid>("CheapPlaceId");
+
+                    b.Property<Guid>("UserWhoGiveMarkId");
+
+                    b.Property<bool>("IsCool");
+
+                    b.HasKey("CheapPlaceId", "UserWhoGiveMarkId");
+
+                    b.HasIndex("UserWhoGiveMarkId");
+
+                    b.ToTable("RateCheapPlaces");
                 });
 
             modelBuilder.Entity("SurviveOnSotka.Entities.RateReview", b =>
@@ -308,6 +399,19 @@ namespace SurviveOnSotka.Db.Migrations
                     b.ToTable("Tags");
                 });
 
+            modelBuilder.Entity("SurviveOnSotka.Entities.TagsInCheapPlaces", b =>
+                {
+                    b.Property<Guid>("TagId");
+
+                    b.Property<Guid>("CheapPlaceId");
+
+                    b.HasKey("TagId", "CheapPlaceId");
+
+                    b.HasIndex("CheapPlaceId");
+
+                    b.ToTable("TagsInCheapPlaces");
+                });
+
             modelBuilder.Entity("SurviveOnSotka.Entities.TagsInRecipe", b =>
                 {
                     b.Property<Guid>("TagId");
@@ -392,6 +496,8 @@ namespace SurviveOnSotka.Db.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LevelId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -455,6 +561,18 @@ namespace SurviveOnSotka.Db.Migrations
                         .HasForeignKey("ParentCategoryId");
                 });
 
+            modelBuilder.Entity("SurviveOnSotka.Entities.CheapPlace", b =>
+                {
+                    b.HasOne("SurviveOnSotka.Entities.City", "City")
+                        .WithMany("CheapPlaces")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SurviveOnSotka.Entities.User", "User")
+                        .WithMany("CheapPlaces")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("SurviveOnSotka.Entities.Ingredient", b =>
                 {
                     b.HasOne("SurviveOnSotka.Entities.TypeFood", "TypeFood")
@@ -473,6 +591,26 @@ namespace SurviveOnSotka.Db.Migrations
                     b.HasOne("SurviveOnSotka.Entities.Recipe", "Recipe")
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SurviveOnSotka.Entities.Level", b =>
+                {
+                    b.HasOne("SurviveOnSotka.Entities.Level", "LastLevel")
+                        .WithOne("NextLevel")
+                        .HasForeignKey("SurviveOnSotka.Entities.Level", "LastLevelId");
+                });
+
+            modelBuilder.Entity("SurviveOnSotka.Entities.RateCheapPlace", b =>
+                {
+                    b.HasOne("SurviveOnSotka.Entities.CheapPlace", "CheapPlace")
+                        .WithMany("RateCheapPlaces")
+                        .HasForeignKey("CheapPlaceId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SurviveOnSotka.Entities.User", "UserWhoGiveMark")
+                        .WithMany("RateCheapPlaces")
+                        .HasForeignKey("UserWhoGiveMarkId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -529,6 +667,19 @@ namespace SurviveOnSotka.Db.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("SurviveOnSotka.Entities.TagsInCheapPlaces", b =>
+                {
+                    b.HasOne("SurviveOnSotka.Entities.CheapPlace", "CheapPlace")
+                        .WithMany()
+                        .HasForeignKey("CheapPlaceId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SurviveOnSotka.Entities.Tag", "Tag")
+                        .WithMany("CheapPlaces")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SurviveOnSotka.Entities.TagsInRecipe", b =>
                 {
                     b.HasOne("SurviveOnSotka.Entities.Recipe", "Recipe")
@@ -540,6 +691,13 @@ namespace SurviveOnSotka.Db.Migrations
                         .WithMany("Recipies")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SurviveOnSotka.Entities.User", b =>
+                {
+                    b.HasOne("SurviveOnSotka.Entities.Level", "Level")
+                        .WithMany("Users")
+                        .HasForeignKey("LevelId");
                 });
 #pragma warning restore 612, 618
         }

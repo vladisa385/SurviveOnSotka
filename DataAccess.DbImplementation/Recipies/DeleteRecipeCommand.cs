@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Recipies;
+using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 
@@ -34,7 +34,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
                 var isAdmin = await _userManager.IsInRoleAsync(currentUser, "admin");
                 if (recipeToDelete.User != currentUser && !isAdmin)
-                    throw new ThisRequestNotFromOwnerException();
+                    throw new ThisRequestNotFromOwnerException(null);
                 if (recipeToDelete.PathToPhotos != null)
                     DeleteFilesCommand.Execute(recipeToDelete.PathToPhotos);
                 _context.Recipes.Remove(recipeToDelete);

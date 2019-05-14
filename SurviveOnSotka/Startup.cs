@@ -8,14 +8,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Categories;
-using SurviveOnSotka.DataAccess.CheapPlaces;
-using SurviveOnSotka.DataAccess.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
-using SurviveOnSotka.DataAccess.DbImplementation.CheapPlaces;
-using SurviveOnSotka.DataAccess.DbImplementation.Cities;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
-using SurviveOnSotka.DataAccess.DbImplementation.Levels;
-using SurviveOnSotka.DataAccess.DbImplementation.RateCheapPlaces;
 using SurviveOnSotka.DataAccess.DbImplementation.RateReviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Recipies;
 using SurviveOnSotka.DataAccess.DbImplementation.Reviews;
@@ -23,8 +17,6 @@ using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.DbImplementation.Users;
 using SurviveOnSotka.DataAccess.Ingredients;
-using SurviveOnSotka.DataAccess.Levels;
-using SurviveOnSotka.DataAccess.RateCheapPlaces;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.DataAccess.Reviews;
@@ -33,8 +25,6 @@ using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
-using ICreateCheapPlaceCommand = SurviveOnSotka.DataAccess.CheapPlaces.ICreateCheapPlaceCommand;
-using IUpdateCheapPlaceCommand = SurviveOnSotka.DataAccess.CheapPlaces.IUpdateCheapPlaceCommand;
 
 
 namespace SurviveOnSotka
@@ -54,12 +44,13 @@ namespace SurviveOnSotka
         {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            RegisterQueriesAndCommands(services);
+
             services.AddHttpContextAccessor();
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
+            RegisterQueriesAndCommands(services);
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connection));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
             services.AddIdentity<User, Role>()
              .AddEntityFrameworkStores<AppDbContext>();
 
@@ -137,30 +128,11 @@ namespace SurviveOnSotka
                 .AddScoped<IUpdateTypeFoodCommand, UpdateTypeFoodCommand>()
                 .AddScoped<IDeleteTypeFoodCommand, DeleteTypeFoodCommand>()
 
-                .AddScoped<ICitiesListQuery, CitiesListQuery>()
-                 .AddScoped<ICityQuery, CityQuery>()
-                .AddScoped<ICreateCityCommand, CreateCityCommand>()
-                .AddScoped<IUpdateCityCommand, UpdateCityCommand>()
-                .AddScoped<IDeleteCityCommand, DeleteCityCommand>()
-
-                .AddScoped<ICheapPlaceQuery, CheapPlaceQuery>()
-                .AddScoped<ICheapPlacesListQuery, CheapPlacesListQuery>()
-                .AddScoped<ICreateCheapPlaceCommand, CreateCheapPlaceCommand>()
-                .AddScoped<IUpdateCheapPlaceCommand, UpdateCheapPlaceCommand>()
-                .AddScoped<IDeleteCheapPlaceCommand, DeleteCheapPlaceCommand>()
-
-
                 .AddScoped<IIngredientQuery, IngredientQuery>()
                 .AddScoped<IIngredientsListQuery, IngredientsListQuery>()
                 .AddScoped<ICreateIngredientCommand, CreateIngredientCommand>()
                 .AddScoped<IUpdateIngredientCommand, UpdateIngredientCommand>()
                 .AddScoped<IDeleteIngredientCommand, DeleteIngredientCommand>()
-
-                .AddScoped<ILevelQuery, LevelQuery>()
-                .AddScoped<ILevelsListQuery, LevelsListQuery>()
-                .AddScoped<ICreateLevelCommand, CreateLevelCommand>()
-                .AddScoped<IUpdateLevelCommand, UpdateLevelCommand>()
-                .AddScoped<IDeleteLevelCommand, DeleteLevelCommand>()
 
                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 .AddScoped<ILogOffUserCommand, LogOffUserCommand>()
@@ -170,7 +142,6 @@ namespace SurviveOnSotka
                  .AddScoped<IUserQuery, UserQuery>()
                 .AddScoped<IUsersListQuery, UsersListQuery>()
                 .AddScoped<IDeleteUserCommand, DeleteUserCommand>()
-                .AddScoped<IUpdateUserLevelCommand, UpdateUserLevelCommand>()
 
                 .AddScoped<IRecipeQuery, RecipeQuery>()
                 .AddScoped<IRecipiesListQuery, RecipiesListQuery>()
@@ -190,11 +161,6 @@ namespace SurviveOnSotka
                 .AddScoped<IUpdateRateReviewCommand, UpdateRateReviewCommand>()
                 .AddScoped<IDeleteRateReviewCommand, DeleteRateReviewCommand>()
 
-                 .AddScoped<IRateCheapPlaceQuery, RateCheapPlaceQuery>()
-                .AddScoped<IRateCheapPlacesListQuery, RateCheapPlacesListQuery>()
-                .AddScoped<ICreateRateCheapPlaceCommand, CreateRateCheapPlaceCommand>()
-                .AddScoped<IUpdateRateCheapPlaceCommand, UpdateRateCheapPlaceCommand>()
-                .AddScoped<IDeleteRateCheapPlaceCommand, DeleteRateCheapPlaceCommand>()
                 ;
         }
     }

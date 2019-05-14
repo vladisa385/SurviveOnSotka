@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Recipies;
@@ -11,16 +12,17 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
     public class RecipeQuery : IRecipeQuery
     {
         private readonly AppDbContext _context;
-
-        public RecipeQuery(AppDbContext context)
+        private readonly IMapper _mapper;
+        public RecipeQuery(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<RecipeResponse> RunAsync(Guid recipeId)
         {
             RecipeResponse response = await _context.Recipes
-                 .ProjectTo<RecipeResponse>()
+                 .ProjectTo<RecipeResponse>(_mapper.ConfigurationProvider)
                  .FirstOrDefaultAsync(p => p.Id == recipeId);
             return response;
         }

@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.Reviews;
+using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Reviews;
 

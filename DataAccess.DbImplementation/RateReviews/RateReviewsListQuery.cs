@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.RateReviews;
@@ -12,10 +13,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
     public class RateReviewsListQuery : IRateReviewsListQuery
     {
         private readonly AppDbContext _context;
-        public RateReviewsListQuery(AppDbContext tasksContext)
+        private readonly IMapper _mapper;
+        public RateReviewsListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;
-
+            _mapper = mapper;
         }
 
         private IQueryable<RateReviewResponse> ApplyFilter(IQueryable<RateReviewResponse> query, RateReviewFilter filter)
@@ -39,8 +41,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 
         public async Task<ListResponse<RateReviewResponse>> RunAsync(RateReviewFilter filter, ListOptions options)
         {
-            IQueryable<RateReviewResponse> query = _context.RateCheapPlaces
-                .ProjectTo<RateReviewResponse>();
+            IQueryable<RateReviewResponse> query = _context.RateReviews
+                .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();
             if (options.Sort == null)

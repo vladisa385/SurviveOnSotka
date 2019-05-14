@@ -50,7 +50,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
         public async Task<ListResponse<CategoryResponse>> RunAsync(CategoryFilter filter, ListOptions options)
         {
             IQueryable<CategoryResponse> query = _context.Categories.Include("Recipies")
-                .ProjectTo<CategoryResponse>();
+                .ProjectTo<CategoryResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();
             if (options.Sort == null)

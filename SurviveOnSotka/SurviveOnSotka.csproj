@@ -12,6 +12,7 @@
     <Copyright>©Vladislav Konyukhov</Copyright>
     <PackageProjectUrl>https://github.com/vladisa385/SurviveOnSotka</PackageProjectUrl>
     <NoWin32Manifest>true</NoWin32Manifest>
+    <UserSecretsId>7d1cbc15-a83f-4114-a855-d61a30f35061</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

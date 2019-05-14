@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Users;
@@ -12,10 +13,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
     public class UsersListQuery : IUsersListQuery
     {
         private readonly AppDbContext _context;
-        public UsersListQuery(AppDbContext tasksContext)
+        private readonly IMapper _mapper;
+        public UsersListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;
-
+            _mapper = mapper;
         }
 
         private IQueryable<UserResponse> ApplyFilter(IQueryable<UserResponse> query, UserFilter filter)
@@ -49,18 +51,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
                     query = query.Where(p => p.RecipiesCount <= filter.Recipies.To);
                 }
             }
-            if (filter.CheapPlaces != null)
-            {
-                if (filter.CheapPlaces.From != null)
-                {
-                    query = query.Where(p => p.CheapPlacesCount >= filter.CheapPlaces.From);
-                }
 
-                if (filter.CheapPlaces.To != null)
-                {
-                    query = query.Where(p => p.CheapPlacesCount <= filter.CheapPlaces.To);
-                }
-            }
             if (filter.Reviews != null)
             {
                 if (filter.Reviews.From != null)
@@ -96,7 +87,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
                 .Include("CheapPlaces")
                 .Include("RateReviews")
                  .Include("RateCheapPlaces")
-                .ProjectTo<UserResponse>();
+                .ProjectTo<UserResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();
             if (options.Sort == null)

@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.CheapPlaces;
 using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Files;
-
+using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Reviews;
@@ -43,7 +42,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
                 var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
                 var isAdmin = await _userManager.IsInRoleAsync(currentUser, "admin");
                 if (foundReview.Author != currentUser && !isAdmin)
-                    throw new ThisRequestNotFromOwnerException();
+                    throw new ThisRequestNotFromOwnerException(null);
                 Review mappedReview = _mapper.Map<UpdateReviewRequest, Review>(request);
                 mappedReview.Id = reviewId;
                 mappedReview.Author = currentUser;
