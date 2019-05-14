@@ -11,7 +11,7 @@ namespace SurviveOnSotka.Controllers
     public class TagsController : Controller
     {
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(ListResponse<TagResponse>))]
         public async Task<IActionResult> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ITagsListQuery query)
@@ -21,7 +21,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpDelete("{tag}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
         public async Task<IActionResult> DeleteTagAsync(string tag, [FromServices]IDeleteTagCommand command)

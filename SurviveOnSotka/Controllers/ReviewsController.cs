@@ -14,7 +14,7 @@ namespace SurviveOnSotka.Controllers
     public class ReviewsController : Controller
     {
         [HttpGet("GetList")]
-        [Authorize]
+        // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<ReviewResponse>))]
         public async Task<IActionResult> GetReviewsListAsync(ReviewFilter review, ListOptions options,
             [FromServices] IReviewsListQuery query)
@@ -24,7 +24,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [ProducesResponseType(201, Type = typeof(ReviewResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
@@ -40,7 +40,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{reviewId}", Name = "GetSingleReview")]
-        [Authorize(Roles = "user")]
+        // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetReviewAsync(Guid reviewId, [FromServices] IReviewQuery query)
@@ -50,7 +50,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update/{reviewId}")]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
@@ -69,7 +69,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpDelete("Delete/{reviewId}")]
         [ProducesResponseType(204)]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeletereviewAsync(Guid reviewId, [FromServices] IDeleteReviewCommand command)

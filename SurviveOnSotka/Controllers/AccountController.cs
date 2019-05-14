@@ -12,7 +12,7 @@ namespace SurviveOnSotka.Controllers
     public class AccountController : Controller
     {
         [HttpGet("GetList")]
-        [Authorize]
+        // [Authorize]
         [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(ListResponse<UserResponse>))]
         public async Task<IActionResult> GetUsersListAsync(UserFilter user, ListOptions options, [FromServices]IUsersListQuery query)
@@ -22,7 +22,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{userId}", Name = "GetSingleUser")]
-        [Authorize]
+        // [Authorize]
         [ProducesResponseType(200, Type = typeof(UserResponse))]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
@@ -60,7 +60,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> UpdateUser([FromBody]UpdateUserRequest user, [FromServices] IUpdateUserCommand command)
         {
             if (!ModelState.IsValid)
@@ -86,7 +86,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> ChangeUserPassword([FromBody]ChangePasswordUserRequest user, [FromServices] IChangeUserPasswordCommand command)
         {
             if (!ModelState.IsValid)
@@ -130,14 +130,14 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("LogOff")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> LogOff([FromServices] ILogOffUserCommand command)
         {
             await command.ExecuteAsync();
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [HttpDelete("Delete/{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]

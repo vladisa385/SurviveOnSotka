@@ -10,7 +10,7 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [ProducesResponseType(401)]
-    [Authorize]
+    //[Authorize]
     public class RateReviewsController : Controller
     {
 
@@ -41,7 +41,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{reviewId}", Name = "GetSingleRateReview")]
-        [Authorize(Roles = "user")]
+        // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(RateReviewResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetRateReviewAsync(Guid reviewId, [FromServices] IRateReviewQuery query)

@@ -10,12 +10,12 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [ProducesResponseType(401)]
-    [Authorize]
+    // [Authorize]
     public class IngredientsController : Controller
     {
 
         [HttpGet("GetList")]
-        [Authorize(Roles = "user")]
+        //  [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(ListResponse<IngredientResponse>))]
         public async Task<IActionResult> GetIngredientsListAsync(IngredientFilter ingredient, ListOptions options, [FromServices]IIngredientsListQuery query)
         {
@@ -24,7 +24,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(201, Type = typeof(IngredientResponse))]
         [ProducesResponseType(400)]
@@ -45,7 +45,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{ingredientId}", Name = "GetSingleIngredient")]
-        [Authorize(Roles = "user")]
+        //[Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(IngredientResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetIngredientAsync(Guid ingredientId, [FromServices] IIngredientQuery query)
@@ -55,7 +55,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update/{ingredientId}")]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [ProducesResponseType(200, Type = typeof(IngredientResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
@@ -81,7 +81,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpDelete("Delete/{ingredientId}")]
         [ProducesResponseType(204)]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         public async Task<IActionResult> DeleteingredientAsync(Guid ingredientId, [FromServices]IDeleteIngredientCommand command)

@@ -9,7 +9,7 @@ using SurviveOnSotka.ViewModel.Recipies;
 
 namespace SurviveOnSotka.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ProducesResponseType(401)]
     [Route("api/[controller]")]
     public class RecipesController : Controller

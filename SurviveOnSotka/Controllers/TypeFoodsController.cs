@@ -14,7 +14,7 @@ namespace SurviveOnSotka.Controllers
     {
 
         [HttpGet("GetList")]
-        [Authorize]
+        // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<TypeFoodResponse>))]
         public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ITypeFoodsListQuery query)
         {
@@ -23,7 +23,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [ProducesResponseType(201, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
@@ -36,7 +36,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{typeFoodId}", Name = "GetSingleTypeFood")]
-        [Authorize(Roles = "user")]
+        // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetTypeFoodAsync(Guid typeFoodId, [FromServices] ITypeFoodQuery query)
@@ -46,7 +46,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update/{typeFoodId}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
@@ -63,7 +63,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpDelete("Delete/{typeFoodId}")]
         [ProducesResponseType(204)]
-        [Authorize(Roles = "admin")]
+        //  [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeletetypeFoodAsync(Guid typeFoodId, [FromServices]IDeleteTypeFoodCommand command)

@@ -14,7 +14,7 @@ namespace SurviveOnSotka.Controllers
     {
         [HttpGet("GetList")]
         [ProducesResponseType(401)]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<CategoryResponse>))]
         public async Task<IActionResult> GetCategoriesListAsync(CategoryFilter categoryFilter, ListOptions options, [FromServices]ICategoriesListQuery query)
         {
@@ -23,7 +23,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ProducesResponseType(201, Type = typeof(CategoryResponse))]
@@ -45,7 +45,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{categoryId}", Name = "GetSingleCategory")]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(CategoryResponse))]
         [ProducesResponseType(404)]
@@ -56,7 +56,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update/{categoryId}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ProducesResponseType(200, Type = typeof(CategoryResponse))]
@@ -82,7 +82,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpDelete("Delete/{categoryId}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
