@@ -13,7 +13,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
     public class TagsListQuery : ITagsListQuery
     {
         private readonly AppDbContext _context;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         public TagsListQuery(AppDbContext context, IMapper mapper)
         {
             _context = context;

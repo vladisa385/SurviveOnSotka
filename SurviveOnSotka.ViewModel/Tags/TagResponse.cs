@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SurviveOnSotka.ViewModel.Tags
 {
@@ -7,7 +8,7 @@ namespace SurviveOnSotka.ViewModel.Tags
         [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }
         [Required]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public int RecipiesCount { get; set; }
     }
