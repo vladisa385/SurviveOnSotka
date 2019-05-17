@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SurviveOnSotka.ViewModel.TagsInRecipe
+﻿namespace SurviveOnSotka.ViewModel.TagsInRecipe
 {
     public class TagsInRecipeResponse
     {

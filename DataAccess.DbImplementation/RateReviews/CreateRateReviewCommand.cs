@@ -17,7 +17,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
 
-        public CreateRateReviewCommand(AppDbContext context, IMapper mapper, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+        public CreateRateReviewCommand(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -26,7 +26,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
         public async Task<RateReviewResponse> ExecuteAsync(CreateRateReviewRequest request,Guid userId)
         {
             var rateReview = _mapper.Map<CreateRateReviewRequest, RateReview>(request);
-            rateReview.UserWhoGiveMarkId = userId;
+            rateReview.UserId = userId;
             try
             {
                 await _context.RateReviews.AddAsync(rateReview);
@@ -36,7 +36,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             {
                 throw new CannotCreateOrUpdateRateReviewException();
             }
-            
             return _mapper.Map<RateReview, RateReviewResponse>(rateReview);
         }
     }

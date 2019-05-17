@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Categories;
 using SurviveOnSotka.ViewModel.Ingredients;

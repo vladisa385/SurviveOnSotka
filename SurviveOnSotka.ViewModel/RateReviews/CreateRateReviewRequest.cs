@@ -5,6 +5,7 @@ namespace SurviveOnSotka.ViewModel.RateReviews
 {
     public class CreateRateReviewRequest
     {
+
         [Required]
         public Guid ReviewId { get; set; }
         [Required]

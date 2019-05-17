@@ -14,42 +14,30 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        public RateReviewsListQuery(AppDbContext tasksContext, IMapper mapper)
+        public RateReviewsListQuery(AppDbContext context, IMapper mapper)
         {
-            _context = tasksContext;
+            _context = context;
             _mapper = mapper;
         }
 
         private IQueryable<RateReviewResponse> ApplyFilter(IQueryable<RateReviewResponse> query, RateReviewFilter filter)
         {
-
-            if (filter.UserWhoGiveMarkId != null)
-            {
-                query = query.Where(p => p.UserWhoGiveMarkId == filter.UserWhoGiveMarkId);
-            }
-
+            if (filter.UserId != null)
+                query = query.Where(p => p.UserId == filter.UserId);
             if (filter.ReviewId != null)
-            {
                 query = query.Where(p => p.ReviewId == filter.ReviewId);
-            }
             if (filter.IsCool != null)
-            {
                 query = query.Where(p => p.IsCool == filter.IsCool);
-            }
             return query;
         }
 
         public async Task<ListResponse<RateReviewResponse>> RunAsync(RateReviewFilter filter, ListOptions options)
         {
-            IQueryable<RateReviewResponse> query = _context.RateReviews
-                .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider);
+            var query = _context.RateReviews.ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
-            int totalCount = await query.CountAsync();
+            var totalCount = await query.CountAsync();
             if (options.Sort == null)
-            {
                 options.Sort = "ReviewId";
-            }
-
             query = options.ApplySort(query);
             query = options.ApplyPaging(query);
             return new ListResponse<RateReviewResponse>

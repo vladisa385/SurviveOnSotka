@@ -7,9 +7,9 @@ namespace SurviveOnSotka.Entities
     {
 
         public Guid ReviewId { get; set; }
-        public Guid UserWhoGiveMarkId { get; set; }
+        public Guid UserId { get; set; }
         public Review Review { get; set; }
-        public User UserWhoGiveMark { get; set; }
+        public User User { get; set; }
         [Required]
         public bool IsCool { get; set; }
     }

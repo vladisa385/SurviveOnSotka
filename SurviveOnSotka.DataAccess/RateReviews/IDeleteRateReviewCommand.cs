@@ -5,6 +5,6 @@ namespace SurviveOnSotka.DataAccess.RateReviews
 {
     public interface IDeleteRateReviewCommand
     {
-        Task ExecuteAsync(Guid reviewId);
+        Task ExecuteAsync(Guid reviewId,Guid userId);
     }
 }
