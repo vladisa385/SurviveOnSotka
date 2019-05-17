@@ -9,6 +9,8 @@ namespace SurviveOnSotka.Db
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<IngredientToRecipe> IngredientToRecipe { get; set; }
+        public DbSet<RecipeInCategories> RecipeInCategories { get; set; }
         public DbSet<RateReview> RateReviews { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Review> Reviews { get; set; }

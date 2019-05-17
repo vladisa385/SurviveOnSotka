@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.Db;
@@ -11,11 +10,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
     public class DeleteTagCommand : IDeleteTagCommand
     {
         private readonly AppDbContext _context;
-        private IMapper _mapper;
+
         public DeleteTagCommand(AppDbContext context, IMapper mapper)
         {
             _context = context;
-            _mapper = mapper;
         }
         public async Task ExecuteAsync(string tag)
         {
