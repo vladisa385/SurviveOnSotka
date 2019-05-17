@@ -95,7 +95,7 @@ namespace SurviveOnSotka
             {
                 app.UseHsts();
             }
-             app.ConfigureExceptionHandler();
+            app.ConfigureCustomExceptionMiddleware();
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
