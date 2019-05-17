@@ -6,6 +6,6 @@ namespace SurviveOnSotka.DataAccess.RateReviews
 {
     public interface ICreateRateReviewCommand
     {
-        Task<RateReviewResponse> ExecuteAsync(Guid reviewId, CreateRateReviewRequest request);
+        Task<RateReviewResponse> ExecuteAsync(CreateRateReviewRequest request,Guid userId);
     }
 }

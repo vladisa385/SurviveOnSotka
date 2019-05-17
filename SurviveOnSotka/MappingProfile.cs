@@ -9,6 +9,7 @@ using SurviveOnSotka.ViewModel.Recipies;
 using SurviveOnSotka.ViewModel.Reviews;
 using SurviveOnSotka.ViewModel.Steps;
 using SurviveOnSotka.ViewModel.Tags;
+using SurviveOnSotka.ViewModel.TagsInRecipe;
 using SurviveOnSotka.ViewModel.TypeFoods;
 using SurviveOnSotka.ViewModel.Users;
 
@@ -58,6 +59,8 @@ namespace SurviveOnSotka
                .ForMember(d => d.RecipiesCount, o => o.MapFrom(src => src.Recipies.Count))
                ;
 
+            CreateMap<TagsInRecipe, TagsInRecipeResponse>();
+
             CreateMap<Ingredient, IngredientResponse>()
                 .ForMember(d => d.RecipiesCount, o => o.MapFrom(src => src.Recipies.Count));
 
@@ -74,10 +77,7 @@ namespace SurviveOnSotka
                 .ForMember(u => u.RecipeId, pt => pt.Ignore());
             CreateMap<CreateIngredientToRecipeRequest, IngredientToRecipe>()
                    .ForMember(u => u.RecipeId, pt => pt.Ignore());
-            CreateMap<Recipe, RecipeResponse>().
-            ForMember(d => d.User, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.User)))
-              .ForMember(dest => dest.Tags, opt => opt.MapFrom(so => so.Tags.Select(t => t.Tag.Name).ToList()));
-            CreateMap<UpdateRecipeRequest, Recipe>().
+             CreateMap<UpdateRecipeRequest, Recipe>().
             ForMember(d => d.Tags, pt => pt.Ignore());
             CreateMap<CreateRecipeRequest, Recipe>().
             ForMember(d => d.Tags, pt => pt.Ignore());

@@ -33,7 +33,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             {
                 query = query.Where(p => p.Name.StartsWith(filter.Name));
             }
-
             if (filter.Categories != null)
             {
                 if (filter.Categories.From != null)
@@ -50,12 +49,12 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             {
                 if (filter.Reviews.From != null)
                 {
-                    query = query.Where(p => p.ReviewsCount >= filter.Reviews.From);
+                    query = query.Where(p => p.Reviews.Count >= filter.Reviews.From);
                 }
 
                 if (filter.Reviews.To != null)
                 {
-                    query = query.Where(p => p.ReviewsCount <= filter.Reviews.To);
+                    query = query.Where(p => p.Reviews.Count <= filter.Reviews.To);
                 }
             }
             if (filter.DateCreated != null)
@@ -106,12 +105,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                     query = query.Where(p => p.TimeForPreparetion <= filter.TimeForPreparetion.To);
                 }
             }
-
             if (filter.Tags != null)
             {
                 foreach (var tag in filter.Tags)
                 {
-                    query = query.Where(u => u.Tags.Any(y => y == tag));
+                    query = query.Where(u => u.Tags.Any(y => y.Tag == tag));
                 }
             }
             //if (filter.Ingredients != null)
@@ -143,8 +141,14 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 
         public async Task<ListResponse<RecipeResponse>> RunAsync(RecipeFilter filter, ListOptions options)
         {
-            IQueryable<RecipeResponse> query = _context.Recipes.Include("Ingredients")
-                .ProjectTo<RecipeResponse>(_mapper.ConfigurationProvider);
+            IQueryable<RecipeResponse> query = _context.Recipes
+                .Include("Ingredients")
+                .Include("Categories")
+                .Include("Reviews")
+                .Include("Ingredients")
+                .Include("Steps")
+                .Include("Tags")
+                .ProjectTo<RecipeResponse>(_mapper.ConfigurationProvider); ;
             query = ApplyFilter(query, filter);
             int totalCount = await query.CountAsync();
             if (options.Sort == null)

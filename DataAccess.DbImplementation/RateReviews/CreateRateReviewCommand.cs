@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
@@ -16,39 +15,27 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CreateRateReviewCommand(AppDbContext context, IMapper mapper, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _mapper = mapper;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<RateReviewResponse> ExecuteAsync(Guid reviewId, CreateRateReviewRequest request)
+        public async Task<RateReviewResponse> ExecuteAsync(CreateRateReviewRequest request,Guid userId)
         {
-            RateReview rateReview = null;
-            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            var currentReview = await _context.Reviews.Include("RateReviews").FirstOrDefaultAsync(u => u.Id == reviewId);
-            if (currentReview != null)
+            var rateReview = _mapper.Map<CreateRateReviewRequest, RateReview>(request);
+            rateReview.UserWhoGiveMarkId = userId;
+            try
             {
-                var currentUser = await _userManager.Users.Include("RateReviews").FirstOrDefaultAsync(
-                    u => u.Id == user.Id);
-                if (_context.RateReviews.AnyAsync(
-                        u => u.ReviewId == currentReview.Id &&
-                             u.UserWhoGiveMarkId == currentUser.Id).Result == false)
-                {
-                    rateReview = _mapper.Map<CreateRateReviewRequest, RateReview>(request);
-                    rateReview.UserWhoGiveMark = currentUser;
-                    currentUser.RateReviews.Add(rateReview);
-                    rateReview.Review = currentReview;
-                    currentReview.RateReviews.Add(rateReview);
-                    await _context.RateReviews.AddAsync(rateReview);
-                    await _context.SaveChangesAsync();
-                }
+                await _context.RateReviews.AddAsync(rateReview);
+                await _context.SaveChangesAsync();
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.GetType());
+            }
+            
             return _mapper.Map<RateReview, RateReviewResponse>(rateReview);
         }
     }
