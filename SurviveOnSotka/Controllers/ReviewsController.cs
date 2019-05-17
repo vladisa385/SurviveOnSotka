@@ -28,12 +28,11 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(201, Type = typeof(ReviewResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateReviewAsync(Guid recipeId, [FromBody] CreateReviewRequest review,
-            [FromServices] ICreateReviewCommand command)
+        public async Task<IActionResult> CreateReviewAsync([FromBody] CreateReviewRequest review, [FromServices] ICreateReviewCommand command)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            ReviewResponse response = await command.ExecuteAsync(recipeId, review);
+            ReviewResponse response = await command.ExecuteAsync(review);
             if (response == null)
                 return NotFound();
             return CreatedAtRoute("GetSingleReview", new { reviewId = response.Id }, response);

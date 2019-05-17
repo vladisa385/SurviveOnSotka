@@ -26,7 +26,7 @@ namespace SurviveOnSotka.Entities
             get
             {
                 if (RateReviews == null) return 0;
-                return RateReviews.Count(u => u.IsCool == true);
+                return RateReviews.Count(u => u.IsCool);
             }
         }
         public int DisLikes

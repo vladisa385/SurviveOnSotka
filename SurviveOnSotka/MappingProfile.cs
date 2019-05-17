@@ -81,11 +81,7 @@ namespace SurviveOnSotka
             ForMember(d => d.Tags, pt => pt.Ignore());
             CreateMap<CreateRecipeRequest, Recipe>().
             ForMember(d => d.Tags, pt => pt.Ignore());
-            CreateMap<Review, ReviewResponse>().
-                ForMember(d => d.Author, o => o.MapFrom(src => Mapper.Map<User, UserResponse>(src.Author))).
-                ForMember(d => d.Likes, o => o.MapFrom(src => src.RateReviews.Count(u => u.IsCool == true))).
-            ForMember(d => d.DisLikes, o => o.MapFrom(src => src.RateReviews.Count(u => u.IsCool != true)));
-            CreateMap<UpdateReviewRequest, Review>();
+                 CreateMap<UpdateReviewRequest, Review>();
             CreateMap<CreateReviewRequest, Review>();
 
             CreateMap<RateReview, RateReviewResponse>();

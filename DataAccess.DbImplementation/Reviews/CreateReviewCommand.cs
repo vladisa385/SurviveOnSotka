@@ -32,11 +32,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<ReviewResponse> ExecuteAsync(Guid recipeId, CreateReviewRequest request)
+        public async Task<ReviewResponse> ExecuteAsync(CreateReviewRequest request)
         {
             Review review = null;
             User user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            var currentRecipe = await _context.Recipes.Include("Reviews").FirstOrDefaultAsync(u => u.Id == recipeId);
+            var currentRecipe = await _context.Recipes.Include("Reviews").FirstOrDefaultAsync(u => u.Id == request.RecipeId);
             if (currentRecipe != null)
             {
                 var currentUser = await _userManager.Users.Include("Reviews").FirstOrDefaultAsync(
