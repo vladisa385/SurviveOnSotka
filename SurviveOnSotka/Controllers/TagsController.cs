@@ -15,7 +15,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(200, Type = typeof(ListResponse<TagResponse>))]
         public async Task<IActionResult> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ITagsListQuery query)
         {
-            ListResponse<TagResponse> response = await query.RunAsync(filter, options);
+            var response = await query.RunAsync(filter, options);
             return Ok(response);
         }
 

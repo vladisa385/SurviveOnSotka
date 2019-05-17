@@ -74,9 +74,7 @@ namespace SurviveOnSotka.Controllers
         public async Task<IActionResult> UpdateRateReviewAsync([FromBody] UpdateRateReviewRequest request, [FromServices] IUpdateRateReviewCommand command)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
             var currentUser = await GetCurrentUserAsync();
             try
             {

@@ -40,9 +40,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
                 options.Sort = "ReviewId";
             query = options.ApplySort(query);
             query = options.ApplyPaging(query);
+            var items = await query.ToListAsync();
             return new ListResponse<RateReviewResponse>
             {
-                Items = await query.ToListAsync(),
+                Items = items,
                 Page = options.Page,
                 PageSize = options.PageSize ?? -1,
                 Sort = options.Sort ?? "-Id",
