@@ -13,21 +13,12 @@ namespace SurviveOnSotka.Controllers
     [Route("api/[controller]")]
     [ProducesResponseType(401)]
     //[Authorize]
-    public class RateReviewsController : Controller
+    public class RateReviewsController : BaseController
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<User> _userManager;
-        public RateReviewsController(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+        public RateReviewsController(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager) : base(httpContextAccessor, userManager)
         {
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
         }
-        private async Task<User> GetCurrentUserAsync()
-        {
-            var contextUser = _httpContextAccessor.HttpContext.User;
-            var result = await _userManager.GetUserAsync(contextUser);
-            return result;
-        }
+
         [HttpGet("GetList")]
         [ProducesResponseType(200, Type = typeof(ListResponse<RateReviewResponse>))]
 
