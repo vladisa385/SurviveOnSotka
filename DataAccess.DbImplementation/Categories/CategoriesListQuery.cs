@@ -13,7 +13,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
     public class CategoriesListQuery : ICategoriesListQuery
     {
         private readonly AppDbContext _context;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         public CategoriesListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;

@@ -30,7 +30,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
         public async Task<RateReviewResponse> ExecuteAsync(Guid reviewId, CreateRateReviewRequest request)
         {
             RateReview rateReview = null;
-            User user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
             var currentReview = await _context.Reviews.Include("RateReviews").FirstOrDefaultAsync(u => u.Id == reviewId);
             if (currentReview != null)
             {
