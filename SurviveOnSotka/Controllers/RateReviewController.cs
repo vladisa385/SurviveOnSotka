@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
+using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.RateReviews;
 
@@ -36,15 +37,8 @@ namespace SurviveOnSotka.Controllers
         public async Task<IActionResult> CreateRateReviewAsync([FromBody] CreateRateReviewRequest request, [FromServices]ICreateRateReviewCommand command)
         {
             var currentUser = await GetCurrentUserAsync();
-            try
-            {
-                var response = await command.ExecuteAsync(request,currentUser.Id);
-                return CreatedAtRoute("GetSingleRateReview", new { reviewId = response.ReviewId }, response);
-            }
-            catch (CannotCreateOrUpdateRateReviewException e)
-            {
-                return BadRequest(e.Message);
-            }
+            var response = await command.ExecuteAsync(request,currentUser.Id);
+            return CreatedAtRoute("GetSingleRateReview", new { reviewId = response.ReviewId }, response);
         }
 
         [HttpGet("Get/{reviewId}", Name = "GetSingleRateReview")]
@@ -66,15 +60,8 @@ namespace SurviveOnSotka.Controllers
         public async Task<IActionResult> UpdateRateReviewAsync([FromBody] UpdateRateReviewRequest request, [FromServices] IUpdateRateReviewCommand command)
         {
             var currentUser = await GetCurrentUserAsync();
-            try
-            {
-                var response = await command.ExecuteAsync(request, currentUser.Id);
-                return  Ok(response);
-            }
-            catch (CannotCreateOrUpdateRateReviewException e)
-            {
-                return NotFound(e.Message);
-            }
+            var response = await command.ExecuteAsync(request, currentUser.Id);
+            return  Ok(response);
         }
 
         [HttpDelete("Delete/{reviewId}")]

@@ -32,7 +32,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
                 await _context.RateReviews.AddAsync(rateReview);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
                 throw new CannotCreateOrUpdateRateReviewException();
             }

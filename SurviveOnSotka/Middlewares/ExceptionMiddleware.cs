@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using SurviveOnSotka.DataAccess.RateReviews;
 
 namespace SurviveOnSotka.Middlewares
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
@@ -26,21 +26,16 @@ namespace SurviveOnSotka.Middlewares
             }
             catch (Exception ex)
             {
-                //_logger.LogError($"Something went wrong: {ex}");
-                await HandleExceptionAsync(httpContext, ex);
+                var errorDetails = ErrorDetails.GetErrorDetailsByException(ex);
+                await HandleExceptionAsync(httpContext,errorDetails);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static Task HandleExceptionAsync(HttpContext context,ErrorDetails errorDetails)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-            return context.Response.WriteAsync(new ErrorDetails()
-            {
-                StatusCode = context.Response.StatusCode,
-                Message = "Internal Server Error from the custom middleware."
-            }.ToString());
+            context.Response.StatusCode = errorDetails.StatusCode;
+            return context.Response.WriteAsync(errorDetails.ToString());
         }
     }
 
