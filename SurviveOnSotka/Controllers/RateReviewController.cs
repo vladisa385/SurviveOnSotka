@@ -53,18 +53,26 @@ namespace SurviveOnSotka.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var currentUser = await GetCurrentUserAsync();
-            var response = await command.ExecuteAsync( rateReview, currentUser.Id);
-            return CreatedAtRoute("GetSingleRateReview", new { reviewId = response.ReviewId }, response);
+            try
+            {
+                var response = await command.ExecuteAsync(rateReview, currentUser.Id);
+                return CreatedAtRoute("GetSingleRateReview", new { reviewId = response.ReviewId }, response);
 
+            }
+            catch (CannotCreateOrUpdateRateReviewException e)
+            {
+                return BadRequest(e.Message);
+            }
+           
         }
 
-        [HttpGet("Get/{rateReviewId}", Name = "GetSingleRateReview")]
+        [HttpGet("Get/{reviewId}", Name = "GetSingleRateReview")]
         // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(RateReviewResponse))]
-        [ProducesResponseType(404)]
-        public async Task<IActionResult> GetRateReviewAsync(Guid rateReviewId, [FromServices] IRateReviewQuery query)
+        [ProducesResponseType(401)]
+        public async Task<IActionResult> GetRateReviewAsync(Guid reviewId, [FromServices] IRateReviewQuery query)
         {
-            RateReviewResponse response = await query.RunAsync(rateReviewId);
+            RateReviewResponse response = await query.RunAsync(reviewId);
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 

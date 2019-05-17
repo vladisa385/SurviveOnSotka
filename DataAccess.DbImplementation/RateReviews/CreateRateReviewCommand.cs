@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
@@ -31,9 +32,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
                 await _context.RateReviews.AddAsync(rateReview);
                 await _context.SaveChangesAsync();
             }
-            catch (Exception e)
+            catch (DbUpdateException)
             {
-                Console.WriteLine(e.GetType());
+                throw new CannotCreateOrUpdateRateReviewException();
             }
             
             return _mapper.Map<RateReview, RateReviewResponse>(rateReview);
