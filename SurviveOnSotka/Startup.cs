@@ -25,6 +25,8 @@ using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
+using SurviveOnSotka.Filters;
+using SurviveOnSotka.Middlewares;
 
 
 namespace SurviveOnSotka
@@ -93,7 +95,7 @@ namespace SurviveOnSotka
             {
                 app.UseHsts();
             }
-            // app.UseAuthentication();
+             app.ConfigureExceptionHandler();
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -106,7 +108,6 @@ namespace SurviveOnSotka
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
             app.UseMvc();
         }
 
@@ -139,7 +140,7 @@ namespace SurviveOnSotka
                 .AddScoped<ILoginUserCommand, LoginUserCommand>()
                 .AddScoped<IChangeUserPasswordCommand, ChangeUserPasswordCommand>()
                 .AddScoped<IUpdateUserCommand, UpdateUserCommand>()
-                 .AddScoped<IUserQuery, UserQuery>()
+                .AddScoped<IUserQuery, UserQuery>()
                 .AddScoped<IUsersListQuery, UsersListQuery>()
                 .AddScoped<IDeleteUserCommand, DeleteUserCommand>()
 
@@ -161,7 +162,8 @@ namespace SurviveOnSotka
                 .AddScoped<IUpdateRateReviewCommand, UpdateRateReviewCommand>()
                 .AddScoped<IDeleteRateReviewCommand, DeleteRateReviewCommand>()
 
-                ;
+                .AddScoped<ModelValidationAttribute>();
+            ;
         }
     }
 
