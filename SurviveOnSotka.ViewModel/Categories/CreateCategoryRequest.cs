@@ -10,7 +10,7 @@ namespace SurviveOnSotka.ViewModel.Categories
         public string Name { get; set; }
         [MinLength(10), MaxLength(64)]
         public string Descriptrion { get; set; }
-        public Guid? IdParentCategory { get; set; }
+        public Guid? ParentCategoryId { get; set; }
         public IFormFile Icon { get; set; }
 
     }

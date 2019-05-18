@@ -18,10 +18,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             _context = dbContext;
             _mapper = mapper;
         }
-
         public async Task<TypeFoodResponse> RunAsync(Guid typeFoodId)
         {
-            TypeFoodResponse response = await _context.TypeFoods
+            var response = await _context.TypeFoods
                 .ProjectTo<TypeFoodResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(p => p.Id == typeFoodId);
             return response;

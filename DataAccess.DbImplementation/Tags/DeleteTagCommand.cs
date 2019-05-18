@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Tags;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.Entities;
 using Task = System.Threading.Tasks.Task;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Tags

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.Entities;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {

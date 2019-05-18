@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
@@ -22,21 +21,16 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             _mapper = mapper;
         }
 
-        public async Task<RateReviewResponse> ExecuteAsync(UpdateRateReviewRequest request,Guid userId)
+        public async Task<RateReviewResponse> ExecuteAsync(UpdateRateReviewRequest request, Guid userId)
         {
-            try
-            {
-                var rateReview = await _context.RateReviews.FirstAsync(u =>
-                    u.ReviewId == request.ReviewId && 
-                    u.UserId == userId);
-                rateReview.IsCool = request.IsCool;
-                await _context.SaveChangesAsync();
-                return _mapper.Map<RateReview, RateReviewResponse>(rateReview);
-            }
-            catch (DbUpdateException)
-            {
-                throw new CannotCreateOrUpdateRateReviewException();
-            }
+            var rateReview = await _context.RateReviews.FirstOrDefaultAsync(u =>
+                u.ReviewId == request.ReviewId &&
+                u.UserId == userId);
+            if(rateReview==null)
+                 throw new UpdateItemException("RateReview cannot be updated.ReviewId with this id doesn't exist");
+            rateReview.IsCool = request.IsCool;
+            await _context.SaveChangesAsync();
+            return _mapper.Map<RateReview, RateReviewResponse>(rateReview);
         }
     }
 }

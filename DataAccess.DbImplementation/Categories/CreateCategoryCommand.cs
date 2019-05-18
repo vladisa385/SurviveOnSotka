@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Categories;
-using SurviveOnSotka.DataAccess.DbImplementation.Files;
+using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Categories;
@@ -14,28 +13,26 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IHostingEnvironment _appEnvironment;
-        public CreateCategoryCommand(AppDbContext dbContext, IMapper mapper, IHostingEnvironment appEnvironment)
+        public CreateCategoryCommand(AppDbContext dbContext, IMapper mapper)
         {
             _context = dbContext;
             _mapper = mapper;
-            _appEnvironment = appEnvironment;
         }
         public async Task<CategoryResponse> ExecuteAsync(CreateCategoryRequest request)
         {
-            if (!_context.Categories.AnyAsync(u => u.Id == request.IdParentCategory).Result)
-            {
-                throw new CannotCreateOrUpdateCategoryWithThisIParentCategoryGuidException();
-            }
             var category = _mapper.Map<CreateCategoryRequest, Category>(request);
-            await _context.Categories.AddAsync(category);
-            if (request.Icon != null)
+            try
             {
-                string basedir = _appEnvironment.WebRootPath + "/Files/Categories/";
-                category.PathToIcon = basedir + request.Icon.FileName;
-                await CreateFileCommand.ExecuteAsync(request.Icon, basedir);
+                await _context.Categories.AddAsync(category);
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
+            catch (DbUpdateException exception)
+            {
+                throw new CreateItemException("Category cannot be created, The ParentCategory's guid is incorrect")
+                {
+                    DbUpdateException = exception,
+                };
+            }
             return _mapper.Map<Category, CategoryResponse>(category);
         }
     }

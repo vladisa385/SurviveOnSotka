@@ -23,7 +23,7 @@ namespace SurviveOnSotka
             // mapping to and from
             CreateMap<Category, CategoryResponse>()
                 .ForMember(d => d.RecipiesCount, o => o.MapFrom(src => src.Recipies.Count))
-                .ForMember(d => d.ParentCategory, o => o.MapFrom(u => u.ParentCategory.Id))
+                        .ForMember(d => d.CategoriesCount, o => o.MapFrom(src => src.Categories.Count))
                 ;
             CreateMap<UpdateCategoryRequest, Category>();
             CreateMap<CreateCategoryRequest, Category>();

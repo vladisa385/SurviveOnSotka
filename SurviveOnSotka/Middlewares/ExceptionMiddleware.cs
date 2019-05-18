@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.DataAccess.RateReviews;
 
 namespace SurviveOnSotka.Middlewares
@@ -24,9 +25,10 @@ namespace SurviveOnSotka.Middlewares
             {
                 await _next(httpContext);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                var errorDetails = ErrorDetails.GetErrorDetailsByException(ex);
+                //log
+                var errorDetails = new ErrorDetails(exception);
                 await HandleExceptionAsync(httpContext,errorDetails);
             }
         }
@@ -34,7 +36,7 @@ namespace SurviveOnSotka.Middlewares
         private static Task HandleExceptionAsync(HttpContext context,ErrorDetails errorDetails)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = errorDetails.StatusCode;
+            context.Response.StatusCode = (int)errorDetails.StatusCode;
             return context.Response.WriteAsync(errorDetails.ToString());
         }
     }

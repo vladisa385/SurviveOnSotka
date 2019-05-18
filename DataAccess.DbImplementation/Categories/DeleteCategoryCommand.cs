@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Immutable;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Categories;
-using SurviveOnSotka.DataAccess.DbImplementation.Files;
+using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.Entities;
 using Task = System.Threading.Tasks.Task;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
@@ -19,17 +18,16 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
         }
         public async Task ExecuteAsync(Guid categoryId)
         {
-            var categories = _context.Categories.ToImmutableList();
-            Category categoryToDelete = await _context.Categories.FirstOrDefaultAsync(p => p.Id == categoryId);
+            var categoryToDelete = await _context.Categories
+                .Include(u=>u.Recipies)
+                .Include(u=>u.Categories)
+                .FirstOrDefaultAsync(p => p.Id == categoryId);
             if (categoryToDelete?.Recipies?.Count > 0)
-            {
-                throw new CannotDeleteCategoryWithRecipiesException();
-            }
-
+                throw new DeleteItemCrudException("Category cannot be deleted, if there are recipies in it.");
+            if (categoryToDelete?.Categories.Count(u=>u.Id!=categoryToDelete.Id) > 0)
+                throw new DeleteItemCrudException("Category cannot be deleted, if there are categories in it.");
             if (categoryToDelete != null)
             {
-                if (categoryToDelete.PathToIcon != null)
-                    DeleteFileCommand.Execute(categoryToDelete.PathToIcon);
                 _context.Categories.Remove(categoryToDelete);
                 await _context.SaveChangesAsync();
             }

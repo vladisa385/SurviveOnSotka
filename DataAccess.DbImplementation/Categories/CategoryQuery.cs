@@ -18,10 +18,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
             _context = dbContext;
             _mapper = mapper;
         }
-
         public async Task<CategoryResponse> RunAsync(Guid categoryId)
         {
-            CategoryResponse response = await _context.Categories
+            var response = await _context.Categories
                 .ProjectTo<CategoryResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(p => p.Id == categoryId);
             return response;

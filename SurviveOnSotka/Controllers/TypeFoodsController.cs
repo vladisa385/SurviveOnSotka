@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.TypeFoods;
+using SurviveOnSotka.Filters;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.TypeFoods;
 
@@ -23,14 +24,13 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPost("Create")]
         // [Authorize(Roles = "admin")]
+        [ModelValidation]
         [ProducesResponseType(201, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]ICreateTypeFoodCommand command)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            TypeFoodResponse response = await command.ExecuteAsync(typeFood);
+            var response = await command.ExecuteAsync(typeFood);
             return CreatedAtRoute("GetSingleTypeFood", new { typeFoodId = response.Id }, response);
         }
 
@@ -40,24 +40,21 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetTypeFoodAsync(Guid typeFoodId, [FromServices] ITypeFoodQuery query)
         {
-            TypeFoodResponse response = await query.RunAsync(typeFoodId);
+            var response = await query.RunAsync(typeFoodId);
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
         [HttpPut("Update/{typeFoodId}")]
         //[Authorize(Roles = "admin")]
+        [ModelValidation]
         [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> UpdatetypeFoodAsync(Guid typeFoodId, [FromBody] UpdateTypeFoodRequest request, [FromServices] IUpdateTypeFoodCommand command)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            TypeFoodResponse response = await command.ExecuteAsync(typeFoodId, request);
-            return response == null ? (IActionResult)NotFound($"typeFood with id: {typeFoodId} not found") : Ok(response);
+            var response = await command.ExecuteAsync(typeFoodId, request);
+            return Ok(response);
         }
 
         [HttpDelete("Delete/{typeFoodId}")]
@@ -65,19 +62,10 @@ namespace SurviveOnSotka.Controllers
         //  [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeletetypeFoodAsync(Guid typeFoodId, [FromServices]IDeleteTypeFoodCommand command)
+        public async Task<IActionResult> DeleteTypeFoodAsync(Guid typeFoodId, [FromServices]IDeleteTypeFoodCommand command)
         {
-            try
-            {
-                await command.ExecuteAsync(typeFoodId);
-                return NoContent();
-            }
-            catch (CannotDeleteTypeFoodWithIngredientsExeption exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            await command.ExecuteAsync(typeFoodId);
+            return NoContent();
         }
     }
-
-
 }

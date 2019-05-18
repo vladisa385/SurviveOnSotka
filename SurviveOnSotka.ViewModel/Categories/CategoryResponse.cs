@@ -11,9 +11,11 @@ namespace SurviveOnSotka.ViewModel.Categories
         public string Name { get; set; }
         [MinLength(16), MaxLength(64)]
         public string Descriptrion { get; set; }
-        public Guid? ParentCategory { get; set; }
+        public Guid? ParentCategoryId { get; set; }
         public string PathToIcon { get; set; }
         [Required]
         public int RecipiesCount { get; set; }
+        [Required]
+        public int CategoriesCount { get; set; }
     }
 }
