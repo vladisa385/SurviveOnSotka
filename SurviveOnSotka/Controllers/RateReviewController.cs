@@ -14,6 +14,7 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [ProducesResponseType(401)]
+    [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     //[Authorize]
     public class RateReviewsController : BaseController
     {

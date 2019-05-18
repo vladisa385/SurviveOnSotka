@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.Filters;
+using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.TypeFoods;
 
 namespace SurviveOnSotka.Controllers
 {
     [ProducesResponseType(401)]
+    [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     [Route("api/[controller]")]
     public class TypeFoodsController : Controller
     {

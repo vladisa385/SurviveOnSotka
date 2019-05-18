@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.Filters;
+using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Categories;
 
@@ -10,6 +11,7 @@ namespace SurviveOnSotka.Controllers
 {
 
     [Route("api/[controller]")]
+    [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class CategoriesController : ControllerBase
     {
         [HttpGet("GetList")]

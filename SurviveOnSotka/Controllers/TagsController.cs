@@ -1,12 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Tags;
+using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Tags;
 
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class TagsController : Controller
     {
         [HttpGet]

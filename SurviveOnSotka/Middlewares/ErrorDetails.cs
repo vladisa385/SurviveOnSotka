@@ -2,7 +2,6 @@
 using System.Net;
 using Newtonsoft.Json;
 using SurviveOnSotka.DataAccess.Exceptions;
-using SurviveOnSotka.DataAccess.RateReviews;
 
 namespace SurviveOnSotka.Middlewares
 {
