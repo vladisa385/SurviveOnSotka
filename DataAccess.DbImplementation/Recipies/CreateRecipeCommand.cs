@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -22,9 +23,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             _context = context;
         }
 
-        public async Task<RecipeResponse> ExecuteAsync(CreateRecipeRequest request)
+        public async Task<RecipeResponse> ExecuteAsync(Guid userId,CreateRecipeRequest request)
         {
             var recipe = _mapper.Map<CreateRecipeRequest, Recipe>(request);
+            recipe.UserId = userId;
+            recipe.DateCreated = DateTime.Now;
             await CreateIngredients(recipe);
             AddIdToSteps(recipe);
             await CreateTags(recipe, request.Tags);

@@ -98,12 +98,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
         public async Task<ListResponse<RecipeResponse>> RunAsync(RecipeFilter filter, ListOptions options)
         {
             var query = _context.Recipes
-                .Include("Ingredients")
-                .Include("Categories")
-                .Include("Reviews")
-                .Include("Ingredients")
-                .Include("Steps")
-                .Include("Tags")
+                .Include(u=>u.Ingredients)
+                .Include(u=>u.Categories)
+                .Include(u=>u.Reviews)
+                .Include(u=>u.Steps)
+                .Include(u=>u.Tags)
                 .ProjectTo<RecipeResponse>(_mapper.ConfigurationProvider); ;
             query = ApplyFilter(query, filter);
             if (options.Sort == null)

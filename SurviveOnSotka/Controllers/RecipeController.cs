@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Recipies;
+using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
@@ -13,8 +16,11 @@ namespace SurviveOnSotka.Controllers
     [ProducesResponseType(401)]
     [Route("api/[controller]")]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
-    public class RecipesController : Controller
+    public class RecipesController : BaseController
     {
+        public RecipesController(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager) : base(httpContextAccessor, userManager)
+        {
+        }
         [HttpGet("GetList")]
         [ProducesResponseType(200, Type = typeof(ListResponse<RecipeResponse>))]
         public async Task<IActionResult> GetRecipesListAsync(RecipeFilter recipe, ListOptions options,
@@ -30,7 +36,8 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateRecipeAsync([FromBody] CreateRecipeRequest recipe, [FromServices] ICreateRecipeCommand command)
         {
-            var response = await command.ExecuteAsync(recipe);
+            var currentUser = await GetCurrentUserAsync();
+            var response = await command.ExecuteAsync(currentUser.Id,recipe);
             return CreatedAtRoute("GetSingleRecipe", new {recipeId = response.Id}, response);
         }
 
