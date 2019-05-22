@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
@@ -10,7 +11,7 @@ using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {
-    public class RecipiesListQuery : IRecipiesListQuery
+    public class RecipiesListQuery : ListQuery<RecipeResponse,RecipeFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -19,7 +20,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             _context = context;
             _mapper = mapper;
         }
-        private IQueryable<RecipeResponse> ApplyFilter(IQueryable<RecipeResponse> query, RecipeFilter filter)
+        protected override IQueryable<RecipeResponse> ApplyFilter(IQueryable<RecipeResponse> query, RecipeFilter filter)
         {
             if (filter.Id != null)
                 query = query.Where(p => p.Id == filter.Id);
@@ -95,31 +96,14 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             return query;
 
         }
-        public async Task<ListResponse<RecipeResponse>> RunAsync(RecipeFilter filter, ListOptions options)
-        {
-            var query = _context.Recipes
-                .Include(u=>u.Ingredients)
-                .Include(u=>u.Categories)
-                .Include(u=>u.Reviews)
-                .Include(u=>u.Steps)
-                .Include(u=>u.Tags)
-                .ProjectTo<RecipeResponse>(_mapper.ConfigurationProvider); ;
-            query = ApplyFilter(query, filter);
-            if (options.Sort == null)
-                options.Sort = "Id";
-            query = options.ApplySort(query);
-            query = options.ApplyPaging(query);
-            var items = await query.ToListAsync();
-            var totalCount = await query.CountAsync();
-            return new ListResponse<RecipeResponse>
-            {
-                Items = items,
-                Page = options.Page,
-                PageSize = options.PageSize ?? -1,
-                Sort = options.Sort ?? "-Id",
-                TotalItemsCount = totalCount
-            };
-        }
+        protected override IQueryable<RecipeResponse> GetQuery() =>
+            _context.Recipes
+                .Include(u => u.Ingredients)
+                .Include(u => u.Categories)
+                .Include(u => u.Reviews)
+                .Include(u => u.Steps)
+                .Include(u => u.Tags)
+                .ProjectTo<RecipeResponse>(_mapper.ConfigurationProvider);
     }
 }
 

@@ -7,10 +7,11 @@ using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 using SurviveOnSotka.ViewModel.Implementanion.Steps;
 using SurviveOnSotka.ViewModel.Implementanion.TagsInRecipe;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
 {
-    public class RecipeResponse
+    public class RecipeResponse:Response
     {
         public Guid Id { get; set; }
         [Required, MinLength(5), MaxLength(100)]

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using SurviveOnSotka.Controllers;
 using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
@@ -26,6 +27,9 @@ using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion.Categories;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
+using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
+using SurviveOnSotka.ViewModel.Implementanion.Recipies;
+using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
 using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 
@@ -146,20 +150,20 @@ namespace SurviveOnSotka
                 .AddScoped<IUsersListQuery, UsersListQuery>()
                 .AddScoped<IDeleteUserCommand, DeleteUserCommand>()
 
-                .AddScoped<IRecipeQuery, RecipeQuery>()
-                .AddScoped<IRecipiesListQuery, RecipiesListQuery>()
+                .AddScoped<Query<RecipeResponse>, RecipeQuery>()
+                .AddScoped<ListQuery<RecipeResponse,RecipeFilter>, RecipiesListQuery>()
                 .AddScoped<ICreateRecipeCommand, CreateRecipeCommand>()
                 .AddScoped<IUpdateRecipeCommand, UpdateRecipeCommand>()
-                .AddScoped<IDeleteRecipeCommand, DeleteRecipeCommand>()
+                .AddScoped<DeleteCommand<RecipeResponse>, DeleteRecipeCommand>()
 
-                .AddScoped<IReviewQuery, ReviewQuery>()
-                .AddScoped<IReviewsListQuery, ReviewsListQuery>()
+                .AddScoped<Query<ReviewResponse>, ReviewQuery>()
+                .AddScoped<ListQuery<ReviewResponse, ReviewFilter>, ReviewsListQuery>()
                 .AddScoped<ICreateReviewCommand, CreateReviewCommand>()
                 .AddScoped<IUpdateReviewCommand, UpdateReviewCommand>()
-                .AddScoped<IDeleteReviewCommand, DeleteReviewCommand>()
+                .AddScoped<DeleteCommand<ReviewResponse>, DeleteReviewCommand>()
 
                 .AddScoped<IRateReviewQuery, RateReviewQuery>()
-                 .AddScoped<IRateReviewsListQuery, RateReviewsListQuery>()
+                 .AddScoped<ListQuery<RateReviewResponse, RateReviewFilter>, RateReviewsListQuery>()
                 .AddScoped<ICreateRateReviewCommand, CreateRateReviewCommand>()
                 .AddScoped<IUpdateRateReviewCommand, UpdateRateReviewCommand>()
                 .AddScoped<IDeleteRateReviewCommand, DeleteRateReviewCommand>()

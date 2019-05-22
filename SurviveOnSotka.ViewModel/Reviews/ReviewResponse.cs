@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
 {
-    public class ReviewResponse
+    public class ReviewResponse:Response
     {
         [Required]
         public Guid Id { get; set; }

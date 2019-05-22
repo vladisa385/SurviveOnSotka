@@ -1,8 +1,9 @@
 ﻿using System;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.RateReviews
 {
-    public class RateReviewFilter
+    public class RateReviewFilter:Filter
     {
         public Guid? ReviewId { get; set; }
         public bool? IsCool { get; set; }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
@@ -10,7 +11,7 @@ using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {
-    public class RateReviewsListQuery : IRateReviewsListQuery
+    public class RateReviewsListQuery : ListQuery<RateReviewResponse,RateReviewFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -20,7 +21,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             _mapper = mapper;
         }
 
-        private IQueryable<RateReviewResponse> ApplyFilter(IQueryable<RateReviewResponse> query, RateReviewFilter filter)
+        protected override IQueryable<RateReviewResponse> ApplyFilter(IQueryable<RateReviewResponse> query, RateReviewFilter filter)
         {
             if (filter.UserId != null)
                 query = query.Where(p => p.UserId == filter.UserId);
@@ -31,24 +32,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             return query;
         }
 
-        public async Task<ListResponse<RateReviewResponse>> RunAsync(RateReviewFilter filter, ListOptions options)
-        {
-            var query = _context.RateReviews.ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider);
-            query = ApplyFilter(query, filter);
-            var totalCount = await query.CountAsync();
-            if (options.Sort == null)
-                options.Sort = "ReviewId";
-            query = options.ApplySort(query);
-            query = options.ApplyPaging(query);
-            var items = await query.ToListAsync();
-            return new ListResponse<RateReviewResponse>
-            {
-                Items = items,
-                Page = options.Page,
-                PageSize = options.PageSize ?? -1,
-                Sort = options.Sort ?? "-Id",
-                TotalItemsCount = totalCount
-            };
-        }
+        protected override IQueryable<RateReviewResponse> GetQuery() => 
+            _context.RateReviews
+                .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider);
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
-using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
@@ -19,7 +17,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             _context = tasksContext;
             _mapper = mapper;
         }
-        private IQueryable<TypeFoodResponse> ApplyFilter(IQueryable<TypeFoodResponse> query, TypeFoodFilter filter)
+
+        protected override IQueryable<TypeFoodResponse> ApplyFilter(IQueryable<TypeFoodResponse> query, TypeFoodFilter filter)
         {
             if (filter.Id != null)
                 query = query.Where(p => p.Id == filter.Id);
@@ -37,26 +36,13 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             }
             return query;
         }
-        protected override async Task<ListResponse<TypeFoodResponse>> QueryListItem(TypeFoodFilter filter, ListOptions options)
+
+        protected override IQueryable<TypeFoodResponse> GetQuery()
         {
             var query = _context.TypeFoods
-               .Include("Ingredients")
-               .ProjectTo<TypeFoodResponse>(_mapper.ConfigurationProvider);
-            query = ApplyFilter(query, filter);
-            if (options.Sort == null)
-                options.Sort = "Id";
-            query = options.ApplySort(query);
-            query = options.ApplyPaging(query);
-            var totalCount = await query.CountAsync();
-            var items = await query.ToListAsync();
-            return new ListResponse<TypeFoodResponse>
-            {
-                Items = items,
-                Page = options.Page,
-                PageSize = options.PageSize ?? -1,
-                Sort = options.Sort ?? "-Id",
-                TotalItemsCount = totalCount
-            };
+                .Include("Ingredients")
+                .ProjectTo<TypeFoodResponse>(_mapper.ConfigurationProvider);
+            return query;
         }
     }
 }

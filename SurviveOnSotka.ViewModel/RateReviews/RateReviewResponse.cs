@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.RateReviews
 {
-    public class RateReviewResponse
+    public class RateReviewResponse:Response
     {
 
         public Guid ReviewId { get; set; }

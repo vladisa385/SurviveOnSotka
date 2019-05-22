@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
@@ -25,7 +26,7 @@ namespace SurviveOnSotka.Controllers
         [HttpGet("GetList")]
         [ProducesResponseType(200, Type = typeof(ListResponse<RateReviewResponse>))]
 
-        public async Task<IActionResult> GetRateReviewsListAsync(RateReviewFilter filter, ListOptions options, [FromServices]IRateReviewsListQuery query)
+        public async Task<IActionResult> GetRateReviewsListAsync(RateReviewFilter filter, ListOptions options, [FromServices]ListQuery<RateReviewResponse,RateReviewFilter> query)
         {
             var response = await query.RunAsync(filter, options);
             return Ok(response);

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
@@ -23,7 +24,7 @@ namespace SurviveOnSotka.Controllers
         // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<ReviewResponse>))]
         [ProducesResponseType(500, Type = typeof(ErrorDetails))]
-        public async Task<IActionResult> GetReviewsListAsync(ReviewFilter review, ListOptions options, [FromServices] IReviewsListQuery query)
+        public async Task<IActionResult> GetReviewsListAsync(ReviewFilter review, ListOptions options, [FromServices] ListQuery<ReviewResponse, ReviewFilter> query)
         {
             var response = await query.RunAsync(review, options);
             return Ok(response);
@@ -46,7 +47,7 @@ namespace SurviveOnSotka.Controllers
         // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetReviewAsync(Guid reviewId, [FromServices] IReviewQuery query)
+        public async Task<IActionResult> GetReviewAsync(Guid reviewId, [FromServices] Query<ReviewResponse> query)
         {
             var response = await query.RunAsync(reviewId);
             return response == null ? (IActionResult) NotFound() : Ok(response);
@@ -70,7 +71,7 @@ namespace SurviveOnSotka.Controllers
         // [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteReviewAsync(Guid reviewId, [FromServices] IDeleteReviewCommand command)
+        public async Task<IActionResult> DeleteReviewAsync(Guid reviewId, [FromServices] DeleteCommand<ReviewResponse> command)
         {
             await command.ExecuteAsync(reviewId);
             return NoContent();

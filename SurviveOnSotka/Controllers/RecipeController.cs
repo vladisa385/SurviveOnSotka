@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
@@ -23,8 +24,7 @@ namespace SurviveOnSotka.Controllers
         }
         [HttpGet("GetList")]
         [ProducesResponseType(200, Type = typeof(ListResponse<RecipeResponse>))]
-        public async Task<IActionResult> GetRecipesListAsync(RecipeFilter recipe, ListOptions options,
-            [FromServices] IRecipiesListQuery query)
+        public async Task<IActionResult> GetRecipesListAsync(RecipeFilter recipe, ListOptions options,[FromServices] ListQuery<RecipeResponse,RecipeFilter> query)
         {
             var response = await query.RunAsync(recipe, options);
             return Ok(response);
@@ -44,7 +44,7 @@ namespace SurviveOnSotka.Controllers
         [HttpGet("Get/{recipeId}", Name = "GetSingleRecipe")]
         [ProducesResponseType(200, Type = typeof(RecipeResponse))]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetRecipeAsync(Guid recipeId, [FromServices] IRecipeQuery query)
+        public async Task<IActionResult> GetRecipeAsync(Guid recipeId, [FromServices] Query<RecipeResponse> query)
         {
             var response = await query.RunAsync(recipeId);
             return response == null ? (IActionResult) NotFound() : Ok(response);
@@ -65,7 +65,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteRecipeAsync(Guid recipeId, [FromServices] IDeleteRecipeCommand command)
+        public async Task<IActionResult> DeleteRecipeAsync(Guid recipeId, [FromServices] DeleteCommand<Recipe> command)
         {
             await command.ExecuteAsync(recipeId);
             return NoContent();

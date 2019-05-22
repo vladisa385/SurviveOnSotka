@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.ViewModell;
 
 
@@ -29,6 +29,30 @@ namespace SurviveOnSotka.DataAccess.CrudOperation
         {
             throw ex;
         }
-        protected abstract Task<ListResponse<TResponse>> QueryListItem(TFilter filter, ListOptions options);
+
+        protected virtual async Task<ListResponse<TResponse>> QueryListItem(TFilter filter, ListOptions options)
+        {
+            var query = GetQuery();
+            query = ApplyFilter(query, filter);
+            if (options.Sort == null)
+                options.Sort = "Id";
+            query = options.ApplySort(query);
+            query = options.ApplyPaging(query);
+            var totalCount = await query.CountAsync();
+            var items = await query.ToListAsync();
+            return new ListResponse<TResponse>
+            {
+                Items = items,
+                Page = options.Page,
+                PageSize = options.PageSize ?? -1,
+                Sort = options.Sort ?? "-Id",
+                TotalItemsCount = totalCount
+            };
+        }
+
+        protected abstract IQueryable<TResponse> ApplyFilter(IQueryable<TResponse> query, TFilter filter);
+
+        protected abstract IQueryable<TResponse> GetQuery();
+
     }
 }

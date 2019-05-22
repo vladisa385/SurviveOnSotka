@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
-    public class ReviewQuery : IReviewQuery
+    public class ReviewQuery : Query<ReviewResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -18,12 +19,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             _context = context;
             _mapper = mapper;
         }
-
-        public async Task<ReviewResponse> RunAsync(Guid reviewId)
+        protected override async Task<ReviewResponse> QueryItem(Guid reviewId)
         {
             var response = await _context.Reviews
-                .ProjectTo<ReviewResponse>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(p => p.Id == reviewId);
+                 .ProjectTo<ReviewResponse>(_mapper.ConfigurationProvider)
+                 .FirstOrDefaultAsync(p => p.Id == reviewId);
             return response;
         }
     }

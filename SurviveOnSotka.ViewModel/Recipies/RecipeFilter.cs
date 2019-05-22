@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
 {
-    public class RecipeFilter
+    public class RecipeFilter:Filter
     {
         public Guid? Id { get; set; }
         public string Name { get; set; }

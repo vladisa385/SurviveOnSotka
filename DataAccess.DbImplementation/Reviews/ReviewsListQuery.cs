@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
@@ -10,7 +11,7 @@ using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
-    public class ReviewsListQuery : IReviewsListQuery
+    public class ReviewsListQuery : ListQuery<ReviewResponse,ReviewFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -21,7 +22,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             _mapper = mapper;
         }
 
-        private IQueryable<ReviewResponse> ApplyFilter(IQueryable<ReviewResponse> query, ReviewFilter filter)
+        protected override IQueryable<ReviewResponse> ApplyFilter(IQueryable<ReviewResponse> query, ReviewFilter filter)
         {
             if (filter.Id != null)
                 query = query.Where(p => p.Id == filter.Id);
@@ -59,27 +60,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             }
             return query;
         }
-        public async Task<ListResponse<ReviewResponse>> RunAsync(ReviewFilter filter, ListOptions options)
-        {
-            var query = _context.Reviews
+
+        protected override IQueryable<ReviewResponse> GetQuery() =>
+            _context.Reviews
                 .Include("Ingredients")
                 .ProjectTo<ReviewResponse>(_mapper.ConfigurationProvider);
-            query = ApplyFilter(query, filter);
-            if (options.Sort == null)
-                options.Sort = "Id";
-            query = options.ApplySort(query);
-            query = options.ApplyPaging(query);
-            var totalCount = await query.CountAsync();
-            var items = await query.ToListAsync();
-            return new ListResponse<ReviewResponse>
-            {
-                Items = items,
-                Page = options.Page,
-                PageSize = options.PageSize ?? -1,
-                Sort = options.Sort ?? "-Id",
-                TotalItemsCount = totalCount
-            };
-        }
     }
 }
 
