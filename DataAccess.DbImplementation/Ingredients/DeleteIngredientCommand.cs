@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
-using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.Db;
+using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
-    public class DeleteIngredientCommand : IDeleteIngredientCommand
+    public class DeleteIngredientCommand : DeleteCommand<IngredientResponse>
     {
         private readonly AppDbContext _context;
         public DeleteIngredientCommand(AppDbContext dbContext)
         {
             _context = dbContext;
         }
-        public async Task ExecuteAsync(Guid ingredientId)
+
+        protected override async Task DeleteItem(Guid ingredientId)
         {
             var ingredientToDelete = await _context.Ingredients
-                .Include(u=>u.Recipies)
-                .FirstOrDefaultAsync(p => p.Id == ingredientId);
+                 .Include(u => u.Recipies)
+                 .FirstOrDefaultAsync(p => p.Id == ingredientId);
             if (ingredientToDelete?.Recipies?.Count > 0)
                 throw new DeleteItemCrudException("Cannot delete ingredient with recipies");
             if (ingredientToDelete != null)
@@ -27,6 +29,5 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
                 await _context.SaveChangesAsync();
             }
         }
-
     }
 }

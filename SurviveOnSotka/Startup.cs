@@ -16,7 +16,6 @@ using SurviveOnSotka.DataAccess.DbImplementation.Reviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.DbImplementation.Users;
-using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.DataAccess.Reviews;
@@ -26,6 +25,7 @@ using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion.Categories;
+using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
 using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 
@@ -124,17 +124,18 @@ namespace SurviveOnSotka
                 .AddScoped<ListQuery<TagResponse,TagFilter>, TagsListQuery>()
                 .AddScoped<DeleteCommand<TagResponse>, DeleteTagCommand>()
 
-                .AddScoped<Query<TypeFoodResponse>, TypeFoodQuery>()
-                .AddScoped<ListQuery<TypeFoodResponse,TypeFoodFilter>, TypeFoodsListQuery>()
-                .AddScoped<CreateCommand<CreateTypeFoodRequest,TypeFoodResponse>, CreateTypeFoodCommand>()
-                .AddScoped<UpdateCommand<UpdateTypeFoodRequest,TypeFoodResponse>, UpdateTypeFoodCommand>()
+                .AddScoped<Query<IngredientResponse>, IngredientQuery>()
+                .AddScoped<ListQuery<IngredientResponse,IngredientFilter>, IngredientsListQuery>()
+                .AddScoped<CreateCommand<CreateIngredientRequest,IngredientResponse>, CreateIngredientCommand>()
+                .AddScoped<UpdateCommand<UpdateIngredientRequest,IngredientResponse>, UpdateIngredientCommand>()
+                .AddScoped<DeleteCommand<IngredientResponse>, DeleteIngredientCommand>()
+
+                 .AddScoped<Query<TypeFoodResponse>, TypeFoodQuery>()
+                .AddScoped<ListQuery<TypeFoodResponse, TypeFoodFilter>, TypeFoodsListQuery>()
+                .AddScoped<CreateCommand<CreateTypeFoodRequest, TypeFoodResponse>, CreateTypeFoodCommand>()
+                .AddScoped<UpdateCommand<UpdateTypeFoodRequest, TypeFoodResponse>, UpdateTypeFoodCommand>()
                 .AddScoped<DeleteCommand<TypeFoodResponse>, DeleteTypeFoodCommand>()
 
-                .AddScoped<IIngredientQuery, IngredientQuery>()
-                .AddScoped<IIngredientsListQuery, IngredientsListQuery>()
-                .AddScoped<ICreateIngredientCommand, CreateIngredientCommand>()
-                .AddScoped<IUpdateIngredientCommand, UpdateIngredientCommand>()
-                .AddScoped<IDeleteIngredientCommand, DeleteIngredientCommand>()
 
                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 .AddScoped<ILogOffUserCommand, LogOffUserCommand>()

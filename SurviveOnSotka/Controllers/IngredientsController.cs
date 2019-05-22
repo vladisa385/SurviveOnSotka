@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.DataAccess.Ingredients;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
@@ -19,7 +19,7 @@ namespace SurviveOnSotka.Controllers
         //  [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(ListResponse<IngredientResponse>))]
         [ProducesResponseType(500, Type = typeof(ErrorDetails))]
-        public async Task<IActionResult> GetIngredientsListAsync(IngredientFilter ingredient, ListOptions options, [FromServices] IIngredientsListQuery query)
+        public async Task<IActionResult> GetIngredientsListAsync(IngredientFilter ingredient, ListOptions options, [FromServices] ListQuery<IngredientResponse,IngredientFilter> query)
         {
             var response = await query.RunAsync(ingredient, options);
             return Ok(response);
@@ -31,7 +31,7 @@ namespace SurviveOnSotka.Controllers
         [ModelValidation]
         [ProducesResponseType(201, Type = typeof(IngredientResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices] ICreateIngredientCommand command)
+        public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices] CreateCommand<CreateRequest,IngredientResponse> command)
         {
             var response = await command.ExecuteAsync(ingredient);
             return CreatedAtRoute("GetSingleIngredient", new {ingredientId = response.Id}, response);
@@ -41,7 +41,7 @@ namespace SurviveOnSotka.Controllers
         //[Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(IngredientResponse))]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetIngredientAsync(Guid ingredientId, [FromServices] IIngredientQuery query)
+        public async Task<IActionResult> GetIngredientAsync(Guid ingredientId, [FromServices] Query<IngredientResponse> query)
         {
             var response = await query.RunAsync(ingredientId);
             return response == null ? (IActionResult) NotFound() : Ok(response);
@@ -54,7 +54,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateIngredientAsync([FromBody] UpdateIngredientRequest request, [FromServices] IUpdateIngredientCommand command)
+        public async Task<IActionResult> UpdateIngredientAsync([FromBody] UpdateIngredientRequest request, [FromServices] UpdateCommand<UpdateIngredientRequest,IngredientResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return Ok(response);
@@ -65,7 +65,7 @@ namespace SurviveOnSotka.Controllers
         // [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteIngredientAsync(Guid ingredientId,[FromServices] IDeleteIngredientCommand command)
+        public async Task<IActionResult> DeleteIngredientAsync(Guid ingredientId,[FromServices] DeleteCommand<IngredientResponse> command)
         {
             await command.ExecuteAsync(ingredientId);
             return NoContent();

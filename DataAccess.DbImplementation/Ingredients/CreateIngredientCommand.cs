@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
-using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
@@ -11,7 +12,7 @@ using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
 
-    public class CreateIngredientCommand : ICreateIngredientCommand
+    public class CreateIngredientCommand : CreateCommand<CreateIngredientRequest,IngredientResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -20,19 +21,23 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             _context = dbContext;
             _mapper = mapper;
         }
-        public async Task<IngredientResponse> ExecuteAsync(CreateIngredientRequest request)
+
+        protected override  async Task<IngredientResponse> CreateItem(CreateIngredientRequest request)
         {
             var ingredient = _mapper.Map<CreateIngredientRequest, Ingredient>(request);
-            try
-            {
-                await _context.Ingredients.AddAsync(ingredient);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new CreateItemException("Ingredient cannot be created, The TypeFood's guid is incorrect", exception);
-            }
+            await _context.Ingredients.AddAsync(ingredient);
+            await _context.SaveChangesAsync();
             return _mapper.Map<Ingredient, IngredientResponse>(ingredient);
+        }
+
+        protected override void HandleError(Exception exception)
+        {
+            switch (exception)
+            {
+                case DbUpdateException _:
+                    throw new CreateItemException("Ingredient cannot be created, The TypeFood's guid is incorrect", exception);
+            }
+            base.HandleError(exception);
         }
     }
 }

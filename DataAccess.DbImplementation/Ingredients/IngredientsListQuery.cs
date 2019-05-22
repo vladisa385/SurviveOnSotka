@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Ingredients;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
-    public class IngredientsListQuery : IIngredientsListQuery
+    public class IngredientsListQuery : ListQuery<IngredientResponse,IngredientFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -35,11 +35,12 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             return query;
         }
 
-        public async Task<ListResponse<IngredientResponse>> RunAsync(IngredientFilter filter, ListOptions options)
+
+        protected override async Task<ListResponse<IngredientResponse>> QueryListItem(IngredientFilter filter, ListOptions options)
         {
             var query = _context.Ingredients
-                .Include("Recipies")
-                .ProjectTo<IngredientResponse>(_mapper.ConfigurationProvider);
+                 .Include("Recipies")
+                 .ProjectTo<IngredientResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             if (options.Sort == null)
                 options.Sort = "Id";
@@ -49,7 +50,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             var items = await query.ToListAsync();
             return new ListResponse<IngredientResponse>
             {
-                Items =items,
+                Items = items,
                 Page = options.Page,
                 PageSize = options.PageSize ?? -1,
                 Sort = options.Sort ?? "-Id",

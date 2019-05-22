@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Ingredients;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
-    public class IngredientQuery : IIngredientQuery
+    public class IngredientQuery : Query<IngredientResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             _context = dbContext;
             _mapper = mapper;
         }
-        public async Task<IngredientResponse> RunAsync(Guid ingredientId)
+        protected override async Task<IngredientResponse> QueryItem(Guid ingredientId)
         {
             var response = await _context.Ingredients
                 .ProjectTo<IngredientResponse>(_mapper.ConfigurationProvider)
