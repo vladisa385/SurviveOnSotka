@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace SurviveOnSotka.ViewModel.Ingredients
+namespace SurviveOnSotka.ViewModel.Implementanion.Ingredients
 {
     public class UpdateIngredientRequest
     {

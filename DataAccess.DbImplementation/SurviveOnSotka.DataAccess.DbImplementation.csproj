@@ -22,7 +22,7 @@
     <ProjectReference Include="..\Db\SurviveOnSotka.Db.csproj" />
     <ProjectReference Include="..\Entities\SurviveOnSotka.Entities.csproj" />
     <ProjectReference Include="..\SurviveOnSotka.DataAccess\SurviveOnSotka.DataAccess.csproj" />
-    <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.csproj" />
+    <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.Implementanion.csproj" />
   </ItemGroup>
 
   <ItemGroup>

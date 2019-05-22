@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.ViewModel.Categories;
+using SurviveOnSotka.ViewModel.Implementanion.Categories;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class CategoryQuery : ICategoryQuery
+    public class CategoryQuery : Query<CategoryResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
             _context = dbContext;
             _mapper = mapper;
         }
-        public async Task<CategoryResponse> RunAsync(Guid categoryId)
+        protected override async Task<CategoryResponse> QueryItem(Guid categoryId)
         {
             var response = await _context.Categories
                 .ProjectTo<CategoryResponse>(_mapper.ConfigurationProvider)

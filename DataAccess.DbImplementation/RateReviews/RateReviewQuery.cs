@@ -5,7 +5,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.ViewModel.RateReviews;
+using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {

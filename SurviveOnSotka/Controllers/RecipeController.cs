@@ -4,12 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Recipies;
-using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
-using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.Recipies;
+using SurviveOnSotka.ViewModel.Implementanion.Recipies;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.Controllers
 {

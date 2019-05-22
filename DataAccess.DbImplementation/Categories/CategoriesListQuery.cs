@@ -3,15 +3,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Categories;
-using SurviveOnSotka.DataAccess.ViewModels;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.Categories;
+using SurviveOnSotka.ViewModel.Implementanion.Categories;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class CategoriesListQuery : ICategoriesListQuery
+    public class CategoriesListQuery : ListQuery<CategoryResponse,CategoryFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -50,11 +49,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
             }
             return query;
         }
-        public async Task<ListResponse<CategoryResponse>> RunAsync(CategoryFilter filter, ListOptions options)
+        protected override async Task<ListResponse<CategoryResponse>> QueryListItem(CategoryFilter filter, ListOptions options)
         {
             var query = _context.Categories
-                .Include(u=>u.Recipies)
-                .ProjectTo<CategoryResponse>(_mapper.ConfigurationProvider);
+                 .Include(u => u.Recipies)
+                 .ProjectTo<CategoryResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             var totalCount = await query.CountAsync();
             if (options.Sort == null)

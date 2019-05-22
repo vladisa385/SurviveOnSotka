@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>keys.pfx</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
     <Version>0.0.1</Version>
@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Entities\SurviveOnSotka.Entities.csproj" />
+    <ProjectReference Include="..\SurviveOnSotka.ViewModell\SurviveOnSotka.ViewModell.csproj" />
   </ItemGroup>
 
   <ItemGroup>

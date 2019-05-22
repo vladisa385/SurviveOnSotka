@@ -1,15 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.Categories;
+using SurviveOnSotka.ViewModel.Implementanion.Categories;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class CreateCategoryCommand : ICreateCategoryCommand
+    public class CreateCategoryCommand : CreateCommand<CreateCategoryRequest,CategoryResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -18,19 +19,22 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
             _context = dbContext;
             _mapper = mapper;
         }
-        public async Task<CategoryResponse> ExecuteAsync(CreateCategoryRequest request)
+        protected override async Task<CategoryResponse> CreateItem(CreateCategoryRequest request)
         {
             var category = _mapper.Map<CreateCategoryRequest, Category>(request);
-            try
-            {
-                await _context.Categories.AddAsync(category);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new CreateItemException("Category cannot be created, The ParentCategory's guid is incorrect",exception);
-            }
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
             return _mapper.Map<Category, CategoryResponse>(category);
+        }
+
+        protected override void HandleError(Exception exception)
+        {
+            switch (exception)
+            {
+                case DbUpdateException _:
+                    throw new CreateItemException("Category cannot be created, The ParentCategory's guid is incorrect", exception);
+            }
+            base.HandleError(exception);
         }
     }
 }

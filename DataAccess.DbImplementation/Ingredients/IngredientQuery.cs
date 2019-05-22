@@ -5,7 +5,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.ViewModel.Ingredients;
+using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {

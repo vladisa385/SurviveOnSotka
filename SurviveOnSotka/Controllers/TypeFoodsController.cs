@@ -2,12 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CrudOperation;
-using SurviveOnSotka.DataAccess.TypeFoods;
-using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
-using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.TypeFoods;
+using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -20,7 +18,7 @@ namespace SurviveOnSotka.Controllers
         [HttpGet("GetList")]
         // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<TypeFoodResponse>))]
-        public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ITypeFoodsListQuery query)
+        public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ListQuery<TypeFoodResponse,TypeFoodFilter> query)
         {
             var response = await query.RunAsync(typeFood, options);
             return Ok(response);
@@ -32,7 +30,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(201, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]ICreateTypeFoodCommand command)
+        public async Task<IActionResult> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]CreateCommand<CreateTypeFoodRequest,TypeFoodResponse> command)
         {
             var response = await command.ExecuteAsync(typeFood);
             return CreatedAtRoute("GetSingleTypeFood", new { typeFoodId = response.Id }, response);
@@ -42,7 +40,7 @@ namespace SurviveOnSotka.Controllers
         // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetTypeFoodAsync(Guid typeFoodId, [FromServices] ITypeFoodQuery query)
+        public async Task<IActionResult> GetTypeFoodAsync(Guid typeFoodId, [FromServices] Query<TypeFoodResponse> query)
         {
             var response = await query.RunAsync(typeFoodId);
             return response == null ? (IActionResult)NotFound() : Ok(response);
@@ -55,7 +53,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateTypeFoodAsync([FromBody] UpdateTypeFoodRequest request, [FromServices] IUpdateTypeFoodCommand command)
+        public async Task<IActionResult> UpdateTypeFoodAsync([FromBody] UpdateTypeFoodRequest request, [FromServices] UpdateCommand<UpdateTypeFoodRequest,TypeFoodResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return Ok(response);

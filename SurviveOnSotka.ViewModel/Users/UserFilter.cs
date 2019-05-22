@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SurviveOnSotka.ViewModel.Users
+namespace SurviveOnSotka.ViewModel.Implementanion.Users
 {
     public class UserFilter
     {

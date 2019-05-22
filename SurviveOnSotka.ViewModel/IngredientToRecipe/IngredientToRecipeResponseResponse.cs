@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.ViewModel.IngredientToRecipe
+namespace SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe
 {
     public class IngredientToRecipeResponse
     {

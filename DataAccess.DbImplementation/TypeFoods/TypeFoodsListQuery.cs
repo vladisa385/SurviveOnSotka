@@ -3,15 +3,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.TypeFoods;
-using SurviveOnSotka.DataAccess.ViewModels;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.TypeFoods;
+using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
-    public class TypeFoodsListQuery : ITypeFoodsListQuery
+    public class TypeFoodsListQuery : ListQuery<TypeFoodResponse,TypeFoodFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -38,12 +37,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             }
             return query;
         }
-
-        public async Task<ListResponse<TypeFoodResponse>> RunAsync(TypeFoodFilter filter, ListOptions options)
+        protected override async Task<ListResponse<TypeFoodResponse>> QueryListItem(TypeFoodFilter filter, ListOptions options)
         {
             var query = _context.TypeFoods
-                .Include("Ingredients")
-                .ProjectTo<TypeFoodResponse>(_mapper.ConfigurationProvider);
+               .Include("Ingredients")
+               .ProjectTo<TypeFoodResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
             if (options.Sort == null)
                 options.Sort = "Id";

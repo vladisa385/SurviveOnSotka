@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.TypeFoods;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.ViewModel.TypeFoods;
+using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
-    public class TypeFoodQuery : ITypeFoodQuery
+    public class TypeFoodQuery : Query<TypeFoodResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -18,13 +18,12 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             _context = dbContext;
             _mapper = mapper;
         }
-        public async Task<TypeFoodResponse> RunAsync(Guid typeFoodId)
+        protected override async Task<TypeFoodResponse> QueryItem(Guid typeFoodId)
         {
             var response = await _context.TypeFoods
-                .ProjectTo<TypeFoodResponse>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(p => p.Id == typeFoodId);
+                  .ProjectTo<TypeFoodResponse>(_mapper.ConfigurationProvider)
+                  .FirstOrDefaultAsync(p => p.Id == typeFoodId);
             return response;
         }
     }
 }
-

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell;
 
-namespace SurviveOnSotka.ViewModel.TypeFoods
+namespace SurviveOnSotka.ViewModel.Implementanion.TypeFoods
 {
-    public class TypeFoodResponse
+    public class TypeFoodResponse:Response
     {
         [Required]
         public Guid Id { get; set; }

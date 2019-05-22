@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.ViewModel.Users
+namespace SurviveOnSotka.ViewModel.Implementanion.Users
 {
     public class UserResponse
     {

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
-using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.TypeFoods;
+using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
-    public class UpdateTypeFoodCommand : IUpdateTypeFoodCommand
+    public class UpdateTypeFoodCommand : UpdateCommand<UpdateTypeFoodRequest,TypeFoodResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -20,7 +19,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             _context = dbContext;
             _mapper = mapper;
         }
-        public async Task<TypeFoodResponse> ExecuteAsync( UpdateTypeFoodRequest request)
+        protected override async Task<TypeFoodResponse> UpdateItem(UpdateTypeFoodRequest request)
         {
             var foundTypeFood = await _context.TypeFoods.FirstOrDefaultAsync(t => t.Id == request.Id);
             if (foundTypeFood == null)

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.Reviews;
+using SurviveOnSotka.ViewModel.Implementanion.Reviews;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.Reviews
 {

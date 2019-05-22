@@ -1,4 +1,4 @@
-﻿namespace SurviveOnSotka.ViewModel.TagsInRecipe
+﻿namespace SurviveOnSotka.ViewModel.Implementanion.TagsInRecipe
 {
     public class TagsInRecipeResponse
     {

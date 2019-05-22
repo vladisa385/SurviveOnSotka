@@ -6,7 +6,7 @@ using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.Ingredients;
+using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SurviveOnSotka.DataAccess.ViewModels.Extensions;
+using SurviveOnSotka.ViewModell.Extensions;
 
-namespace SurviveOnSotka.DataAccess.ViewModels
+namespace SurviveOnSotka.ViewModell
 {
     public class ListOptions
     {

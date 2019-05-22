@@ -8,7 +8,7 @@ using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.Recipies;
+using SurviveOnSotka.ViewModel.Implementanion.Recipies;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {

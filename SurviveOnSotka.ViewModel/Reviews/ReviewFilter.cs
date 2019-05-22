@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SurviveOnSotka.ViewModel.Reviews
+namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
 {
     public class ReviewFilter
     {

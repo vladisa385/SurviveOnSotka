@@ -3,15 +3,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Tags;
-using SurviveOnSotka.DataAccess.ViewModels;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.Tags;
+using SurviveOnSotka.ViewModel.Implementanion.Tags;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
 {
-    public class TagsListQuery : ITagsListQuery
+    public class TagsListQuery : ListQuery<TagResponse,TagFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -20,7 +19,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
             _context = context;
             _mapper = mapper;
         }
-        public async Task<ListResponse<TagResponse>> RunAsync(TagFilter filter, ListOptions options)
+        protected override async Task<ListResponse<TagResponse>> QueryListItem(TagFilter filter, ListOptions options)
         {
             var query = _context.Tags.ProjectTo<TagResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);

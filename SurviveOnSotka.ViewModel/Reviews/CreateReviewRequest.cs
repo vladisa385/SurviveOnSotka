@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace SurviveOnSotka.ViewModel.Reviews
+namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
 {
     public class CreateReviewRequest
     {

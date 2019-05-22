@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using SurviveOnSotka.ViewModel.IngredientToRecipe;
-using SurviveOnSotka.ViewModel.Reviews;
-using SurviveOnSotka.ViewModel.Steps;
-using SurviveOnSotka.ViewModel.TagsInRecipe;
-using SurviveOnSotka.ViewModel.Users;
+using SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe;
+using SurviveOnSotka.ViewModel.Implementanion.Reviews;
+using SurviveOnSotka.ViewModel.Implementanion.Steps;
+using SurviveOnSotka.ViewModel.Implementanion.TagsInRecipe;
+using SurviveOnSotka.ViewModel.Implementanion.Users;
 
-namespace SurviveOnSotka.ViewModel.Recipies
+namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
 {
     public class RecipeResponse
     {

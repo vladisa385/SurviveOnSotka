@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SurviveOnSotka.ViewModel.Ingredients
+namespace SurviveOnSotka.ViewModel.Implementanion.Ingredients
 {
     public class IngredientFilter
     {

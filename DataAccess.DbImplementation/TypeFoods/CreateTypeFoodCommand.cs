@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using SurviveOnSotka.DataAccess.TypeFoods;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.TypeFoods;
+using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
-    public class CreateTypeFoodCommand : ICreateTypeFoodCommand
+    public class CreateTypeFoodCommand : CreateCommand<CreateTypeFoodRequest,TypeFoodResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             _context = dbContext;
             _mapper = mapper;
         }
-        public async Task<TypeFoodResponse> ExecuteAsync(CreateTypeFoodRequest request)
+        protected override async Task<TypeFoodResponse> CreateItem(CreateTypeFoodRequest request)
         {
             var typeFood = _mapper.Map<CreateTypeFoodRequest, TypeFood>(request);
             await _context.TypeFoods.AddAsync(typeFood);

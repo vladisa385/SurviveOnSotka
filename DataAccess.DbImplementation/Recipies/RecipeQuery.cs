@@ -5,7 +5,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Db;
-using SurviveOnSotka.ViewModel.Recipies;
+using SurviveOnSotka.ViewModel.Implementanion.Recipies;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {

@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Ingredients;
-using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
-using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.Ingredients;
+using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.Controllers
 {

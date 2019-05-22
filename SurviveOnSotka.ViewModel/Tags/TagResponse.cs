@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell;
 
-namespace SurviveOnSotka.ViewModel.Tags
+namespace SurviveOnSotka.ViewModel.Implementanion.Tags
 {
-    public class TagResponse
+    public class TagResponse:Response
     {
         [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }

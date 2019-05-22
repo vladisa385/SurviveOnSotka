@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
-using SurviveOnSotka.ViewModel.IngredientToRecipe;
-using SurviveOnSotka.ViewModel.Steps;
+using SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe;
+using SurviveOnSotka.ViewModel.Implementanion.Steps;
 
-namespace SurviveOnSotka.ViewModel.Recipies
+namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
 {
     public class UpdateRecipeRequest
     {

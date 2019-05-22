@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using SurviveOnSotka.ViewModel.Reviews;
+using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 
 namespace SurviveOnSotka.DataAccess.Reviews
 {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.Ingredients;
+using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.Ingredients
 {

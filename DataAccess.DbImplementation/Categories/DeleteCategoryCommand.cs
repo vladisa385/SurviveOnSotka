@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
+using SurviveOnSotka.ViewModel.Implementanion.Categories;
 using Task = System.Threading.Tasks.Task;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class DeleteCategoryCommand : IDeleteCategoryCommand
+    public class DeleteCategoryCommand : DeleteCommand<CategoryResponse>
     {
         private readonly AppDbContext _context;
 
@@ -16,15 +17,15 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
         {
             _context = dbContext;
         }
-        public async Task ExecuteAsync(Guid categoryId)
+        protected override async Task DeleteItem(Guid categoryId)
         {
             var categoryToDelete = await _context.Categories
-                .Include(u=>u.Recipies)
-                .Include(u=>u.Categories)
+                .Include(u => u.Recipies)
+                .Include(u => u.Categories)
                 .FirstOrDefaultAsync(p => p.Id == categoryId);
             if (categoryToDelete?.Recipies?.Count > 0)
                 throw new DeleteItemCrudException("Category cannot be deleted, if there are recipies in it.");
-            if (categoryToDelete?.Categories.Count(u=>u.Id!=categoryToDelete.Id) > 0)
+            if (categoryToDelete?.Categories.Count(u => u.Id != categoryToDelete.Id) > 0)
                 throw new DeleteItemCrudException("Category cannot be deleted, if there are categories in it.");
             if (categoryToDelete != null)
             {
@@ -32,6 +33,5 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
                 await _context.SaveChangesAsync();
             }
         }
-
     }
 }

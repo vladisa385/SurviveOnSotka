@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.ViewModel.RateReviews
+namespace SurviveOnSotka.ViewModel.Implementanion.RateReviews
 {
     public class UpdateRateReviewRequest
     {

@@ -1,4 +1,4 @@
-﻿namespace SurviveOnSotka.ViewModel
+﻿namespace SurviveOnSotka.ViewModel.Implementanion
 {
     public class RangeFilter<T> where T : struct
     {

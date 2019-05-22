@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using SurviveOnSotka.DataAccess.ViewModels;
+using SurviveOnSotka.ViewModell;
 
 
 namespace SurviveOnSotka.DataAccess.CrudOperation
@@ -11,7 +11,7 @@ namespace SurviveOnSotka.DataAccess.CrudOperation
     where TResponse : Response
     where TFilter : Filter
     {
-        public async Task<List<TResponse>> RunAsync(TFilter filter, ListOptions options)
+        public async Task<ListResponse<TResponse>> RunAsync(TFilter filter, ListOptions options)
         {
             try
             {
@@ -29,6 +29,6 @@ namespace SurviveOnSotka.DataAccess.CrudOperation
         {
             throw ex;
         }
-        protected abstract Task<List<TResponse>> QueryListItem(TFilter filter, ListOptions options);
+        protected abstract Task<ListResponse<TResponse>> QueryListItem(TFilter filter, ListOptions options);
     }
 }

@@ -1,12 +1,14 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Tags;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
+using SurviveOnSotka.ViewModel.Implementanion.Tags;
 using Task = System.Threading.Tasks.Task;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
 {
-    public class DeleteTagCommand : IDeleteTagCommand
+    public class DeleteTagCommand : DeleteCommand<TagResponse>
     {
         private readonly AppDbContext _context;
 
@@ -14,9 +16,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
         {
             _context = context;
         }
-        public async Task ExecuteAsync(string tag)
+        protected override async Task DeleteItem(Guid id)
         {
-            var tagToDelete = await _context.Tags.FirstOrDefaultAsync(t => t.Name == tag);
+            var tagToDelete = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
             if (tagToDelete != null)
             {
                 _context.Tags.Remove(tagToDelete);

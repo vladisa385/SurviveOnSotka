@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using SurviveOnSotka.ViewModel.Ingredients;
+using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 
 namespace SurviveOnSotka.DataAccess.Ingredients
 {

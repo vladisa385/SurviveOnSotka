@@ -6,7 +6,7 @@ using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.Reviews;
+using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {

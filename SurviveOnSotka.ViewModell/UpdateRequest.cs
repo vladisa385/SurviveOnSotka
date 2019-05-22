@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.DataAccess.ViewModels
+namespace SurviveOnSotka.ViewModell
 {
     public abstract class UpdateRequest
     {
+        [Required]
         public Guid Id { get; set; }
     }
 }

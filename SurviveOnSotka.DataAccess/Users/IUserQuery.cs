@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SurviveOnSotka.ViewModel.Users;
+using SurviveOnSotka.ViewModel.Implementanion.Users;
 
 namespace SurviveOnSotka.DataAccess.Users
 {

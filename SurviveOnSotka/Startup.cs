@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.DataAccess.Categories;
 using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
@@ -21,14 +20,14 @@ using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.DataAccess.Reviews;
-using SurviveOnSotka.DataAccess.Tags;
-using SurviveOnSotka.DataAccess.TypeFoods;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
-using SurviveOnSotka.ViewModel.TypeFoods;
+using SurviveOnSotka.ViewModel.Implementanion.Categories;
+using SurviveOnSotka.ViewModel.Implementanion.Tags;
+using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 
 
 namespace SurviveOnSotka
@@ -116,19 +115,19 @@ namespace SurviveOnSotka
         private void RegisterQueriesAndCommands(IServiceCollection services)
         {
             services
-                .AddScoped<ICategoryQuery, CategoryQuery>()
-                .AddScoped<ICategoriesListQuery, CategoriesListQuery>()
-                .AddScoped<ICreateCategoryCommand, CreateCategoryCommand>()
-                .AddScoped<IUpdateCategoryCommand, UpdateCategoryCommand>()
-                .AddScoped<IDeleteCategoryCommand, DeleteCategoryCommand>()
+                .AddScoped<Query<CategoryResponse>, CategoryQuery>()
+                .AddScoped<ListQuery<CategoryResponse, CategoryFilter>, CategoriesListQuery>()
+                .AddScoped<CreateCommand<CreateCategoryRequest, CategoryResponse>, CreateCategoryCommand>()
+                .AddScoped<UpdateCommand<UpdateCategoryRequest, CategoryResponse>, UpdateCategoryCommand>()
+                .AddScoped<DeleteCommand<CategoryResponse>, DeleteCategoryCommand>()
 
-                .AddScoped<ITagsListQuery, TagsListQuery>()
-                .AddScoped<IDeleteTagCommand, DeleteTagCommand>()
+                .AddScoped<ListQuery<TagResponse,TagFilter>, TagsListQuery>()
+                .AddScoped<DeleteCommand<TagResponse>, DeleteTagCommand>()
 
-                .AddScoped<ITypeFoodQuery, TypeFoodQuery>()
-                .AddScoped<ITypeFoodsListQuery, TypeFoodsListQuery>()
-                .AddScoped<ICreateTypeFoodCommand, CreateTypeFoodCommand>()
-                .AddScoped<IUpdateTypeFoodCommand, UpdateTypeFoodCommand>()
+                .AddScoped<Query<TypeFoodResponse>, TypeFoodQuery>()
+                .AddScoped<ListQuery<TypeFoodResponse,TypeFoodFilter>, TypeFoodsListQuery>()
+                .AddScoped<CreateCommand<CreateTypeFoodRequest,TypeFoodResponse>, CreateTypeFoodCommand>()
+                .AddScoped<UpdateCommand<UpdateTypeFoodRequest,TypeFoodResponse>, UpdateTypeFoodCommand>()
                 .AddScoped<DeleteCommand<TypeFoodResponse>, DeleteTypeFoodCommand>()
 
                 .AddScoped<IIngredientQuery, IngredientQuery>()

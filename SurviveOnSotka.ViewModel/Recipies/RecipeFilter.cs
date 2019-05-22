@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using SurviveOnSotka.ViewModel.IngredientToRecipe;
+using SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe;
 
-namespace SurviveOnSotka.ViewModel.Recipies
+namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
 {
     public class RecipeFilter
     {

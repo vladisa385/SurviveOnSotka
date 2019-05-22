@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SurviveOnSotka.ViewModel.Steps
+namespace SurviveOnSotka.ViewModel.Implementanion.Steps
 {
     public class UpdateStepRequest
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SurviveOnSotka.DataAccess.ViewModels;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.CrudOperation
 {

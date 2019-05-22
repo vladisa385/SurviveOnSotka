@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.Users;
+using SurviveOnSotka.ViewModel.Implementanion.Users;
 
-namespace SurviveOnSotka.ViewModel.Reviews
+namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
 {
     public class ReviewResponse
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace SurviveOnSotka.DataAccess.ViewModels.Extensions
+namespace SurviveOnSotka.ViewModell.Extensions
 {
     // ReSharper disable once InconsistentNaming
     public static class IQueryableExtensions

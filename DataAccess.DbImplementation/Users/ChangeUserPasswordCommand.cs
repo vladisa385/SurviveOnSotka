@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.Users;
+using SurviveOnSotka.ViewModel.Implementanion.Users;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {

@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.DataAccess.Tags;
-using SurviveOnSotka.DataAccess.ViewModels;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Middlewares;
-using SurviveOnSotka.ViewModel;
-using SurviveOnSotka.ViewModel.Tags;
+using SurviveOnSotka.ViewModel.Implementanion.Tags;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -17,7 +17,7 @@ namespace SurviveOnSotka.Controllers
         //[Authorize]
         [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(ListResponse<TagResponse>))]
-        public async Task<IActionResult> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ITagsListQuery query)
+        public async Task<IActionResult> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ListQuery<TagResponse,TagFilter> query)
         {
             var response = await query.RunAsync(filter, options);
             return Ok(response);
@@ -27,9 +27,9 @@ namespace SurviveOnSotka.Controllers
         //[Authorize(Roles = "admin")]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteTagAsync(string tag, [FromServices]IDeleteTagCommand command)
+        public async Task<IActionResult> DeleteTagAsync(Guid id, [FromServices]DeleteCommand<TagResponse> command)
         {
-            await command.ExecuteAsync(tag);
+            await command.ExecuteAsync(id);
             return NoContent();
         }
     }
