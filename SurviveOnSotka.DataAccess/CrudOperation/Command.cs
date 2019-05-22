@@ -22,7 +22,6 @@ namespace SurviveOnSotka.DataAccess.CrudOperation
                 return default;
             }
 
-
             protected virtual void HandleError(Exception ex)
             {
                 throw ex;

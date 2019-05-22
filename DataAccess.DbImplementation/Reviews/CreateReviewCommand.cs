@@ -26,16 +26,19 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
         {
             var review = _mapper.Map<CreateReviewRequest, Review>(request);
             review.DateCreated = DateTime.Now;
-            try
-            {
-                await _context.Reviews.AddAsync(review);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new CreateItemException("Review cannot be Created. User can create only one review", exception);
-            }
+            await _context.Reviews.AddAsync(review);
+            await _context.SaveChangesAsync();
             return _mapper.Map<Review, ReviewResponse>(review);
         }
+        protected override void HandleError(Exception exception)
+        {
+            switch (exception)
+            {
+                case DbUpdateException _:
+                     throw new CreateItemException("Review cannot be Created. User can create only one review", exception);
+            }
+            base.HandleError(exception);
+        }
+
     }
 }

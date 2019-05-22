@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CrudOperation;
@@ -21,16 +22,19 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
         protected override async Task<RateReviewResponse> Execute(CreateRateReviewRequest request)
         {
             var rateReview = _mapper.Map<CreateRateReviewRequest, RateReview>(request);
-            try
-            {
-                await _context.RateReviews.AddAsync(rateReview);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException exception)
-            {
-                throw new CreateItemException("RateReview cannot be Created. This rateReview already exist",exception);
-            }
+            await _context.RateReviews.AddAsync(rateReview);
+            await _context.SaveChangesAsync();
             return _mapper.Map<RateReview, RateReviewResponse>(rateReview);
+        }
+
+        protected override void HandleError(Exception exception)
+        {
+            switch (exception)
+            {
+                case DbUpdateException _:
+                    throw new CreateItemException("RateReview cannot be Created. This rateReview already exist",exception);
+            }
+            base.HandleError(exception);
         }
     }
 }

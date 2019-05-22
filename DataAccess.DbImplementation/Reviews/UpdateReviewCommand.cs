@@ -30,7 +30,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             if (foundReview == null)
                 throw new UpdateItemException("Review cannot be updated.Review with this id doesn't exist");
             if (request.IsLegalAccess(foundReview.UserId))
-                throw new UpdateItemException("This request doesnt come from owner or admin");
+                throw new IllegalAccessException();
             var mappedReview = _mapper.Map<UpdateReviewRequest, Review>(request);
             mappedReview.RecipeId = foundReview.RecipeId;
             mappedReview.UserId = foundReview.UserId;

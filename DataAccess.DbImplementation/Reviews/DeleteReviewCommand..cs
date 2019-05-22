@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CrudOperation;
+using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
@@ -19,11 +20,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
         {
             var reviewToDelete = await _context.Reviews
                 .FirstOrDefaultAsync(p => p.Id == request.Id);
-            if (reviewToDelete != null)
-            {
-                _context.Reviews.Remove(reviewToDelete);
-                await _context.SaveChangesAsync();
-            }
+            if (reviewToDelete == null) return null;
+            if (request.IsLegalAccess(reviewToDelete.UserId))
+                throw new IllegalAccessException();
+            _context.Reviews.Remove(reviewToDelete);
+            await _context.SaveChangesAsync();
             return null;
         }
     }

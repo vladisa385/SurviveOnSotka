@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CrudOperation;
-
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion;
@@ -13,7 +12,6 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [ProducesResponseType(401)]
-    [Route("api/[controller]")]
     public class ReviewsController : Controller
     {
         [HttpGet("GetList")]
@@ -29,7 +27,7 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("Create")]
         // [Authorize(Roles = "admin")]
         [ModelValidation]
-         [ServiceFilter(typeof(InjectUserId))]
+        [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(ReviewResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
