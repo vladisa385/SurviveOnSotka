@@ -21,21 +21,8 @@ namespace SurviveOnSotka.Entities
         public string PathToPhotos { get; set; }
         public ICollection<RateReview> RateReviews { get; set; }
 
-        public int Likes
-        {
-            get
-            {
-                if (RateReviews == null) return 0;
-                return RateReviews.Count(u => u.IsCool);
-            }
-        }
-        public int DisLikes
-        {
-            get
-            {
-                if (RateReviews == null) return 0;
-                return RateReviews.Count(u => u.IsCool == false);
-            }
-        }
+        public int Likes => RateReviews?.Count(u => u.IsCool) ?? 0;
+
+        public int DisLikes => RateReviews?.Count(u => u.IsCool == false) ?? 0;
     }
 }

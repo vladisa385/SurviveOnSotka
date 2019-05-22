@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Ingredients;
+using SurviveOnSotka.Filters;
+using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Ingredients;
 
@@ -12,11 +14,11 @@ namespace SurviveOnSotka.Controllers
     // [Authorize]
     public class IngredientsController : Controller
     {
-
         [HttpGet("GetList")]
         //  [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(ListResponse<IngredientResponse>))]
-        public async Task<IActionResult> GetIngredientsListAsync(IngredientFilter ingredient, ListOptions options, [FromServices]IIngredientsListQuery query)
+        [ProducesResponseType(500, Type = typeof(ErrorDetails))]
+        public async Task<IActionResult> GetIngredientsListAsync(IngredientFilter ingredient, ListOptions options, [FromServices] IIngredientsListQuery query)
         {
             var response = await query.RunAsync(ingredient, options);
             return Ok(response);
@@ -25,22 +27,13 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("Create")]
         //[Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
+        [ModelValidation]
         [ProducesResponseType(201, Type = typeof(IngredientResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices]ICreateIngredientCommand command)
+        public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices] ICreateIngredientCommand command)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            try
-            {
-                IngredientResponse response = await command.ExecuteAsync(ingredient);
-                return CreatedAtRoute("GetSingleIngredient", new { ingredientId = response.Id }, response);
-            }
-            catch (CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException e)
-            {
-                return BadRequest(e.Message);
-            }
-
+            var response = await command.ExecuteAsync(ingredient);
+            return CreatedAtRoute("GetSingleIngredient", new {ingredientId = response.Id}, response);
         }
 
         [HttpGet("Get/{ingredientId}", Name = "GetSingleIngredient")]
@@ -49,33 +42,21 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetIngredientAsync(Guid ingredientId, [FromServices] IIngredientQuery query)
         {
-            IngredientResponse response = await query.RunAsync(ingredientId);
-            return response == null ? (IActionResult)NotFound() : Ok(response);
+            var response = await query.RunAsync(ingredientId);
+            return response == null ? (IActionResult) NotFound() : Ok(response);
         }
 
-        [HttpPut("Update/{ingredientId}")]
+        [HttpPut("Update}")]
         // [Authorize(Roles = "admin")]
+        [ModelValidation]
         [ProducesResponseType(200, Type = typeof(IngredientResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateingredientAsync(Guid ingredientId, [FromBody] UpdateIngredientRequest request, [FromServices] IUpdateIngredientCommand command)
+        public async Task<IActionResult> UpdateIngredientAsync([FromBody] UpdateIngredientRequest request, [FromServices] IUpdateIngredientCommand command)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                IngredientResponse response = await command.ExecuteAsync(ingredientId, request);
-                return response == null ? (IActionResult)NotFound($"ingredient with id: {ingredientId} not found") : Ok(response);
-            }
-            catch (CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException e)
-            {
-                return BadRequest(e.Message);
-            }
-
+            var response = await command.ExecuteAsync(request);
+            return Ok(response);
         }
 
         [HttpDelete("Delete/{ingredientId}")]
@@ -83,17 +64,10 @@ namespace SurviveOnSotka.Controllers
         // [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteingredientAsync(Guid ingredientId, [FromServices]IDeleteIngredientCommand command)
+        public async Task<IActionResult> DeleteIngredientAsync(Guid ingredientId,[FromServices] IDeleteIngredientCommand command)
         {
-            try
-            {
-                await command.ExecuteAsync(ingredientId);
-                return NoContent();
-            }
-            catch (CannotDeleteIngredientWithRecipiesExeption exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            await command.ExecuteAsync(ingredientId);
+            return NoContent();
         }
     }
 }

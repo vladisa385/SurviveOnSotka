@@ -7,7 +7,8 @@ namespace SurviveOnSotka.ViewModel.Reviews
 {
     public class UpdateReviewRequest
     {
-
+        [Required]
+        public Guid Id { get; set; }
         [MinLength(100), MaxLength(2000)]
         public string Text { get; set; }
         public DateTime DateCreated { get; set; }

@@ -18,10 +18,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             _context = context;
             _mapper = mapper;
         }
-
         public async Task<RecipeResponse> RunAsync(Guid recipeId)
         {
-            RecipeResponse response = await _context.Recipes
+            var response = await _context.Recipes
                  .ProjectTo<RecipeResponse>(_mapper.ConfigurationProvider)
                  .FirstOrDefaultAsync(p => p.Id == recipeId);
             return response;

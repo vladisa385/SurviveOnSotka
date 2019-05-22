@@ -78,9 +78,9 @@ namespace SurviveOnSotka
                    .ForMember(u => u.RecipeId, pt => pt.Ignore());
              CreateMap<UpdateRecipeRequest, Recipe>().
             ForMember(d => d.Tags, pt => pt.Ignore());
-            CreateMap<CreateRecipeRequest, Recipe>().
-            ForMember(d => d.Tags, pt => pt.Ignore());
-                 CreateMap<UpdateReviewRequest, Review>();
+             CreateMap<CreateRecipeRequest, Recipe>()
+                 .ForMember(d => d.Tags, pt => pt.Ignore());
+             CreateMap<UpdateReviewRequest, Review>();
             CreateMap<CreateReviewRequest, Review>();
 
             CreateMap<RateReview, RateReviewResponse>();

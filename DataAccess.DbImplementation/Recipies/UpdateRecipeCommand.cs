@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.DbImplementation.Files;
+using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.DataAccess.Recipies;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Recipies;
@@ -20,77 +15,63 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IHostingEnvironment _appEnvironment;
-        private readonly UserManager<User> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UpdateRecipeCommand(AppDbContext context, IMapper mapper, IHostingEnvironment appEnvironment, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+        public UpdateRecipeCommand(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _appEnvironment = appEnvironment;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<RecipeResponse> ExecuteAsync(Guid recipeId, UpdateRecipeRequest request)
+        public async Task<RecipeResponse> ExecuteAsync(UpdateRecipeRequest request)
         {
-            Recipe foundRecipe = await _context.Recipes.Include("User").FirstOrDefaultAsync(t => t.Id == recipeId);
-
-
-            if (foundRecipe != null)
-            {
-                var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-                var isAdmin = await _userManager.IsInRoleAsync(currentUser, "admin");
-                if (foundRecipe.User != currentUser && !isAdmin)
-                    throw new ThisRequestNotFromOwnerException(null);
-                Recipe mappedRecipe = _mapper.Map<UpdateRecipeRequest, Recipe>(request);
-                mappedRecipe.Id = recipeId;
-                foreach (var ingredientToRecipe in mappedRecipe.Ingredients.ToList())
-                {
-
-                    if (_context.Ingredients.AnyAsync(
-                            u => u.Id == ingredientToRecipe.IngredientId).Result == false)
-                    {
-                        mappedRecipe.Ingredients.Remove(ingredientToRecipe);
-                        continue;
-                    }
-                    ingredientToRecipe.Recipe = mappedRecipe;
-                }
-                _context.Entry(foundRecipe).CurrentValues.SetValues(mappedRecipe);
-                foundRecipe.User = currentUser;
-                foundRecipe.UserId = currentUser.Id;
-                foundRecipe.Tags = new List<TagsInRecipe>();
-                foreach (var tag in request.Tags)
-                {
-                    var newTag = await _context.Tags.Include("Recipies").FirstOrDefaultAsync(u => u.Name == tag);
-                    if (newTag == null)
-                    {
-                        //такого тега нет в системе, создадим
-                        newTag = new Tag { Name = tag, Recipies = new List<TagsInRecipe>() };
-                        await _context.Tags.AddAsync(newTag);
-                    }
-                    TagsInRecipe tit = new TagsInRecipe
-                    {
-                        Recipe = foundRecipe,
-                        Tag = newTag
-                    };
-                    foundRecipe.Tags.Add(tit);
-                    newTag.Recipies.Add(tit);
-                    await _context.TagsInRecipies.AddAsync(tit);
-
-                }
-                if (request.Photos != null)
-                {
-                    foreach (var photo in request.Photos)
-                    {
-
-                        await CreateFileCommand.ExecuteAsync(photo, foundRecipe.PathToPhotos);
-                    }
-                }
-                await _context.SaveChangesAsync();
-            }
+            var foundRecipe = await _context.Recipes
+                .Include("User")
+                .FirstOrDefaultAsync(t => t.Id == request.Id);
+            if(foundRecipe == null)
+                throw new UpdateItemException($"Recipe with id: {request.Id} not found");
+            var mappedRecipe = _mapper.Map<UpdateRecipeRequest, Recipe>(request);
+            await CreateIngredients(mappedRecipe);
+            AddIdToSteps(mappedRecipe);
+            await CreateTags(mappedRecipe, request.Tags);
+            _context.Entry(foundRecipe).CurrentValues.SetValues(mappedRecipe);
+            await _context.SaveChangesAsync();
             return _mapper.Map<Recipe, RecipeResponse>(foundRecipe);
+        }
+        private async Task CreateTags(Recipe recipe, ICollection<string> tags)
+        {
+            foreach (var tag in tags)
+            {
+                var newTag = await _context.Tags
+                    .Include(u => u.Recipies)
+                    .FirstOrDefaultAsync(u => u.Name == tag);
+                if (newTag == null)
+                {
+                    newTag = new Tag
+                    {
+                        Name = tag,
+                        Recipies = new List<TagsInRecipe>()
+                    };
+                    await _context.Tags.AddAsync(newTag);
+                }
+                var tit = new TagsInRecipe
+                {
+                    TagId = newTag.Id,
+                    RecipeId = recipe.Id
+                };
+                await _context.TagsInRecipies.AddAsync(tit);
+            }
+        }
+        private void AddIdToSteps(Recipe recipe) => recipe.Steps.ToList().ForEach(x => x.RecipeId = recipe.Id);
+        private async Task CreateIngredients(Recipe recipe)
+        {
+            foreach (var ingredientToRecipe in recipe.Ingredients)
+            {
+                var ingredient = await _context.Ingredients
+                    .FirstOrDefaultAsync(u => u.Id == ingredientToRecipe.IngredientId);
+                if (ingredient == null)
+                    throw new CreateItemException($"Recipe cannot be created, The ingredient with id {ingredientToRecipe.IngredientId} doesn't exist");
+                ingredientToRecipe.RecipeId = recipe.Id;
+            }
         }
     }
 }

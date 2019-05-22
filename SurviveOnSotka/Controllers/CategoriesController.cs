@@ -45,7 +45,7 @@ namespace SurviveOnSotka.Controllers
             var response = await query.RunAsync(categoryId);
             return response == null ? (IActionResult) NotFound() : Ok(response);
         }
-        [HttpPut("Update/{categoryId}")]
+        [HttpPut("Update")]
         //[Authorize(Roles = "admin")]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
@@ -53,9 +53,9 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(200, Type = typeof(CategoryResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateCategoryAsync(Guid categoryId, [FromBody] UpdateCategoryRequest request, [FromServices] IUpdateCategoryCommand command)
+        public async Task<IActionResult> UpdateCategoryAsync([FromBody] UpdateCategoryRequest request, [FromServices] IUpdateCategoryCommand command)
         {
-            var response = await command.ExecuteAsync(categoryId, request);
+            var response = await command.ExecuteAsync( request);
             return Ok(response);
         }
         [HttpDelete("Delete/{categoryId}")]

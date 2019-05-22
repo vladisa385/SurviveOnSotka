@@ -18,10 +18,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             _context = dbContext;
             _mapper = mapper;
         }
-
         public async Task<IngredientResponse> RunAsync(Guid ingredientId)
         {
-            IngredientResponse response = await _context.Ingredients
+            var response = await _context.Ingredients
                 .ProjectTo<IngredientResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(p => p.Id == ingredientId);
             return response;

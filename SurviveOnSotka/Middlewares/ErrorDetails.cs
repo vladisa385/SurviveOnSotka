@@ -15,9 +15,6 @@ namespace SurviveOnSotka.Middlewares
             Message = exception.Message;
             StatusCode = baseCrudException.StatusCode;
         }
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
+        public override string ToString() => JsonConvert.SerializeObject(this);
     }
 }

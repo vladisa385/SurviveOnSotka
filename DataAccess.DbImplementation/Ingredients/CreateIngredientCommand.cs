@@ -2,7 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.DbImplementation.Files;
+using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
@@ -13,34 +13,26 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 
     public class CreateIngredientCommand : ICreateIngredientCommand
     {
-
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IHostingEnvironment _appEnvironment;
         public CreateIngredientCommand(AppDbContext dbContext, IMapper mapper, IHostingEnvironment appEnvironment)
         {
             _context = dbContext;
             _mapper = mapper;
-            _appEnvironment = appEnvironment;
         }
         public async Task<IngredientResponse> ExecuteAsync(CreateIngredientRequest request)
         {
-            if (!_context.TypeFoods.AnyAsync(u => u.Id == request.TypeFoodId).Result)
-            {
-                throw new CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException();
-            }
             var ingredient = _mapper.Map<CreateIngredientRequest, Ingredient>(request);
-            await _context.Ingredients.AddAsync(ingredient);
-            if (request.Icon != null)
+            try
             {
-                string basedir = _appEnvironment.WebRootPath + "/Files/Ingredients/";
-                ingredient.PathToIcon = basedir + request.Icon.FileName;
-                await CreateFileCommand.ExecuteAsync(request.Icon, basedir);
+                await _context.Ingredients.AddAsync(ingredient);
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
+            catch (DbUpdateException exception)
+            {
+                throw new CreateItemException("Ingredient cannot be created, The TypeFood's guid is incorrect", exception);
+            }
             return _mapper.Map<Ingredient, IngredientResponse>(ingredient);
         }
-
-
     }
 }

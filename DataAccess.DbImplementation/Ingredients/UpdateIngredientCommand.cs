@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.DbImplementation.Files;
+using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.DataAccess.Ingredients;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
@@ -15,33 +13,26 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IHostingEnvironment _appEnvironment;
 
-        public UpdateIngredientCommand(AppDbContext dbContext, IMapper mappper, IHostingEnvironment appEnvironment)
+        public UpdateIngredientCommand(AppDbContext dbContext, IMapper mapper)
         {
             _context = dbContext;
-            _mapper = mappper;
-            _appEnvironment = appEnvironment;
+            _mapper = mapper;
         }
-        public async Task<IngredientResponse> ExecuteAsync(Guid typefoodId, UpdateIngredientRequest request)
+        public async Task<IngredientResponse> ExecuteAsync(UpdateIngredientRequest request)
         {
-            if (request.TypeFoodId != null && !_context.TypeFoods.AnyAsync(u => u.Id == request.TypeFoodId).Result)
+            var foundIngredient = await _context.Ingredients.FirstOrDefaultAsync(t => t.Id == request.Id);
+            if(foundIngredient==null)
+                throw new UpdateItemException($"Ingredient with id: {request.Id} not found");
+            var mappedIngredient = _mapper.Map<UpdateIngredientRequest, Ingredient>(request);
+            _context.Entry(foundIngredient).CurrentValues.SetValues(mappedIngredient);
+            try
             {
-                throw new CannotCreateOrUpdateIngredientWithThisTypeFoodGuidException();
-            }
-            Ingredient foundIngredient = await _context.Ingredients.FirstOrDefaultAsync(t => t.Id == typefoodId);
-            if (foundIngredient != null)
-            {
-                Ingredient mappedIngredient = _mapper.Map<UpdateIngredientRequest, Ingredient>(request);
-                mappedIngredient.Id = typefoodId;
-                _context.Entry(foundIngredient).CurrentValues.SetValues(mappedIngredient);
-                if (request.Icon != null)
-                {
-                    string basedir = _appEnvironment.WebRootPath + "/Files/Ingredients/";
-                    mappedIngredient.PathToIcon = basedir + request.Icon.FileName;
-                    await CreateFileCommand.ExecuteAsync(request.Icon, basedir);
-                }
                 await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException exception)
+            {
+                throw new UpdateItemException("Ingredient cannot be update, The TypeFood's guid is incorrect", exception);
             }
             return _mapper.Map<Ingredient, IngredientResponse>(foundIngredient);
         }

@@ -19,50 +19,37 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             _context = tasksContext;
             _mapper = mapper;
         }
-
         private IQueryable<IngredientResponse> ApplyFilter(IQueryable<IngredientResponse> query, IngredientFilter filter)
         {
             if (filter.Id != null)
-            {
                 query = query.Where(p => p.Id == filter.Id);
-            }
-
             if (filter.Name != null)
-            {
                 query = query.Where(p => p.Name.StartsWith(filter.Name));
-            }
-
             if (filter.Recipies != null)
             {
                 if (filter.Recipies.From != null)
-                {
                     query = query.Where(p => p.RecipiesCount >= filter.Recipies.From);
-                }
-
                 if (filter.Recipies.To != null)
-                {
                     query = query.Where(p => p.RecipiesCount <= filter.Recipies.To);
-                }
             }
             return query;
         }
 
         public async Task<ListResponse<IngredientResponse>> RunAsync(IngredientFilter filter, ListOptions options)
         {
-            IQueryable<IngredientResponse> query = _context.Ingredients.Include("Recipies")
+            var query = _context.Ingredients
+                .Include("Recipies")
                 .ProjectTo<IngredientResponse>(_mapper.ConfigurationProvider);
             query = ApplyFilter(query, filter);
-            int totalCount = await query.CountAsync();
             if (options.Sort == null)
-            {
                 options.Sort = "Id";
-            }
-
             query = options.ApplySort(query);
             query = options.ApplyPaging(query);
+            var totalCount = await query.CountAsync();
+            var items = await query.ToListAsync();
             return new ListResponse<IngredientResponse>
             {
-                Items = await query.ToListAsync(),
+                Items =items,
                 Page = options.Page,
                 PageSize = options.PageSize ?? -1,
                 Sort = options.Sort ?? "-Id",

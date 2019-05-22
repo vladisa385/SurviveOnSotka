@@ -21,7 +21,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 
         public async Task<ReviewResponse> RunAsync(Guid reviewId)
         {
-            ReviewResponse response = await _context.Reviews
+            var response = await _context.Reviews
                 .ProjectTo<ReviewResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(p => p.Id == reviewId);
             return response;
