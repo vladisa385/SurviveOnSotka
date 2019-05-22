@@ -2,27 +2,30 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CrudOperation;
-using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Db;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {
-    public class DeleteRecipeCommand : DeleteCommand<RecipeResponse>
+    public class DeleteRecipeCommand : Command<SimpleDeleteRequest,RecipeResponse>
     {
         private readonly AppDbContext _context;
         public DeleteRecipeCommand( AppDbContext context)
         {
             _context = context;
         }
-        protected override async Task DeleteItem(Guid recipeId)
+        protected override async Task<RecipeResponse> Execute(SimpleDeleteRequest request)
         {
-            var recipeToDelete = await _context.Recipes.Include(t => t.User).FirstOrDefaultAsync(p => p.Id == recipeId);
+            var recipeToDelete = await _context.Recipes
+                .Include(t => t.User)
+                .FirstOrDefaultAsync(p => p.Id == request.Id);
             if (recipeToDelete != null)
             {
                 _context.Recipes.Remove(recipeToDelete);
                 await _context.SaveChangesAsync();
             }
+            return null;
         }
     }
 }

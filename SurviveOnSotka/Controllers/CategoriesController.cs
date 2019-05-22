@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Categories;
 using SurviveOnSotka.ViewModell;
 
@@ -30,7 +31,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(403)]
         [ProducesResponseType(201, Type = typeof(CategoryResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryRequest category, [FromServices] CreateCommand<CreateCategoryRequest,CategoryResponse> command)
+        public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryRequest category, [FromServices] Command<CreateCategoryRequest,CategoryResponse> command)
         {
             var response = await command.ExecuteAsync(category);
             return CreatedAtRoute("GetSingleCategory", new {categoryId = response.Id}, response);
@@ -54,7 +55,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(200, Type = typeof(CategoryResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateCategoryAsync([FromBody] UpdateCategoryRequest request, [FromServices] UpdateCommand<UpdateCategoryRequest,CategoryResponse> command)
+        public async Task<IActionResult> UpdateCategoryAsync([FromBody] UpdateCategoryRequest request, [FromServices] Command<UpdateCategoryRequest,CategoryResponse> command)
         {
             var response = await command.ExecuteAsync( request);
             return Ok(response);
@@ -65,9 +66,9 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteCategoryAsync(Guid categoryId, [FromServices] DeleteCommand<CategoryResponse> command)
+        public async Task<IActionResult> DeleteCategoryAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest,CategoryResponse> command)
         {
-            await command.ExecuteAsync(categoryId);
+            await command.ExecuteAsync(request);
             return NoContent();
         }
     }

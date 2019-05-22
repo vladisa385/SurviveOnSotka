@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.RateReviews
 {
-    public class CreateRateReviewRequest
+    public class CreateRateReviewRequest:Request
     {
 
         [Required]

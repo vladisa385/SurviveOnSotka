@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Middlewares;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
 using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.Controllers
 {
-    [Route("api/[controller]")]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class TagsController : Controller
@@ -27,9 +27,9 @@ namespace SurviveOnSotka.Controllers
         //[Authorize(Roles = "admin")]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteTagAsync(Guid id, [FromServices]DeleteCommand<TagResponse> command)
+        public async Task<IActionResult> DeleteTagAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest,TagResponse> command)
         {
-            await command.ExecuteAsync(id);
+            await command.ExecuteAsync(request);
             return NoContent();
         }
     }

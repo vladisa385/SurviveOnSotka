@@ -4,15 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
-using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {
-    public class CreateRecipeCommand : ICreateRecipeCommand
+    public class CreateRecipeCommand : Command<CreateRecipeRequest,RecipeResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -21,20 +21,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
         {
             _mapper = mapper;
             _context = context;
-        }
-
-        public async Task<RecipeResponse> ExecuteAsync(Guid userId,CreateRecipeRequest request)
-        {
-            var recipe = _mapper.Map<CreateRecipeRequest, Recipe>(request);
-            recipe.UserId = userId;
-            recipe.DateCreated = DateTime.Now;
-            await CreateIngredients(recipe);
-            AddIdToSteps(recipe);
-            await _context.Recipes.AddAsync(recipe);
-            if (request.Tags != null)
-                await CreateTags(recipe, request.Tags);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<Recipe, RecipeResponse>(recipe);
         }
 
         private async Task CreateTags(Recipe recipe,ICollection<string> tags)
@@ -72,6 +58,19 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                  throw new CreateItemException($"Recipe cannot be created, The ingredient with id {ingredientToRecipe.IngredientId} doesn't exist");
                 ingredientToRecipe.RecipeId = recipe.Id;
             }
+        }
+
+        protected override async Task<RecipeResponse>  Execute(CreateRecipeRequest request)
+        {
+            var recipe = _mapper.Map<CreateRecipeRequest, Recipe>(request);
+            recipe.DateCreated = DateTime.Now;
+            await CreateIngredients(recipe);
+            AddIdToSteps(recipe);
+            await _context.Recipes.AddAsync(recipe);
+            if (request.Tags != null)
+                await CreateTags(recipe, request.Tags);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<Recipe, RecipeResponse>(recipe);
         }
     }
 }

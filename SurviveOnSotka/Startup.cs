@@ -18,13 +18,12 @@ using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.DbImplementation.Users;
 using SurviveOnSotka.DataAccess.RateReviews;
-using SurviveOnSotka.DataAccess.Recipies;
-using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Categories;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
@@ -121,24 +120,24 @@ namespace SurviveOnSotka
             services
                 .AddScoped<Query<CategoryResponse>, CategoryQuery>()
                 .AddScoped<ListQuery<CategoryResponse, CategoryFilter>, CategoriesListQuery>()
-                .AddScoped<CreateCommand<CreateCategoryRequest, CategoryResponse>, CreateCategoryCommand>()
-                .AddScoped<UpdateCommand<UpdateCategoryRequest, CategoryResponse>, UpdateCategoryCommand>()
-                .AddScoped<DeleteCommand<CategoryResponse>, DeleteCategoryCommand>()
+                .AddScoped<Command<CreateCategoryRequest, CategoryResponse>, CreateCategoryCommand>()
+                .AddScoped<Command<UpdateCategoryRequest, CategoryResponse>, UpdateCategoryCommand>()
+                .AddScoped<Command<SimpleDeleteRequest,CategoryResponse>, DeleteCategoryCommand>()
 
                 .AddScoped<ListQuery<TagResponse,TagFilter>, TagsListQuery>()
-                .AddScoped<DeleteCommand<TagResponse>, DeleteTagCommand>()
+                .AddScoped<Command<SimpleDeleteRequest,TagResponse>, DeleteTagCommand>()
 
                 .AddScoped<Query<IngredientResponse>, IngredientQuery>()
                 .AddScoped<ListQuery<IngredientResponse,IngredientFilter>, IngredientsListQuery>()
-                .AddScoped<CreateCommand<CreateIngredientRequest,IngredientResponse>, CreateIngredientCommand>()
-                .AddScoped<UpdateCommand<UpdateIngredientRequest,IngredientResponse>, UpdateIngredientCommand>()
-                .AddScoped<DeleteCommand<IngredientResponse>, DeleteIngredientCommand>()
+                .AddScoped<Command<CreateIngredientRequest,IngredientResponse>, CreateIngredientCommand>()
+                .AddScoped<Command<UpdateIngredientRequest,IngredientResponse>, UpdateIngredientCommand>()
+                .AddScoped<Command<SimpleDeleteRequest,IngredientResponse>, DeleteIngredientCommand>()
 
                  .AddScoped<Query<TypeFoodResponse>, TypeFoodQuery>()
                 .AddScoped<ListQuery<TypeFoodResponse, TypeFoodFilter>, TypeFoodsListQuery>()
-                .AddScoped<CreateCommand<CreateTypeFoodRequest, TypeFoodResponse>, CreateTypeFoodCommand>()
-                .AddScoped<UpdateCommand<UpdateTypeFoodRequest, TypeFoodResponse>, UpdateTypeFoodCommand>()
-                .AddScoped<DeleteCommand<TypeFoodResponse>, DeleteTypeFoodCommand>()
+                .AddScoped<Command<CreateTypeFoodRequest, TypeFoodResponse>, CreateTypeFoodCommand>()
+                .AddScoped<Command<UpdateTypeFoodRequest, TypeFoodResponse>, UpdateTypeFoodCommand>()
+                .AddScoped<Command<SimpleDeleteRequest,TypeFoodResponse>, DeleteTypeFoodCommand>()
 
 
                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
@@ -152,15 +151,15 @@ namespace SurviveOnSotka
 
                 .AddScoped<Query<RecipeResponse>, RecipeQuery>()
                 .AddScoped<ListQuery<RecipeResponse,RecipeFilter>, RecipiesListQuery>()
-                .AddScoped<ICreateRecipeCommand, CreateRecipeCommand>()
-                .AddScoped<IUpdateRecipeCommand, UpdateRecipeCommand>()
-                .AddScoped<DeleteCommand<RecipeResponse>, DeleteRecipeCommand>()
+                .AddScoped<Command<CreateRecipeRequest,RecipeResponse>, CreateRecipeCommand>()
+                .AddScoped<Command<UpdateRecipeRequest,RecipeResponse>, UpdateRecipeCommand>()
+                .AddScoped<Command<SimpleDeleteRequest,RecipeResponse>, DeleteRecipeCommand>()
 
                 .AddScoped<Query<ReviewResponse>, ReviewQuery>()
                 .AddScoped<ListQuery<ReviewResponse, ReviewFilter>, ReviewsListQuery>()
-                .AddScoped<ICreateReviewCommand, CreateReviewCommand>()
-                .AddScoped<IUpdateReviewCommand, UpdateReviewCommand>()
-                .AddScoped<DeleteCommand<ReviewResponse>, DeleteReviewCommand>()
+                .AddScoped<Command<CreateReviewRequest,ReviewResponse>, CreateReviewCommand>()
+                .AddScoped<Command<UpdateReviewRequest,ReviewResponse>, UpdateReviewCommand>()
+                .AddScoped<Command<SimpleDeleteRequest,ReviewResponse>, DeleteReviewCommand>()
 
                 .AddScoped<IRateReviewQuery, RateReviewQuery>()
                  .AddScoped<ListQuery<RateReviewResponse, RateReviewFilter>, RateReviewsListQuery>()
@@ -168,7 +167,8 @@ namespace SurviveOnSotka
                 .AddScoped<IUpdateRateReviewCommand, UpdateRateReviewCommand>()
                 .AddScoped<IDeleteRateReviewCommand, DeleteRateReviewCommand>()
 
-                .AddScoped<ModelValidationAttribute>();
+                .AddScoped<ModelValidationAttribute>()
+                .AddScoped<InjectUserId>()
             ;
         }
     }

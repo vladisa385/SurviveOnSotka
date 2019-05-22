@@ -8,6 +8,7 @@ using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 using SurviveOnSotka.ViewModell;
 
@@ -17,11 +18,8 @@ namespace SurviveOnSotka.Controllers
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     //[Authorize]
-    public class RateReviewsController : BaseController
+    public class RateReviewsController : Controller
     {
-        public RateReviewsController(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager) : base(httpContextAccessor, userManager)
-        {
-        }
 
         [HttpGet("GetList")]
         [ProducesResponseType(200, Type = typeof(ListResponse<RateReviewResponse>))]
@@ -34,45 +32,45 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPost("Create")]
         [ModelValidation]
+         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(RateReviewResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateRateReviewAsync([FromBody] CreateRateReviewRequest request, [FromServices]ICreateRateReviewCommand command)
+        public async Task<IActionResult> CreateRateReviewAsync([FromBody] CreateRateReviewRequest request, [FromServices]Command<CreateRateReviewRequest,RateReviewResponse> command)
         {
-            var currentUser = await GetCurrentUserAsync();
-            var response = await command.ExecuteAsync(request,currentUser.Id);
+            var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleRateReview", new { reviewId = response.ReviewId }, response);
         }
 
         [HttpGet("Get/{reviewId}", Name = "GetSingleRateReview")]
+         [ServiceFilter(typeof(InjectUserId))]
         // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(RateReviewResponse))]
         [ProducesResponseType(401)]
-        public async Task<IActionResult> GetRateReviewAsync(Guid reviewId, [FromServices] IRateReviewQuery query)
+        public async Task<IActionResult> GetRateReviewAsync(Guid reviewId, [FromServices] Query<RateReviewResponse> query)
         {
-            var currentUser = await GetCurrentUserAsync();
-            var response = await query.RunAsync(reviewId, currentUser.Id);
+            var response = await query.RunAsync(reviewId);
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
         [HttpPut("Update")]
         [ModelValidation]
+        [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(RateReviewResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateRateReviewAsync([FromBody] UpdateRateReviewRequest request, [FromServices] IUpdateRateReviewCommand command)
+        public async Task<IActionResult> UpdateRateReviewAsync([FromBody] UpdateRateReviewRequest request, [FromServices] Command<UpdateRateReviewRequest,RateReviewResponse> command)
         {
-            var currentUser = await GetCurrentUserAsync();
-            var response = await command.ExecuteAsync(request, currentUser.Id);
+            var response = await command.ExecuteAsync(request);
             return  Ok(response);
         }
 
         [HttpDelete("Delete/{reviewId}")]
+         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteRateReviewAsync(Guid reviewId, [FromServices]IDeleteRateReviewCommand command)
+        public async Task<IActionResult> DeleteRateReviewAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest,RateReviewResponse> command)
         {
-            var currentUser = await GetCurrentUserAsync();
-            await command.ExecuteAsync(reviewId,currentUser.Id);
+            await command.ExecuteAsync(request);
             return NoContent();
         }
     }

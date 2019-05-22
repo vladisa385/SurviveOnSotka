@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
 {
-    public class UpdateReviewRequest
+    public class UpdateReviewRequest:Request
     {
         [Required]
         public Guid Id { get; set; }

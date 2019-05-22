@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
-using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
@@ -11,7 +11,7 @@ using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
 
-    public class CreateReviewCommand : ICreateReviewCommand
+    public class CreateReviewCommand : Command<CreateReviewRequest,ReviewResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -22,11 +22,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             _mapper = mapper;
         }
 
-        public async Task<ReviewResponse> ExecuteAsync(Guid userId,CreateReviewRequest request)
+        protected override async Task<ReviewResponse> Execute(CreateReviewRequest request)
         {
             var review = _mapper.Map<CreateReviewRequest, Review>(request);
             review.DateCreated = DateTime.Now;
-            review.AuthorId = userId;
             try
             {
                 await _context.Reviews.AddAsync(review);

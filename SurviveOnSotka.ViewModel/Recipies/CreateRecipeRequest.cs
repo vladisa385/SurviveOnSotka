@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe;
 using SurviveOnSotka.ViewModel.Implementanion.Steps;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
 {
-    public class CreateRecipeRequest
+    public class CreateRecipeRequest:Request
     {
         [Required, MinLength(5), MaxLength(100)]
         public string Name { get; set; }

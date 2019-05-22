@@ -9,7 +9,7 @@ using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
-    public class UpdateTypeFoodCommand : UpdateCommand<UpdateTypeFoodRequest,TypeFoodResponse>
+    public class UpdateTypeFoodCommand : Command<UpdateTypeFoodRequest,TypeFoodResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -19,7 +19,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             _context = dbContext;
             _mapper = mapper;
         }
-        protected override async Task<TypeFoodResponse> UpdateItem(UpdateTypeFoodRequest request)
+        protected override async Task<TypeFoodResponse> Execute(UpdateTypeFoodRequest request)
         {
             var foundTypeFood = await _context.TypeFoods.FirstOrDefaultAsync(t => t.Id == request.Id);
             if (foundTypeFood == null)

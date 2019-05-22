@@ -7,7 +7,7 @@ using SurviveOnSotka.ViewModel.Implementanion.Categories;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class CreateCategoryCommand : CreateCommand<CreateCategoryRequest,CategoryResponse>
+    public class CreateCategoryCommand : Command<CreateCategoryRequest,CategoryResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
             _context = dbContext;
             _mapper = mapper;
         }
-        protected override async Task<CategoryResponse> CreateItem(CreateCategoryRequest request)
+        protected override async Task<CategoryResponse> Execute(CreateCategoryRequest request)
         {
             var category = _mapper.Map<CreateCategoryRequest, Category>(request);
             await _context.Categories.AddAsync(category);

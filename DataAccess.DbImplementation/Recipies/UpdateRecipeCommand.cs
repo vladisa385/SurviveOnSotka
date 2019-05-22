@@ -3,15 +3,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
-using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {
-    public class UpdateRecipeCommand : IUpdateRecipeCommand
+    public class UpdateRecipeCommand : Command<UpdateRecipeRequest,RecipeResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             _mapper = mapper;
         }
 
-        public async Task<RecipeResponse> ExecuteAsync(UpdateRecipeRequest request)
+        protected override async Task<RecipeResponse> Execute(UpdateRecipeRequest request)
         {
             var foundRecipe = await _context.Recipes
                 .Include("User")
@@ -71,7 +71,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 var ingredient = await _context.Ingredients
                     .FirstOrDefaultAsync(u => u.Id == ingredientToRecipe.IngredientId);
                 if (ingredient == null)
-                    throw new CreateItemException($"Recipe cannot be created, The ingredient with id {ingredientToRecipe.IngredientId} doesn't exist");
+                    throw new UpdateItemException($"Recipe cannot be created, The ingredient with id {ingredientToRecipe.IngredientId} doesn't exist");
                 ingredientToRecipe.RecipeId = recipe.Id;
             }
         }

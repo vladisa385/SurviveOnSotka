@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Categories;
 using Task = System.Threading.Tasks.Task;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class DeleteCategoryCommand : DeleteCommand<CategoryResponse>
+    public class DeleteCategoryCommand : Command<SimpleDeleteRequest,CategoryResponse>
     {
         private readonly AppDbContext _context;
 
@@ -17,21 +19,22 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
         {
             _context = dbContext;
         }
-        protected override async Task DeleteItem(Guid categoryId)
+        protected override async Task<CategoryResponse> Execute(SimpleDeleteRequest request)
         {
             var categoryToDelete = await _context.Categories
                 .Include(u => u.Recipies)
                 .Include(u => u.Categories)
-                .FirstOrDefaultAsync(p => p.Id == categoryId);
+                .FirstOrDefaultAsync(p => p.Id == request.Id);
             if (categoryToDelete?.Recipies?.Count > 0)
-                throw new DeleteItemCrudException("Category cannot be deleted, if there are recipies in it.");
+                throw new DeleteItemException("Category cannot be deleted, if there are recipies in it.");
             if (categoryToDelete?.Categories.Count(u => u.Id != categoryToDelete.Id) > 0)
-                throw new DeleteItemCrudException("Category cannot be deleted, if there are categories in it.");
+                throw new DeleteItemException("Category cannot be deleted, if there are categories in it.");
             if (categoryToDelete != null)
             {
                 _context.Categories.Remove(categoryToDelete);
                 await _context.SaveChangesAsync();
             }
+            return null;
         }
     }
 }

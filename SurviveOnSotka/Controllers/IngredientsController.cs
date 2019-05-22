@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 using SurviveOnSotka.ViewModell;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -31,7 +33,7 @@ namespace SurviveOnSotka.Controllers
         [ModelValidation]
         [ProducesResponseType(201, Type = typeof(IngredientResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices] CreateCommand<CreateRequest,IngredientResponse> command)
+        public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices] Command<Request,IngredientResponse> command)
         {
             var response = await command.ExecuteAsync(ingredient);
             return CreatedAtRoute("GetSingleIngredient", new {ingredientId = response.Id}, response);
@@ -54,7 +56,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateIngredientAsync([FromBody] UpdateIngredientRequest request, [FromServices] UpdateCommand<UpdateIngredientRequest,IngredientResponse> command)
+        public async Task<IActionResult> UpdateIngredientAsync([FromBody] UpdateIngredientRequest request, [FromServices] Command<UpdateIngredientRequest,IngredientResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return Ok(response);
@@ -65,9 +67,9 @@ namespace SurviveOnSotka.Controllers
         // [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteIngredientAsync(Guid ingredientId,[FromServices] DeleteCommand<IngredientResponse> command)
+        public async Task<IActionResult> DeleteIngredientAsync(SimpleDeleteRequest request,[FromServices] Command<SimpleDeleteRequest,IngredientResponse> command)
         {
-            await command.ExecuteAsync(ingredientId);
+            await command.ExecuteAsync(request);
             return NoContent();
         }
     }

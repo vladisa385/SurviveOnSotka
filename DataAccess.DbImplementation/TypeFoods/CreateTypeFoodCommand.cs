@@ -7,7 +7,7 @@ using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
-    public class CreateTypeFoodCommand : CreateCommand<CreateTypeFoodRequest,TypeFoodResponse>
+    public class CreateTypeFoodCommand : Command<CreateTypeFoodRequest,TypeFoodResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             _context = dbContext;
             _mapper = mapper;
         }
-        protected override async Task<TypeFoodResponse> CreateItem(CreateTypeFoodRequest request)
+        protected override async Task<TypeFoodResponse> Execute(CreateTypeFoodRequest request)
         {
             var typeFood = _mapper.Map<CreateTypeFoodRequest, TypeFood>(request);
             await _context.TypeFoods.AddAsync(typeFood);

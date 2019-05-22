@@ -12,7 +12,7 @@ using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
 
-    public class CreateIngredientCommand : CreateCommand<CreateIngredientRequest,IngredientResponse>
+    public class CreateIngredientCommand : Command<CreateIngredientRequest,IngredientResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             _mapper = mapper;
         }
 
-        protected override  async Task<IngredientResponse> CreateItem(CreateIngredientRequest request)
+        protected override  async Task<IngredientResponse> Execute(CreateIngredientRequest request)
         {
             var ingredient = _mapper.Map<CreateIngredientRequest, Ingredient>(request);
             await _context.Ingredients.AddAsync(ingredient);

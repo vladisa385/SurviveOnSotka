@@ -10,7 +10,7 @@ using SurviveOnSotka.ViewModel.Implementanion.Categories;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class UpdateCategoryCommand : UpdateCommand<UpdateCategoryRequest,CategoryResponse>
+    public class UpdateCategoryCommand : Command<UpdateCategoryRequest,CategoryResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -20,17 +20,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
             _mapper = mapper;
         }
 
-        protected override async Task<CategoryResponse> UpdateItem(UpdateCategoryRequest request)
-        {
-            var foundCategory = await _context.Categories
-                .FirstOrDefaultAsync(t => t.Id == request.Id);
-            if (foundCategory == null)
-                throw new UpdateItemException($"category with id: {request.Id} not found");
-            var mappedCategory = _mapper.Map<UpdateCategoryRequest, Category>(request);
-            _context.Entry(foundCategory).CurrentValues.SetValues(mappedCategory);
-            await _context.SaveChangesAsync();
-            return _mapper.Map<Category, CategoryResponse>(foundCategory);
-        }
 
         protected override void HandleError(Exception exception)
         {
@@ -40,6 +29,18 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
                      throw new UpdateItemException("Category cannot be update, The ParentCategory's guid is incorrect", exception);
             }
             base.HandleError(exception);
+        }
+
+        protected override  async Task<CategoryResponse> Execute(UpdateCategoryRequest request)
+        {
+            var foundCategory = await _context.Categories
+                .FirstOrDefaultAsync(t => t.Id == request.Id);
+            if (foundCategory == null)
+                throw new UpdateItemException($"category with id: {request.Id} not found");
+            var mappedCategory = _mapper.Map<UpdateCategoryRequest, Category>(request);
+            _context.Entry(foundCategory).CurrentValues.SetValues(mappedCategory);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<Category, CategoryResponse>(foundCategory);
         }
     }
 }

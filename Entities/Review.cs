@@ -9,8 +9,8 @@ namespace SurviveOnSotka.Entities
     {
         public Guid RecipeId { get; set; }
         public Recipe Recipe { get; set; }
-        public Guid? AuthorId { get; set; }
-        public User Author { get; set; }
+        public Guid? UserId { get; set; }
+        public User User { get; set; }
         [Required, MinLength(100), MaxLength(2000)]
         public string Text { get; set; }
         [Required]

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CrudOperation;
-using SurviveOnSotka.DataAccess.Recipies;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
 using SurviveOnSotka.ViewModell;
 
@@ -17,11 +15,8 @@ namespace SurviveOnSotka.Controllers
     [ProducesResponseType(401)]
     [Route("api/[controller]")]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
-    public class RecipesController : BaseController
+    public class RecipesController : Controller
     {
-        public RecipesController(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager) : base(httpContextAccessor, userManager)
-        {
-        }
         [HttpGet("GetList")]
         [ProducesResponseType(200, Type = typeof(ListResponse<RecipeResponse>))]
         public async Task<IActionResult> GetRecipesListAsync(RecipeFilter recipe, ListOptions options,[FromServices] ListQuery<RecipeResponse,RecipeFilter> query)
@@ -32,12 +27,12 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPost("Create")]
         [ModelValidation]
+         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(RecipeResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateRecipeAsync([FromBody] CreateRecipeRequest recipe, [FromServices] ICreateRecipeCommand command)
+        public async Task<IActionResult> CreateRecipeAsync([FromBody] CreateRecipeRequest request, [FromServices] Command<CreateRecipeRequest,RecipeResponse> command)
         {
-            var currentUser = await GetCurrentUserAsync();
-            var response = await command.ExecuteAsync(currentUser.Id,recipe);
+            var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleRecipe", new {recipeId = response.Id}, response);
         }
 
@@ -52,22 +47,24 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPut("Update")]
         [ModelValidation]
+        [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(RecipeResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateRecipeAsync( [FromBody] UpdateRecipeRequest request,[FromServices] IUpdateRecipeCommand command)
+        public async Task<IActionResult> UpdateRecipeAsync( [FromBody] UpdateRecipeRequest request,[FromServices] Command<UpdateRecipeRequest,RecipeResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return Ok(response);
         }
 
         [HttpDelete("Delete/{recipeId}")]
+        [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteRecipeAsync(Guid recipeId, [FromServices] DeleteCommand<Recipe> command)
+        public async Task<IActionResult> DeleteRecipeAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest,RecipeResponse> command)
         {
-            await command.ExecuteAsync(recipeId);
+            await command.ExecuteAsync(request);
             return NoContent();
         }
     }

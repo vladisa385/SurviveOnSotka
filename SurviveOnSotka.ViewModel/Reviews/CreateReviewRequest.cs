@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
 {
-    public class CreateReviewRequest
+    public class CreateReviewRequest:Request
     {
  
         [Required]

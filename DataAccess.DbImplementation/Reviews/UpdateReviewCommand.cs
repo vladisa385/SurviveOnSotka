@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Reviews;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
+using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
@@ -10,7 +11,7 @@ using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
-    public class UpdateReviewCommand : IUpdateReviewCommand
+    public class UpdateReviewCommand : Command<UpdateReviewRequest,ReviewResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -20,17 +21,20 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             _context = context;
             _mapper = mapper;
         }
-        public async Task<ReviewResponse> ExecuteAsync(UpdateReviewRequest request)
+
+        protected override async Task<ReviewResponse> Execute(UpdateReviewRequest request)
         {
             var foundReview = await _context.Reviews
-                .Include(u=>u.Author)
-                .Include(u=>u.Recipe)
-                .FirstOrDefaultAsync(t => t.Id == request.Id);
+               .Include(u => u.User)
+               .Include(u => u.Recipe)
+               .FirstOrDefaultAsync(t => t.Id == request.Id);
             if (foundReview == null)
-                 throw new UpdateItemException("Review cannot be updated.Review with this id doesn't exist");
+                throw new UpdateItemException("Review cannot be updated.Review with this id doesn't exist");
+            if (request.IsLegalAccess(foundReview.UserId))
+                throw new UpdateItemException("This request doesnt come from owner or admin");
             var mappedReview = _mapper.Map<UpdateReviewRequest, Review>(request);
             mappedReview.RecipeId = foundReview.RecipeId;
-            mappedReview.AuthorId = foundReview.AuthorId;
+            mappedReview.UserId = foundReview.UserId;
             mappedReview.DateCreated = foundReview.DateCreated;
             _context.Entry(foundReview).CurrentValues.SetValues(mappedReview);
             await _context.SaveChangesAsync();

@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CrudOperation;
-using SurviveOnSotka.DataAccess.Reviews;
-using SurviveOnSotka.Entities;
+
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
+using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.Controllers
 {
+    [Route("api/[controller]")]
     [ProducesResponseType(401)]
     [Route("api/[controller]")]
-    public class ReviewsController : BaseController
+    public class ReviewsController : Controller
     {
-        public ReviewsController(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager) : base(httpContextAccessor, userManager)
-        {
-        }
         [HttpGet("GetList")]
         // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<ReviewResponse>))]
@@ -33,13 +29,13 @@ namespace SurviveOnSotka.Controllers
         [HttpPost("Create")]
         // [Authorize(Roles = "admin")]
         [ModelValidation]
+         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(ReviewResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateReviewAsync([FromBody] CreateReviewRequest review, [FromServices] ICreateReviewCommand command)
+        public async Task<IActionResult> CreateReviewAsync([FromBody] CreateReviewRequest review, [FromServices] Command<CreateReviewRequest,ReviewResponse> command)
         {
-            var currentUser = await GetCurrentUserAsync();
-            var response = await command.ExecuteAsync(currentUser.Id,review);
+            var response = await command.ExecuteAsync(review);
             return CreatedAtRoute("GetSingleReview", new {reviewId = response.Id}, response);
         }
 
@@ -56,24 +52,26 @@ namespace SurviveOnSotka.Controllers
         [HttpPut("Update")]
         // [Authorize(Roles = "admin")]
         [ModelValidation]
+        [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateReviewAsync([FromBody] UpdateReviewRequest request, [FromServices] IUpdateReviewCommand command)
+        public async Task<IActionResult> UpdateReviewAsync([FromBody] UpdateReviewRequest request, [FromServices] Command<UpdateReviewRequest,ReviewResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return Ok(response);
         }
 
         [HttpDelete("Delete/{reviewId}")]
+        [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
         // [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteReviewAsync(Guid reviewId, [FromServices] DeleteCommand<ReviewResponse> command)
+        public async Task<IActionResult> DeleteReviewAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest,ReviewResponse> command)
         {
-            await command.ExecuteAsync(reviewId);
+            await command.ExecuteAsync(request);
             return NoContent();
         }
 

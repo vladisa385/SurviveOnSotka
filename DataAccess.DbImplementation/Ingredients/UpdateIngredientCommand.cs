@@ -10,7 +10,7 @@ using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
-    public class UpdateIngredientCommand : UpdateCommand<UpdateIngredientRequest,IngredientResponse>
+    public class UpdateIngredientCommand : Command<UpdateIngredientRequest,IngredientResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             _mapper = mapper;
         }
   
-        protected override async Task<IngredientResponse> UpdateItem(UpdateIngredientRequest request)
+        protected override async Task<IngredientResponse> Execute(UpdateIngredientRequest request)
         {
             var foundIngredient = await _context.Ingredients.FirstOrDefaultAsync(t => t.Id == request.Id);
             if (foundIngredient == null)

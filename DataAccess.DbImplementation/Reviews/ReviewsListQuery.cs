@@ -4,10 +4,8 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CrudOperation;
-using SurviveOnSotka.DataAccess.Reviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
-using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
