@@ -23,10 +23,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
         {
             var rateReview = await _context.RateReviews.FirstOrDefaultAsync(u =>
                 u.ReviewId == request.ReviewId &&
-                u.UserId == request.UserId);
+                u.UserId == request.GetUserId());
             if(rateReview==null)
                  throw new UpdateItemException("RateReview cannot be updated.ReviewId with this id doesn't exist");
-            if (request.IsLegalAccess(rateReview.UserId))
+            if (!request.IsLegalAccess(rateReview.UserId))
                 throw new IllegalAccessException();
             rateReview.IsCool = request.IsCool;
             await _context.SaveChangesAsync();

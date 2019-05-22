@@ -20,9 +20,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
         {
             var rateReviewToDelete = await _context.RateReviews.FirstOrDefaultAsync(p =>
                 p.ReviewId == request.Id &&
-                p.UserId == request.UserId);
+                p.UserId == request.GetUserId());
             if (rateReviewToDelete == null) return null;
-            if (request.IsLegalAccess(rateReviewToDelete.UserId))
+            if (!request.IsLegalAccess(rateReviewToDelete.UserId))
                 throw new IllegalAccessException();
             _context.RateReviews.Remove(rateReviewToDelete);
             await _context.SaveChangesAsync();

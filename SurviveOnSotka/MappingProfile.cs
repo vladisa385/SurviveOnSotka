@@ -75,17 +75,23 @@ namespace SurviveOnSotka
 
 
             CreateMap<UpdateRecipeRequest, Recipe>().
-                 ForMember(d => d.Tags, pt => pt.Ignore());
+                 ForMember(d => d.Tags, pt => pt.Ignore()).
+                 ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
             CreateMap<CreateRecipeRequest, Recipe>()
-                 .ForMember(d => d.Tags, pt => pt.Ignore());
-
+                 .ForMember(d => d.Tags, pt => pt.Ignore())
+                 .ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
             CreateMap<Review, ReviewResponse>();
-             CreateMap<UpdateReviewRequest, Review>();
-            CreateMap<CreateReviewRequest, Review>();
+            CreateMap<UpdateReviewRequest, Review>().
+                  ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
+
+            CreateMap<CreateReviewRequest, Review>().
+                 ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
 
             CreateMap<RateReview, RateReviewResponse>();
-            CreateMap<UpdateRateReviewRequest, RateReview>();
-            CreateMap<CreateRateReviewRequest, RateReview>();
+            CreateMap<UpdateRateReviewRequest, RateReview>().
+              ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
+            CreateMap<CreateRateReviewRequest, RateReview>()
+                .ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
 
         }
     }

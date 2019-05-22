@@ -3,13 +3,15 @@ namespace SurviveOnSotka.ViewModell.Requests
 {
     public class Request
     {
-        public Guid UserId { get; private set; }
+        private Guid _userId;
 
-        public void SetUserId(Guid id) => UserId = id;
+        public void SetUserId(Guid id) => _userId = id;
+
+        public Guid GetUserId() => _userId;
 
         public bool IsLegalAccess(Guid? userId)
         {
-            return UserId == userId;
+            return _userId == userId;
         }
     }
 }

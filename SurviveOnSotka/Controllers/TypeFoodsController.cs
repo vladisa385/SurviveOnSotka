@@ -17,7 +17,6 @@ namespace SurviveOnSotka.Controllers
     {
 
         [HttpGet("GetList")]
-        [ServiceFilter(typeof(InjectUserId))]
         // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<TypeFoodResponse>))]
         public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ListQuery<TypeFoodResponse,TypeFoodFilter> query)

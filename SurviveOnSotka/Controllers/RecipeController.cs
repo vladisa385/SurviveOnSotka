@@ -26,7 +26,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPost("Create")]
         [ModelValidation]
-         [ServiceFilter(typeof(InjectUserId))]
+        [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(RecipeResponse))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateRecipeAsync([FromBody] CreateRecipeRequest request, [FromServices] Command<CreateRecipeRequest,RecipeResponse> command)

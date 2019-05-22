@@ -12,7 +12,7 @@ namespace SurviveOnSotka.Controllers
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class TagsController : Controller
     {
-        [HttpGet]
+        [HttpGet("GetList")]
         //[Authorize]
         [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(ListResponse<TagResponse>))]

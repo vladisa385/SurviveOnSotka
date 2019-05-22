@@ -28,7 +28,7 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPost("Create")]
         [ModelValidation]
-         [ServiceFilter(typeof(InjectUserId))]
+        [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(RateReviewResponse))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateRateReviewAsync([FromBody] CreateRateReviewRequest request, [FromServices]Command<CreateRateReviewRequest,RateReviewResponse> command)

@@ -29,7 +29,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
                .FirstOrDefaultAsync(t => t.Id == request.Id);
             if (foundReview == null)
                 throw new UpdateItemException("Review cannot be updated.Review with this id doesn't exist");
-            if (request.IsLegalAccess(foundReview.UserId))
+            if (!request.IsLegalAccess(foundReview.UserId))
                 throw new IllegalAccessException();
             var mappedReview = _mapper.Map<UpdateReviewRequest, Review>(request);
             mappedReview.RecipeId = foundReview.RecipeId;

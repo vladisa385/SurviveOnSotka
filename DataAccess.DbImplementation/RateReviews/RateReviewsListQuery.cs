@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
@@ -30,6 +31,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 
         protected override IQueryable<RateReviewResponse> GetQuery() => 
             _context.RateReviews
-                .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider);
+                .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider)
+                .Include(u=>u.UserId)
+                .Include(u=>u.ReviewId);
     }
 }

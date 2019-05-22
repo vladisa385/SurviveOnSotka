@@ -33,7 +33,7 @@ namespace SurviveOnSotka.Controllers
         [ModelValidation]
         [ProducesResponseType(201, Type = typeof(IngredientResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices] Command<Request,IngredientResponse> command)
+        public async Task<IActionResult> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices] Command<CreateIngredientRequest,IngredientResponse> command)
         {
             var response = await command.ExecuteAsync(ingredient);
             return CreatedAtRoute("GetSingleIngredient", new {ingredientId = response.Id}, response);

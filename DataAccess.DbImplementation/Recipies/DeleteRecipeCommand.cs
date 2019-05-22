@@ -21,7 +21,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(p => p.Id == request.Id);
             if (recipeToDelete == null) return null;
-            if (request.IsLegalAccess(recipeToDelete.UserId))
+            if (!request.IsLegalAccess(recipeToDelete.UserId))
                 throw new IllegalAccessException();
             _context.Recipes.Remove(recipeToDelete);
             await _context.SaveChangesAsync();

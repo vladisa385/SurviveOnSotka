@@ -11,11 +11,12 @@ namespace SurviveOnSotka.Filters
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<User> _userManager;
-
+        private readonly string _keyName;
         public InjectUserId(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager)
         {
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
+            _keyName = "request";
         }
 
         protected async Task<User> GetCurrentUserAsync()
@@ -25,10 +26,10 @@ namespace SurviveOnSotka.Filters
             return result;
         }
 
-        public override async void OnActionExecuting(ActionExecutingContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var user = await GetCurrentUserAsync();
-            if (context.ActionArguments["command"] is Request request)
+            var user = GetCurrentUserAsync().Result;
+            if (context.ActionArguments[_keyName] is Request request)
                 request.SetUserId(user.Id);
         }
     }
