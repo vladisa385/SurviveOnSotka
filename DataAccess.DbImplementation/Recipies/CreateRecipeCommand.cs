@@ -30,8 +30,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             recipe.DateCreated = DateTime.Now;
             await CreateIngredients(recipe);
             AddIdToSteps(recipe);
-            await CreateTags(recipe, request.Tags);
             await _context.Recipes.AddAsync(recipe);
+            if (request.Tags != null)
+                await CreateTags(recipe, request.Tags);
             await _context.SaveChangesAsync();
             return _mapper.Map<Recipe, RecipeResponse>(recipe);
         }

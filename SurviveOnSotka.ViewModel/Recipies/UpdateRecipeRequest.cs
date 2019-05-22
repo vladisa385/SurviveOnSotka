@@ -9,9 +9,9 @@ namespace SurviveOnSotka.ViewModel.Recipies
 {
     public class UpdateRecipeRequest
     {
+
         [Required]
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
         [MinLength(5), MaxLength(100)]
         public string Name { get; set; }
         [MinLength(100), MaxLength(400)]

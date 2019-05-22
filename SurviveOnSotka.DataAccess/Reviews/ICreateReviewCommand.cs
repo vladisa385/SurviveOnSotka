@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using SurviveOnSotka.ViewModel.Reviews;
 
 namespace SurviveOnSotka.DataAccess.Reviews
 {
     public interface ICreateReviewCommand
     {
-        Task<ReviewResponse> ExecuteAsync(CreateReviewRequest request);
+        Task<ReviewResponse> ExecuteAsync(Guid userId,CreateReviewRequest request);
     }
 }

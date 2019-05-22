@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Reviews;
+using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
@@ -11,8 +14,11 @@ namespace SurviveOnSotka.Controllers
 {
     [ProducesResponseType(401)]
     [Route("api/[controller]")]
-    public class ReviewsController : Controller
+    public class ReviewsController : BaseController
     {
+        public ReviewsController(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager) : base(httpContextAccessor, userManager)
+        {
+        }
         [HttpGet("GetList")]
         // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<ReviewResponse>))]
@@ -31,7 +37,8 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateReviewAsync([FromBody] CreateReviewRequest review, [FromServices] ICreateReviewCommand command)
         {
-            var response = await command.ExecuteAsync(review);
+            var currentUser = await GetCurrentUserAsync();
+            var response = await command.ExecuteAsync(currentUser.Id,review);
             return CreatedAtRoute("GetSingleReview", new {reviewId = response.Id}, response);
         }
 
@@ -68,6 +75,7 @@ namespace SurviveOnSotka.Controllers
             await command.ExecuteAsync(reviewId);
             return NoContent();
         }
+
     }
 }
 

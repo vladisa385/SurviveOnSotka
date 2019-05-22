@@ -12,7 +12,7 @@ namespace SurviveOnSotka.Middlewares
         public ErrorDetails(Exception exception)
         {
             if (!(exception is BaseCrudException baseCrudException)) return;
-            Message = exception.Message + exception.Message;
+            Message = exception.Message;
             StatusCode = baseCrudException.StatusCode;
         }
         public override string ToString() => JsonConvert.SerializeObject(this);

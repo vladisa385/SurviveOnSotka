@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Exceptions;
@@ -21,9 +22,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             _mapper = mapper;
         }
 
-        public async Task<ReviewResponse> ExecuteAsync(CreateReviewRequest request)
+        public async Task<ReviewResponse> ExecuteAsync(Guid userId,CreateReviewRequest request)
         {
             var review = _mapper.Map<CreateReviewRequest, Review>(request);
+            review.DateCreated = DateTime.Now;
+            review.AuthorId = userId;
             try
             {
                 await _context.Reviews.AddAsync(review);
