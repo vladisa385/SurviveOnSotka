@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Users;
 
@@ -25,8 +26,8 @@ namespace SurviveOnSotka.ViewModel.Reviews
         [Required]
         public ICollection<RateReview> RateReviews { get; set; }
 
-        public int? Likes { get; set; }
+        public int Likes => RateReviews.Count(u=>u.IsCool);
 
-        public int? DisLikes { get; set; }
+        public int? DisLikes => RateReviews.Count(u=>u.IsCool == false);
     }
 }

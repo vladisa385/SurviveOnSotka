@@ -21,7 +21,6 @@ namespace SurviveOnSotka.Entities
         public ICollection<TagsInRecipe> Tags { get; set; }
         public TimeSpan? TimeForCooking { get; set; }
         public TimeSpan? TimeForPreparetion { get; set; }
-        public double Rate => Reviews?.Average(u => u.Rate) ?? 0;
         [Required]
         public ICollection<IngredientToRecipe> Ingredients { get; set; }
         [Required]

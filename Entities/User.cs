@@ -13,7 +13,6 @@ namespace SurviveOnSotka.Entities
         [MinLength(5), MaxLength(40)]
         public string LastName { get; set; }
         public string PathToAvatar { get; set; }
-        public Guid? LevelId { get; set; }
         public bool Gender { get; set; }
         [MinLength(100), MaxLength(1000)]
         public string AboutYourself { get; set; }

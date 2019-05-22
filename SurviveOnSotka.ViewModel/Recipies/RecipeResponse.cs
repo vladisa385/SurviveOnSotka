@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using SurviveOnSotka.ViewModel.IngredientToRecipe;
 using SurviveOnSotka.ViewModel.Reviews;
 using SurviveOnSotka.ViewModel.Steps;
@@ -26,7 +27,8 @@ namespace SurviveOnSotka.ViewModel.Recipies
         public string PathToPhotos { get; set; }
         public TimeSpan TimeForCooking { get; set; }
         public TimeSpan TimeForPreparetion { get; set; }
-        public double Rate { get; set; }
+        public double Rate => Reviews.Count!=0?Reviews.Average(u => u.Rate):0;
+
 
         public ICollection<IngredientToRecipeResponse> Ingredients { get; set; }
         [Required]

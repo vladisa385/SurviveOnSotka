@@ -30,6 +30,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             if(foundRecipe == null)
                 throw new UpdateItemException($"Recipe with id: {request.Id} not found");
             var mappedRecipe = _mapper.Map<UpdateRecipeRequest, Recipe>(request);
+            mappedRecipe.UserId = foundRecipe.UserId;
+            mappedRecipe.DateCreated = foundRecipe.DateCreated;
             await CreateIngredients(mappedRecipe);
             AddIdToSteps(mappedRecipe);
             await CreateTags(mappedRecipe, request.Tags);

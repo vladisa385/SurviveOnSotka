@@ -23,12 +23,15 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
         public async Task<ReviewResponse> ExecuteAsync(UpdateReviewRequest request)
         {
             var foundReview = await _context.Reviews
+                .Include(u=>u.Author)
+                .Include(u=>u.Recipe)
                 .FirstOrDefaultAsync(t => t.Id == request.Id);
             if (foundReview == null)
                  throw new UpdateItemException("Review cannot be updated.Review with this id doesn't exist");
-            if(foundReview.AuthorId!=request.Id)
-                 throw new UpdateItemException("Review cannot be updated.This request doesn't come from owner");
             var mappedReview = _mapper.Map<UpdateReviewRequest, Review>(request);
+            mappedReview.RecipeId = foundReview.RecipeId;
+            mappedReview.AuthorId = foundReview.AuthorId;
+            mappedReview.DateCreated = foundReview.DateCreated;
             _context.Entry(foundReview).CurrentValues.SetValues(mappedReview);
             await _context.SaveChangesAsync();
             return _mapper.Map<Review, ReviewResponse>(foundReview);

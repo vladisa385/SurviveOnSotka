@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Categories;
 using SurviveOnSotka.ViewModel.Ingredients;
@@ -23,8 +24,8 @@ namespace SurviveOnSotka
             // mapping to and from
             CreateMap<Category, CategoryResponse>()
                 .ForMember(d => d.RecipiesCount, o => o.MapFrom(src => src.Recipies.Count))
-                        .ForMember(d => d.CategoriesCount, o => o.MapFrom(src => src.Categories.Count))
-                ;
+                .ForMember(d => d.CategoriesCount, o => o.MapFrom(src => src.Categories.Count));
+
             CreateMap<UpdateCategoryRequest, Category>();
             CreateMap<CreateCategoryRequest, Category>();
 
@@ -47,16 +48,12 @@ namespace SurviveOnSotka
                 .ForMember(d => d.AboutYourself, o => o.MapFrom(src => src.AboutYourself))
                  .ForMember(d => d.LastName, o => o.MapFrom(src => src.LastName))
                  .ForMember(d => d.Gender, o => o.MapFrom(src => src.Gender))
-
-
-
                 .ForAllOtherMembers(opts => opts.Ignore());
             CreateMap<CreateUserRequest, User>();
             CreateMap<UpdateUserRequest, User>();
 
             CreateMap<Tag, TagResponse>()
-               .ForMember(d => d.RecipiesCount, o => o.MapFrom(src => src.Recipies.Count))
-               ;
+               .ForMember(d => d.RecipiesCount, o => o.MapFrom(src => src.Recipies.Count));
 
             CreateMap<TagsInRecipe, TagsInRecipeResponse>();
 
@@ -76,10 +73,14 @@ namespace SurviveOnSotka
                 .ForMember(u => u.RecipeId, pt => pt.Ignore());
             CreateMap<CreateIngredientToRecipeRequest, IngredientToRecipe>()
                    .ForMember(u => u.RecipeId, pt => pt.Ignore());
-             CreateMap<UpdateRecipeRequest, Recipe>().
-            ForMember(d => d.Tags, pt => pt.Ignore());
-             CreateMap<CreateRecipeRequest, Recipe>()
+
+
+            CreateMap<UpdateRecipeRequest, Recipe>().
+                 ForMember(d => d.Tags, pt => pt.Ignore());
+            CreateMap<CreateRecipeRequest, Recipe>()
                  .ForMember(d => d.Tags, pt => pt.Ignore());
+
+            CreateMap<Review, ReviewResponse>();
              CreateMap<UpdateReviewRequest, Review>();
             CreateMap<CreateReviewRequest, Review>();
 
