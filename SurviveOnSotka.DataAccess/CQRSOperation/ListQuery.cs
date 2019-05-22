@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.ViewModell;
 
-
-namespace SurviveOnSotka.DataAccess.CrudOperation
+namespace SurviveOnSotka.DataAccess.CQRSOperation
 {
     public abstract class ListQuery<TResponse,TFilter>
     where TResponse : Response
@@ -24,12 +23,10 @@ namespace SurviveOnSotka.DataAccess.CrudOperation
 
             return default;
         }
-
         protected virtual void HandleError(Exception ex)
         {
             throw ex;
         }
-
         protected virtual async Task<ListResponse<TResponse>> QueryListItem(TFilter filter, ListOptions options)
         {
             var query = GetQuery();
@@ -49,10 +46,7 @@ namespace SurviveOnSotka.DataAccess.CrudOperation
                 TotalItemsCount = totalCount
             };
         }
-
         protected abstract IQueryable<TResponse> ApplyFilter(IQueryable<TResponse> query, TFilter filter);
-
         protected abstract IQueryable<TResponse> GetQuery();
-
     }
 }

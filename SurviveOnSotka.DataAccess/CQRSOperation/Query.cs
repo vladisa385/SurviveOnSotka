@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using SurviveOnSotka.ViewModell;
 
-namespace SurviveOnSotka.DataAccess.CrudOperation
+namespace SurviveOnSotka.DataAccess.CQRSOperation
 {
     public abstract class Query<TResponse>
     where TResponse : Response

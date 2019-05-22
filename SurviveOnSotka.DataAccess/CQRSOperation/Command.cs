@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using SurviveOnSotka.ViewModell;
 using SurviveOnSotka.ViewModell.Requests;
 
-namespace SurviveOnSotka.DataAccess.CrudOperation
+namespace SurviveOnSotka.DataAccess.CQRSOperation
 {
     public abstract class Command<TRequest, TResponse>
         where TResponse : Response
