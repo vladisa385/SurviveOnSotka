@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.Controllers;
 using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
@@ -17,7 +16,6 @@ using SurviveOnSotka.DataAccess.DbImplementation.Reviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.DbImplementation.Users;
-using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
@@ -161,11 +159,11 @@ namespace SurviveOnSotka
                 .AddScoped<Command<UpdateReviewRequest,ReviewResponse>, UpdateReviewCommand>()
                 .AddScoped<Command<SimpleDeleteRequest,ReviewResponse>, DeleteReviewCommand>()
 
-                .AddScoped<IRateReviewQuery, RateReviewQuery>()
-                 .AddScoped<ListQuery<RateReviewResponse, RateReviewFilter>, RateReviewsListQuery>()
-                .AddScoped<ICreateRateReviewCommand, CreateRateReviewCommand>()
-                .AddScoped<IUpdateRateReviewCommand, UpdateRateReviewCommand>()
-                .AddScoped<IDeleteRateReviewCommand, DeleteRateReviewCommand>()
+                .AddScoped<Query<RateReviewResponse>, RateReviewQuery>()
+                .AddScoped<ListQuery<RateReviewResponse, RateReviewFilter>, RateReviewsListQuery>()
+                .AddScoped<Command<CreateRateReviewRequest, RateReviewResponse>, CreateRateReviewCommand>()
+                .AddScoped<Command<UpdateRateReviewRequest, RateReviewResponse>, UpdateRateReviewCommand>()
+                .AddScoped<Command<SimpleDeleteRequest, RateReviewResponse>, DeleteRateReviewCommand>()
 
                 .AddScoped<ModelValidationAttribute>()
                 .AddScoped<InjectUserId>()

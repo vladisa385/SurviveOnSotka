@@ -1,16 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
-using SurviveOnSotka.DataAccess.RateReviews;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {
-    public class CreateRateReviewCommand : ICreateRateReviewCommand
+    public class CreateRateReviewCommand : Command<CreateRateReviewRequest,RateReviewResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -19,10 +18,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             _context = context;
             _mapper = mapper;
         }
-        public async Task<RateReviewResponse> ExecuteAsync(CreateRateReviewRequest request,Guid userId)
+        protected override async Task<RateReviewResponse> Execute(CreateRateReviewRequest request)
         {
             var rateReview = _mapper.Map<CreateRateReviewRequest, RateReview>(request);
-            rateReview.UserId = userId;
             try
             {
                 await _context.RateReviews.AddAsync(rateReview);

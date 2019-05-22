@@ -1,12 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.RateReviews;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
+using SurviveOnSotka.ViewModel.Implementanion;
+using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {
-    public class DeleteRateReviewCommand : IDeleteRateReviewCommand
+    public class DeleteRateReviewCommand : Command<SimpleDeleteRequest,RateReviewResponse>
     {
         private readonly AppDbContext _context;
         public DeleteRateReviewCommand(AppDbContext context)
@@ -14,16 +15,18 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             _context = context;
         }
 
-        public async Task ExecuteAsync(Guid reviewId, Guid userId)
+        protected override async Task<RateReviewResponse> Execute(SimpleDeleteRequest request)
         {
-            var rateReviewToDelete = await _context.RateReviews.FirstOrDefaultAsync(p => 
-                p.ReviewId == reviewId &&
-                p.UserId == userId);
+            var rateReviewToDelete = await _context.RateReviews.FirstOrDefaultAsync(p =>
+                p.ReviewId == request.Id &&
+                p.UserId == request.UserId);
             if (rateReviewToDelete != null)
             {
                 _context.RateReviews.Remove(rateReviewToDelete);
                 await _context.SaveChangesAsync();
             }
+
+            return null;
         }
     }
 }

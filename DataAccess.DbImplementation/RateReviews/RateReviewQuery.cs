@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.RateReviews;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {
-    public class RateReviewQuery : IRateReviewQuery
+    public class RateReviewQuery : Query<RateReviewResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -27,6 +27,11 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
                     p.ReviewId == reviewId &&
                     p.UserId == userId);
             return response;
+        }
+
+        protected override Task<RateReviewResponse> QueryItem(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
