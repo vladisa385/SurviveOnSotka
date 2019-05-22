@@ -60,7 +60,7 @@ namespace SurviveOnSotka.Controllers
             return  Ok(response);
         }
 
-        [HttpDelete("Delete/{reviewId}")]
+        [HttpDelete("Delete")]
          [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

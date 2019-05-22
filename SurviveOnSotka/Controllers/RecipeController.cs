@@ -56,7 +56,7 @@ namespace SurviveOnSotka.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("Delete/{recipeId}")]
+        [HttpDelete("Delete")]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

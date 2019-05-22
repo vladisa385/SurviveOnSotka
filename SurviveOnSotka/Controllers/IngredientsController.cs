@@ -62,7 +62,7 @@ namespace SurviveOnSotka.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("Delete/{ingredientId}")]
+        [HttpDelete("Delete")]
         [ProducesResponseType(204)]
         // [Authorize(Roles = "admin")]
         [ProducesResponseType(400)]

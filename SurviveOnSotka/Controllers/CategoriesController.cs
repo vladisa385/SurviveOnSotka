@@ -60,7 +60,7 @@ namespace SurviveOnSotka.Controllers
             var response = await command.ExecuteAsync( request);
             return Ok(response);
         }
-        [HttpDelete("Delete/{categoryId}")]
+        [HttpDelete("Delete")]
         //[Authorize(Roles = "admin")]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
