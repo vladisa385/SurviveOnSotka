@@ -10,6 +10,7 @@ using SurviveOnSotka.ViewModel.Ingredients;
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
+    [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     [ProducesResponseType(401)]
     // [Authorize]
     public class IngredientsController : Controller
@@ -46,8 +47,8 @@ namespace SurviveOnSotka.Controllers
             return response == null ? (IActionResult) NotFound() : Ok(response);
         }
 
-        [HttpPut("Update}")]
-        // [Authorize(Roles = "admin")]
+        [HttpPut("Update")]
+        //[Authorize(Roles = "admin")]
         [ModelValidation]
         [ProducesResponseType(200, Type = typeof(IngredientResponse))]
         [ProducesResponseType(404)]

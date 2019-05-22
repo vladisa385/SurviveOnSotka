@@ -45,6 +45,7 @@ namespace SurviveOnSotka.Controllers
             var response = await query.RunAsync(categoryId);
             return response == null ? (IActionResult) NotFound() : Ok(response);
         }
+
         [HttpPut("Update")]
         //[Authorize(Roles = "admin")]
         [ProducesResponseType(401)]
