@@ -20,13 +20,12 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
             _context = dbContext;
             _mapper = mapper;
         }
-        public async Task<TypeFoodResponse> ExecuteAsync(Guid typeFoodId, UpdateTypeFoodRequest request)
+        public async Task<TypeFoodResponse> ExecuteAsync( UpdateTypeFoodRequest request)
         {
-            var foundTypeFood = await _context.TypeFoods.FirstOrDefaultAsync(t => t.Id == typeFoodId);
+            var foundTypeFood = await _context.TypeFoods.FirstOrDefaultAsync(t => t.Id == request.Id);
             if (foundTypeFood == null)
-                throw new UpdateItemException($"typeFood with id: {typeFoodId} not found");
+                throw new UpdateItemException($"typeFood with id: {request.Id} not found");
             var mappedTypeFood = _mapper.Map<UpdateTypeFoodRequest, TypeFood>(request);
-            mappedTypeFood.Id = typeFoodId;
             _context.Entry(foundTypeFood).CurrentValues.SetValues(mappedTypeFood);
             await _context.SaveChangesAsync();
             return _mapper.Map<TypeFood, TypeFoodResponse>(foundTypeFood);

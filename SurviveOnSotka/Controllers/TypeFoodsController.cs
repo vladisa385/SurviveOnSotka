@@ -46,16 +46,16 @@ namespace SurviveOnSotka.Controllers
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
-        [HttpPut("Update/{typeFoodId}")]
+        [HttpPut("Update/")]
         //[Authorize(Roles = "admin")]
         [ModelValidation]
         [ProducesResponseType(200, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdatetypeFoodAsync(Guid typeFoodId, [FromBody] UpdateTypeFoodRequest request, [FromServices] IUpdateTypeFoodCommand command)
+        public async Task<IActionResult> UpdateTypeFoodAsync([FromBody] UpdateTypeFoodRequest request, [FromServices] IUpdateTypeFoodCommand command)
         {
-            var response = await command.ExecuteAsync(typeFoodId, request);
+            var response = await command.ExecuteAsync(request);
             return Ok(response);
         }
 
