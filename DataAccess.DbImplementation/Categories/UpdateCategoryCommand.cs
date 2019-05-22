@@ -35,10 +35,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
             }
             catch (DbUpdateException exception)
             {
-                throw new UpdateItemException("Category cannot be update, The ParentCategory's guid is incorrect")
-                {
-                    DbUpdateException = exception,
-                };
+                throw new UpdateItemException("Category cannot be update, The ParentCategory's guid is incorrect", exception);
             }
             return _mapper.Map<Category, CategoryResponse>(foundCategory);
         }

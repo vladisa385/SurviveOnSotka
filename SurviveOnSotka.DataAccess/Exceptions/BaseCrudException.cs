@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Net;
-using Microsoft.EntityFrameworkCore;
 
 namespace SurviveOnSotka.DataAccess.Exceptions
 {
     public class BaseCrudException:Exception
     {
-        public DbUpdateException DbUpdateException { get; set; }
-        public HttpStatusCode StatusCode { get; }
-        public BaseCrudException(string message, HttpStatusCode statusCode) : base(message)
+        public HttpStatusCode StatusCode { get; protected set; }
+
+        public BaseCrudException(string message) : base(message)
         {
-            StatusCode = statusCode;
+
+        }
+
+        public BaseCrudException(string message, Exception innerException) : base(message, innerException)
+        {
+
         }
     }
 }

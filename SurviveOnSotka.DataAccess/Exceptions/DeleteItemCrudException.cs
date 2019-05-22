@@ -4,7 +4,6 @@ namespace SurviveOnSotka.DataAccess.Exceptions
 {
     public class DeleteItemCrudException:BaseCrudException
     {
-        public DeleteItemCrudException(string message) : base(message,HttpStatusCode.BadRequest)
-        { }
+        public DeleteItemCrudException(string message) : base(message) => StatusCode = HttpStatusCode.BadRequest;
     }
 }

@@ -28,12 +28,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
                 await _context.RateReviews.AddAsync(rateReview);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException exception)
             {
-                throw new CreateItemException( "RateReview cannot be Created. This rateReview already exist")
-                {
-                    DbUpdateException = ex,
-                };
+                throw new CreateItemException("RateReview cannot be Created. This rateReview already exist",exception);
             }
             return _mapper.Map<RateReview, RateReviewResponse>(rateReview);
         }

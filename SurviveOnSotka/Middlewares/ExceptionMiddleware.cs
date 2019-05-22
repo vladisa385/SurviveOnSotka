@@ -2,15 +2,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 
 namespace SurviveOnSotka.Middlewares
 {
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
-
         public ExceptionMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -24,7 +21,6 @@ namespace SurviveOnSotka.Middlewares
             }
             catch (Exception exception)
             {
-                //log
                 var errorDetails = new ErrorDetails(exception);
                 await HandleExceptionAsync(httpContext,errorDetails);
             }
