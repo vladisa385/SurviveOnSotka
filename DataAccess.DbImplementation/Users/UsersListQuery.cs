@@ -4,6 +4,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Users;
+using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Users;

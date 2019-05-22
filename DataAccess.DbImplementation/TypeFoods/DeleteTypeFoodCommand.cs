@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.TypeFoods;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
+using SurviveOnSotka.Entities;
+using SurviveOnSotka.ViewModel.TypeFoods;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
-    public class DeleteTypeFoodCommand : IDeleteTypeFoodCommand
+    public class DeleteTypeFoodCommand : DeleteCommand<TypeFoodResponse>
     {
         private readonly AppDbContext _context;
-        public DeleteTypeFoodCommand(AppDbContext dbContext)
+
+        public DeleteTypeFoodCommand(AppDbContext context)
         {
-            _context = dbContext;
+            _context = context;
         }
-        public async Task ExecuteAsync(Guid typeFoodId)
+
+        protected override async Task DeleteItem(Guid typeFoodId)
         {
             var typeFoodToDelete = await _context.TypeFoods
-                .Include(u=>u.Ingredients)
+                .Include(u => u.Ingredients)
                 .FirstOrDefaultAsync(p => p.Id == typeFoodId);
             if (typeFoodToDelete?.Ingredients?.Count > 0)
                 throw new DeleteItemCrudException("Cannot delete typeFood with ingredients");

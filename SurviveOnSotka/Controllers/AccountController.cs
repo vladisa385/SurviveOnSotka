@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Users;
+using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Users;
 

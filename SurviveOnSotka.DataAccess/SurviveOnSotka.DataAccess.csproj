@@ -14,11 +14,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.csproj" />
+    <Folder Include="Files\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Files\" />
+    <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

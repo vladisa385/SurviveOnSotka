@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Tags;
+using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
 using SurviveOnSotka.ViewModel.Tags;

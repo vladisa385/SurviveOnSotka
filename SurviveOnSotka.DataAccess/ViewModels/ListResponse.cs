@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SurviveOnSotka.ViewModel
+namespace SurviveOnSotka.DataAccess.ViewModels
 {
     public class ListResponse<T> where T : class
     {

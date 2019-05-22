@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.TypeFoods;
+using SurviveOnSotka.DataAccess.ViewModels;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel;
@@ -64,7 +66,7 @@ namespace SurviveOnSotka.Controllers
         //  [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteTypeFoodAsync(Guid typeFoodId, [FromServices]IDeleteTypeFoodCommand command)
+        public async Task<IActionResult> DeleteTypeFoodAsync(Guid typeFoodId, [FromServices]DeleteCommand<TypeFoodResponse> command)
         {
             await command.ExecuteAsync(typeFoodId);
             return NoContent();

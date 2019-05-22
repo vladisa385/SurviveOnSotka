@@ -8,6 +8,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Categories;
+using SurviveOnSotka.DataAccess.CrudOperation;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
 using SurviveOnSotka.DataAccess.DbImplementation.RateReviews;
@@ -27,6 +28,7 @@ using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
+using SurviveOnSotka.ViewModel.TypeFoods;
 
 
 namespace SurviveOnSotka
@@ -127,7 +129,7 @@ namespace SurviveOnSotka
                 .AddScoped<ITypeFoodsListQuery, TypeFoodsListQuery>()
                 .AddScoped<ICreateTypeFoodCommand, CreateTypeFoodCommand>()
                 .AddScoped<IUpdateTypeFoodCommand, UpdateTypeFoodCommand>()
-                .AddScoped<IDeleteTypeFoodCommand, DeleteTypeFoodCommand>()
+                .AddScoped<DeleteCommand<TypeFoodResponse>, DeleteTypeFoodCommand>()
 
                 .AddScoped<IIngredientQuery, IngredientQuery>()
                 .AddScoped<IIngredientsListQuery, IngredientsListQuery>()
