@@ -7,8 +7,8 @@ namespace SurviveOnSotka.Entities
     {
         [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }
+
         public string PathToIcon { get; set; }
         public ICollection<Ingredient> Ingredients { get; set; }
-
     }
 }

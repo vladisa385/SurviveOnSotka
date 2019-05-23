@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe;
+﻿using SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe;
 using SurviveOnSotka.ViewModell;
+using System;
+using System.Collections.Generic;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
 {
-    public class RecipeFilter:Filter
+    public class RecipeFilter : Filter
     {
         public Guid? Id { get; set; }
         public string Name { get; set; }
@@ -19,6 +19,5 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         public RangeFilter<int> Rate { get; set; }
         public ICollection<string> Tags { get; set; }
         public ICollection<IngredientToRecipeFilter> Ingredients { get; set; }
-
     }
 }

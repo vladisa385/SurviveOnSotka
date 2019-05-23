@@ -19,6 +19,5 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Users
         [DataType(DataType.Password)]
         [Display(Name = "Подтвердить пароль")]
         public string PasswordConfirm { get; set; }
-
     }
 }

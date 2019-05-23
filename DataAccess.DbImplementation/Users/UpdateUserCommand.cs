@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +6,7 @@ using SurviveOnSotka.DataAccess.DbImplementation.Files;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
@@ -16,6 +16,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
         private readonly IHostingEnvironment _appEnvironment;
+
         public UpdateUserCommand(UserManager<User> userManager,
             IMapper mapper,
             IHttpContextAccessor httpContextAccessor,
@@ -27,10 +28,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 
             _appEnvironment = appEnvironment;
         }
+
         public async Task<UserResponse> ExecuteAsync(UpdateUserRequest request)
         {
-
-
             var foundUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
 
             foundUser.AboutYourself = request.AboutYourself;
@@ -47,7 +47,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             await _userManager.UpdateAsync(foundUser);
 
             return _mapper.Map<User, UserResponse>(foundUser);
-
         }
     }
 }

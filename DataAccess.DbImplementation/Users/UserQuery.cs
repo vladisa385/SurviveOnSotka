@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
@@ -23,7 +23,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 
         public async Task<UserResponse> RunAsync(Guid userId)
         {
-
             UserResponse response = await _userManager.Users.Include("Recipies")
                  .Include("Recipies")
                 .Include("Reviews")

@@ -1,22 +1,24 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
+using System.Linq;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
-    public class IngredientsListQuery : ListQuery<IngredientResponse,IngredientFilter>
+    public class IngredientsListQuery : ListQuery<IngredientResponse, IngredientFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public IngredientsListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;
             _mapper = mapper;
         }
+
         protected override IQueryable<IngredientResponse> ApplyFilter(IQueryable<IngredientResponse> query, IngredientFilter filter)
         {
             if (filter.Id != null)
@@ -39,4 +41,3 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
                 .ProjectTo<IngredientResponse>(_mapper.ConfigurationProvider);
     }
 }
-

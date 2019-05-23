@@ -11,13 +11,17 @@ namespace SurviveOnSotka.Entities
         public Recipe Recipe { get; set; }
         public Guid? UserId { get; set; }
         public User User { get; set; }
+
         [Required, MinLength(100), MaxLength(2000)]
         public string Text { get; set; }
+
         [Required]
         public DateTime DateCreated { get; set; }
+
         [Required]
         [Range(1, 5)]
         public int Rate { get; set; }
+
         public string PathToPhotos { get; set; }
         public ICollection<RateReview> RateReviews { get; set; }
 

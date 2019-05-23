@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
@@ -13,11 +13,13 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public ReviewQuery(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+
         protected override async Task<ReviewResponse> QueryItem(Guid reviewId)
         {
             var response = await _context.Reviews

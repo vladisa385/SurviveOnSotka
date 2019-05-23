@@ -12,10 +12,8 @@ using SurviveOnSotka.ViewModel.Implementanion.TagsInRecipe;
 using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 
-
 namespace SurviveOnSotka
 {
-
     public class MappingProfile : Profile
     {
         public MappingProfile()
@@ -62,7 +60,6 @@ namespace SurviveOnSotka
             CreateMap<UpdateIngredientRequest, Ingredient>();
             CreateMap<CreateIngredientRequest, Ingredient>();
 
-
             CreateMap<Step, StepResponse>();
             CreateMap<UpdateStepRequest, Step>();
             CreateMap<CreateStepRequest, Step>();
@@ -73,30 +70,24 @@ namespace SurviveOnSotka
             CreateMap<CreateIngredientToRecipeRequest, IngredientToRecipe>()
                    .ForMember(u => u.RecipeId, pt => pt.Ignore());
 
-
             CreateMap<UpdateRecipeRequest, Recipe>().
                  ForMember(d => d.Tags, pt => pt.Ignore()).
-                 ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
+                 ForMember(d => d.UserId, pt => pt.MapFrom(x => x.GetUserId()));
             CreateMap<CreateRecipeRequest, Recipe>()
                  .ForMember(d => d.Tags, pt => pt.Ignore())
-                 .ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
+                 .ForMember(d => d.UserId, pt => pt.MapFrom(x => x.GetUserId()));
             CreateMap<Review, ReviewResponse>();
             CreateMap<UpdateReviewRequest, Review>().
-                  ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
+                  ForMember(d => d.UserId, pt => pt.MapFrom(x => x.GetUserId()));
 
             CreateMap<CreateReviewRequest, Review>().
-                 ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
+                 ForMember(d => d.UserId, pt => pt.MapFrom(x => x.GetUserId()));
 
             CreateMap<RateReview, RateReviewResponse>();
             CreateMap<UpdateRateReviewRequest, RateReview>().
-              ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
+              ForMember(d => d.UserId, pt => pt.MapFrom(x => x.GetUserId()));
             CreateMap<CreateRateReviewRequest, RateReview>()
-                .ForMember(d => d.UserId, pt => pt.MapFrom(x=>x.GetUserId()));
-
+                .ForMember(d => d.UserId, pt => pt.MapFrom(x => x.GetUserId()));
         }
     }
-
-
-
 }
-

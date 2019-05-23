@@ -1,14 +1,14 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
 {
-    public class DeleteTagCommand : Command<SimpleDeleteRequest,TagResponse>
+    public class DeleteTagCommand : Command<SimpleDeleteRequest, TagResponse>
     {
         private readonly AppDbContext _context;
 

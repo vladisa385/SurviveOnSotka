@@ -7,7 +7,6 @@ namespace SurviveOnSotka.DataAccess.Users
     {
         public IncorrectPasswordOrEmailExeption() : base("Password or email are incorrect ")
         {
-
         }
     }
 }

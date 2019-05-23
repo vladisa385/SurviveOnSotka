@@ -1,9 +1,9 @@
-﻿using System;
-using SurviveOnSotka.ViewModell;
+﻿using SurviveOnSotka.ViewModell;
+using System;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Categories
 {
-    public class CategoryFilter:Filter
+    public class CategoryFilter : Filter
     {
         public Guid? Id { get; set; }
         public Guid? ParentCategoryId { get; set; }

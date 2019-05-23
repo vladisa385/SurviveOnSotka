@@ -8,6 +8,5 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Steps
 
         [Required, MinLength(100), MaxLength(1000)]
         public string Description { get; set; }
-
     }
 }

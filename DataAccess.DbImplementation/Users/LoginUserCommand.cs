@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
@@ -31,8 +31,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 
             var user = await _userManager.FindByEmailAsync(request.Email);
             return _mapper.Map<User, UserResponse>(user);
-
-
         }
     }
 }

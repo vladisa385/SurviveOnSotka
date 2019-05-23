@@ -8,6 +8,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Users
         [DataType(DataType.Password)]
         [Display(Name = "Старый пароль")]
         public string OldPassword { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
@@ -18,7 +19,5 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Users
         [DataType(DataType.Password)]
         [Display(Name = "Подтвердить пароль")]
         public string NewPasswordConfirm { get; set; }
-
-
     }
 }

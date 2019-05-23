@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
+using System.Linq;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
-    public class ReviewsListQuery : ListQuery<ReviewResponse,ReviewFilter>
+    public class ReviewsListQuery : ListQuery<ReviewResponse, ReviewFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -64,4 +64,3 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
                 .ProjectTo<ReviewResponse>(_mapper.ConfigurationProvider);
     }
 }
-

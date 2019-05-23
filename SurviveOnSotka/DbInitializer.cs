@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using SurviveOnSotka.Entities;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka
 {
@@ -37,7 +37,6 @@ namespace SurviveOnSotka
                     await userManager.AddToRoleAsync(admin, "user");
                 }
             }
-
         }
     }
 }

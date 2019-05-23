@@ -1,9 +1,9 @@
-﻿using System;
-using SurviveOnSotka.ViewModell;
+﻿using SurviveOnSotka.ViewModell;
+using System;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
 {
-    public class ReviewFilter:Filter
+    public class ReviewFilter : Filter
     {
         public Guid? Id { get; set; }
         public Guid? RecipeId { get; set; }

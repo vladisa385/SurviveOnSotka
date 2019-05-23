@@ -1,16 +1,17 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {
-    public class DeleteRateReviewCommand : Command<SimpleDeleteRequest,RateReviewResponse>
+    public class DeleteRateReviewCommand : Command<SimpleDeleteRequest, RateReviewResponse>
     {
         private readonly AppDbContext _context;
+
         public DeleteRateReviewCommand(AppDbContext context) => _context = context;
 
         protected override async Task<RateReviewResponse> Execute(SimpleDeleteRequest request)

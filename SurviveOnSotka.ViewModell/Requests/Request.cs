@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace SurviveOnSotka.ViewModell.Requests
 {
     public class Request

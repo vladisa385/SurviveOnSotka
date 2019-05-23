@@ -1,14 +1,20 @@
-﻿using System;
+﻿using SurviveOnSotka.ViewModell.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SurviveOnSotka.ViewModell.Extensions;
 
 namespace SurviveOnSotka.ViewModell
 {
     public class ListOptions
     {
-        public ListOptions() : this(PageSizeValue.Default) { }
-        public ListOptions(PageSizeValue pageSize) : this(pageSize.AsInt32()) { }
+        public ListOptions() : this(PageSizeValue.Default)
+        {
+        }
+
+        public ListOptions(PageSizeValue pageSize) : this(pageSize.AsInt32())
+        {
+        }
+
         public ListOptions(int? pageSize) => PageSize = pageSize;
 
         public int? PageSize { get; set; }

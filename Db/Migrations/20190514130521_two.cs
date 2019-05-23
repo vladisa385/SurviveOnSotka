@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace SurviveOnSotka.Db.Migrations
 {
@@ -13,7 +13,6 @@ namespace SurviveOnSotka.Db.Migrations
 
             migrationBuilder.DropTable(
                 name: "Levels");
-
 
             migrationBuilder.DropTable(
                 name: "RateCheapPlaces");

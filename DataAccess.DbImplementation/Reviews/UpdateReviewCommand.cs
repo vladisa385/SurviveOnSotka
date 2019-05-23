@@ -1,16 +1,15 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
-
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
 {
-    public class UpdateReviewCommand : Command<UpdateReviewRequest,ReviewResponse>
+    public class UpdateReviewCommand : Command<UpdateReviewRequest, ReviewResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;

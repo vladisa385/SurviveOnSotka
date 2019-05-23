@@ -1,21 +1,23 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
+using System.Linq;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
 {
-    public class TagsListQuery : ListQuery<TagResponse,TagFilter>
+    public class TagsListQuery : ListQuery<TagResponse, TagFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public TagsListQuery(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+
         protected override IQueryable<TagResponse> ApplyFilter(IQueryable<TagResponse> query, TagFilter filter)
         {
             if (filter.Name != null)

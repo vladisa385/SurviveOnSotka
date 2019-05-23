@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 using SurviveOnSotka.ViewModell;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -31,10 +31,10 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(201, Type = typeof(ReviewResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateReviewAsync([FromBody] CreateReviewRequest request, [FromServices] Command<CreateReviewRequest,ReviewResponse> command)
+        public async Task<IActionResult> CreateReviewAsync([FromBody] CreateReviewRequest request, [FromServices] Command<CreateReviewRequest, ReviewResponse> command)
         {
             var response = await command.ExecuteAsync(request);
-            return CreatedAtRoute("GetSingleReview", new {reviewId = response.Id}, response);
+            return CreatedAtRoute("GetSingleReview", new { reviewId = response.Id }, response);
         }
 
         [HttpGet("Get/{reviewId}", Name = "GetSingleReview")]
@@ -44,7 +44,7 @@ namespace SurviveOnSotka.Controllers
         public async Task<IActionResult> GetReviewAsync(Guid reviewId, [FromServices] Query<ReviewResponse> query)
         {
             var response = await query.RunAsync(reviewId);
-            return response == null ? (IActionResult) NotFound() : Ok(response);
+            return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
         [HttpPut("Update")]
@@ -55,7 +55,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateReviewAsync([FromBody] UpdateReviewRequest request, [FromServices] Command<UpdateReviewRequest,ReviewResponse> command)
+        public async Task<IActionResult> UpdateReviewAsync([FromBody] UpdateReviewRequest request, [FromServices] Command<UpdateReviewRequest, ReviewResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return Ok(response);
@@ -67,12 +67,10 @@ namespace SurviveOnSotka.Controllers
         // [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteReviewAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest,ReviewResponse> command)
+        public async Task<IActionResult> DeleteReviewAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest, ReviewResponse> command)
         {
             await command.ExecuteAsync(request);
             return NoContent();
         }
-
     }
 }
-

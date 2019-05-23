@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using Microsoft.AspNetCore.Http;
+using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Files
 {
@@ -12,9 +12,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Files
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
-
             }
-
         }
     }
 }

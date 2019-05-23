@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Categories;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class DeleteCategoryCommand : Command<SimpleDeleteRequest,CategoryResponse>
+    public class DeleteCategoryCommand : Command<SimpleDeleteRequest, CategoryResponse>
     {
         private readonly AppDbContext _context;
 

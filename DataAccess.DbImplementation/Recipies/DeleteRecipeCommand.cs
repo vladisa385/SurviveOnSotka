@@ -1,17 +1,18 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {
-    public class DeleteRecipeCommand : Command<SimpleDeleteRequest,RecipeResponse>
+    public class DeleteRecipeCommand : Command<SimpleDeleteRequest, RecipeResponse>
     {
         private readonly AppDbContext _context;
-        public DeleteRecipeCommand( AppDbContext context) => _context = context;
+
+        public DeleteRecipeCommand(AppDbContext context) => _context = context;
 
         protected override async Task<RecipeResponse> Execute(SimpleDeleteRequest request)
         {

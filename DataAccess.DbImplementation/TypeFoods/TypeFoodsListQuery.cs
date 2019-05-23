@@ -1,17 +1,18 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
+using System.Linq;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
-    public class TypeFoodsListQuery : ListQuery<TypeFoodResponse,TypeFoodFilter>
+    public class TypeFoodsListQuery : ListQuery<TypeFoodResponse, TypeFoodFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public TypeFoodsListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;
@@ -46,4 +47,3 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
         }
     }
 }
-

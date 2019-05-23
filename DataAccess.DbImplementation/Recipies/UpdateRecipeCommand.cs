@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {
-    public class UpdateRecipeCommand : Command<UpdateRecipeRequest,RecipeResponse>
+    public class UpdateRecipeCommand : Command<UpdateRecipeRequest, RecipeResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -27,7 +27,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             var foundRecipe = await _context.Recipes
                 .Include("User")
                 .FirstOrDefaultAsync(t => t.Id == request.Id);
-            if(foundRecipe == null)
+            if (foundRecipe == null)
                 throw new UpdateItemException($"Recipe with id: {request.Id} not found");
             if (request.IsLegalAccess(foundRecipe.UserId))
                 throw new IllegalAccessException();
@@ -41,6 +41,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             await _context.SaveChangesAsync();
             return _mapper.Map<Recipe, RecipeResponse>(foundRecipe);
         }
+
         private async Task CreateTags(Recipe recipe, ICollection<string> tags)
         {
             foreach (var tag in tags)
@@ -65,7 +66,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 await _context.TagsInRecipies.AddAsync(tit);
             }
         }
+
         private void AddIdToSteps(Recipe recipe) => recipe.Steps.ToList().ForEach(x => x.RecipeId = recipe.Id);
+
         private async Task CreateIngredients(Recipe recipe)
         {
             foreach (var ingredientToRecipe in recipe.Ingredients)

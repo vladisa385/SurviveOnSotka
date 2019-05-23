@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
 {
@@ -13,11 +13,13 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public TypeFoodQuery(AppDbContext dbContext, IMapper mapper)
         {
             _context = dbContext;
             _mapper = mapper;
         }
+
         protected override async Task<TypeFoodResponse> QueryItem(Guid typeFoodId)
         {
             var response = await _context.TypeFoods

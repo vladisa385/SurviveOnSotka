@@ -1,16 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
-    public class UpdateIngredientCommand : Command<UpdateIngredientRequest,IngredientResponse>
+    public class UpdateIngredientCommand : Command<UpdateIngredientRequest, IngredientResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             _context = dbContext;
             _mapper = mapper;
         }
-  
+
         protected override async Task<IngredientResponse> Execute(UpdateIngredientRequest request)
         {
             var foundIngredient = await _context.Ingredients.FirstOrDefaultAsync(t => t.Id == request.Id);
@@ -44,4 +44,4 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
             base.HandleError(exception);
         }
     }
-    }
+}

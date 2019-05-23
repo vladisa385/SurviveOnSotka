@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
@@ -31,12 +31,9 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
                await _userManager.ChangePasswordAsync(foundUser, request.OldPassword, request.NewPassword);
             if (!result.Succeeded)
             {
-
                 throw new CannotChangePasswordExeption(result.Errors);
-
             }
             return _mapper.Map<User, UserResponse>(foundUser);
-
         }
     }
 }

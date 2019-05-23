@@ -1,22 +1,24 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
+using System.Linq;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {
-    public class RecipiesListQuery : ListQuery<RecipeResponse,RecipeFilter>
+    public class RecipiesListQuery : ListQuery<RecipeResponse, RecipeFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public RecipiesListQuery(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+
         protected override IQueryable<RecipeResponse> ApplyFilter(IQueryable<RecipeResponse> query, RecipeFilter filter)
         {
             if (filter.Id != null)
@@ -72,7 +74,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             //{
             //    foreach (var ingredient in filter.Ingredients)
             //    {
-
             //        query = query.Where(u => u.Ingredients.Any(y =>
             //            ingredient.Id == filter.Id
             //            &&
@@ -91,8 +92,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             //    }
             //}
             return query;
-
         }
+
         protected override IQueryable<RecipeResponse> GetQuery() =>
             _context.Recipes
                 .Include(u => u.Ingredients)
@@ -103,4 +104,3 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 .ProjectTo<RecipeResponse>(_mapper.ConfigurationProvider);
     }
 }
-

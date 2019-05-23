@@ -7,6 +7,7 @@ namespace SurviveOnSotka.Entities
     {
         [Required, MinLength(3), MaxLength(40)]
         public string Name { get; set; }
+
         public ICollection<TagsInRecipe> Recipies { get; set; }
 
         public override string ToString()

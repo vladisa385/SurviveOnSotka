@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.Entities;
+using System;
 
 namespace SurviveOnSotka.Db
 {
@@ -20,6 +20,7 @@ namespace SurviveOnSotka.Db
            : base(options)
         {
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

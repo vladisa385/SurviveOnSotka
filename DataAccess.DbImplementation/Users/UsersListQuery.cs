@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 using SurviveOnSotka.ViewModell;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
@@ -14,6 +14,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public UsersListQuery(AppDbContext tasksContext, IMapper mapper)
         {
             _context = tasksContext;
@@ -108,4 +109,3 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
         }
     }
 }
-

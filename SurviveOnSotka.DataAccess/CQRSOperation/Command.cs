@@ -1,31 +1,32 @@
-﻿using System;
-using System.Threading.Tasks;
-using SurviveOnSotka.ViewModell;
+﻿using SurviveOnSotka.ViewModell;
 using SurviveOnSotka.ViewModell.Requests;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.CQRSOperation
 {
     public abstract class Command<TRequest, TResponse>
         where TResponse : Response
         where TRequest : Request
+    {
+        public async Task<TResponse> ExecuteAsync(TRequest request)
         {
-            public async Task<TResponse> ExecuteAsync(TRequest request)
+            try
             {
-                try
-                {
-                    return await Execute(request);
-                }
-                catch (Exception e)
-                {
-                    HandleError(e);
-                }
-                return default;
+                return await Execute(request);
             }
-
-            protected virtual void HandleError(Exception ex)
+            catch (Exception e)
             {
-                throw ex;
+                HandleError(e);
             }
-            protected abstract Task<TResponse> Execute(TRequest request);
+            return default;
         }
+
+        protected virtual void HandleError(Exception ex)
+        {
+            throw ex;
+        }
+
+        protected abstract Task<TResponse> Execute(TRequest request);
     }
+}

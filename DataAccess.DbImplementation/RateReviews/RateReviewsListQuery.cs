@@ -1,17 +1,18 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
+using System.Linq;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {
-    public class RateReviewsListQuery : ListQuery<RateReviewResponse,RateReviewFilter>
+    public class RateReviewsListQuery : ListQuery<RateReviewResponse, RateReviewFilter>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public RateReviewsListQuery(AppDbContext context, IMapper mapper)
         {
             _context = context;
@@ -29,10 +30,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             return query;
         }
 
-        protected override IQueryable<RateReviewResponse> GetQuery() => 
+        protected override IQueryable<RateReviewResponse> GetQuery() =>
             _context.RateReviews
                 .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider)
-                .Include(u=>u.UserId)
-                .Include(u=>u.ReviewId);
+                .Include(u => u.UserId)
+                .Include(u => u.ReviewId);
     }
 }

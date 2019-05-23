@@ -1,37 +1,37 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Categories;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class UpdateCategoryCommand : Command<UpdateCategoryRequest,CategoryResponse>
+    public class UpdateCategoryCommand : Command<UpdateCategoryRequest, CategoryResponse>
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+
         public UpdateCategoryCommand(AppDbContext dbContext, IMapper mapper)
         {
             _context = dbContext;
             _mapper = mapper;
         }
 
-
         protected override void HandleError(Exception exception)
         {
             switch (exception)
             {
                 case DbUpdateException _:
-                     throw new UpdateItemException("Category cannot be update, The ParentCategory's guid is incorrect", exception);
+                    throw new UpdateItemException("Category cannot be update, The ParentCategory's guid is incorrect", exception);
             }
             base.HandleError(exception);
         }
 
-        protected override  async Task<CategoryResponse> Execute(UpdateCategoryRequest request)
+        protected override async Task<CategoryResponse> Execute(UpdateCategoryRequest request)
         {
             var foundCategory = await _context.Categories
                 .FirstOrDefaultAsync(t => t.Id == request.Id);

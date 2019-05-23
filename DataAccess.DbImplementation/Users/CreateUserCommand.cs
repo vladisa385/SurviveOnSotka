@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
@@ -22,6 +22,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             _signInManager = signInManager;
             _mapper = mapper;
         }
+
         public async Task<UserResponse> ExecuteAsync(CreateUserRequest request)
         {
             User user = new User
@@ -40,7 +41,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             await _signInManager.SignInAsync(user, false);
             await _userManager.AddToRoleAsync(user, "user");
             return _mapper.Map<User, UserResponse>(user);
-
         }
     }
 }

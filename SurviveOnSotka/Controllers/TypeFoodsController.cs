@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 using SurviveOnSotka.ViewModell;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -15,11 +15,10 @@ namespace SurviveOnSotka.Controllers
     [Route("api/[controller]")]
     public class TypeFoodsController : Controller
     {
-
         [HttpGet("GetList")]
         // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<TypeFoodResponse>))]
-        public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ListQuery<TypeFoodResponse,TypeFoodFilter> query)
+        public async Task<IActionResult> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ListQuery<TypeFoodResponse, TypeFoodFilter> query)
         {
             var response = await query.RunAsync(typeFood, options);
             return Ok(response);
@@ -31,7 +30,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(201, Type = typeof(TypeFoodResponse))]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]Command<CreateTypeFoodRequest,TypeFoodResponse> command)
+        public async Task<IActionResult> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]Command<CreateTypeFoodRequest, TypeFoodResponse> command)
         {
             var response = await command.ExecuteAsync(typeFood);
             return CreatedAtRoute("GetSingleTypeFood", new { typeFoodId = response.Id }, response);
@@ -54,7 +53,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateTypeFoodAsync([FromBody] UpdateTypeFoodRequest request, [FromServices] Command<UpdateTypeFoodRequest,TypeFoodResponse> command)
+        public async Task<IActionResult> UpdateTypeFoodAsync([FromBody] UpdateTypeFoodRequest request, [FromServices] Command<UpdateTypeFoodRequest, TypeFoodResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return Ok(response);
@@ -65,7 +64,7 @@ namespace SurviveOnSotka.Controllers
         //  [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteTypeFoodAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest,TypeFoodResponse> command)
+        public async Task<IActionResult> DeleteTypeFoodAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, TypeFoodResponse> command)
         {
             await command.ExecuteAsync(request);
             return NoContent();

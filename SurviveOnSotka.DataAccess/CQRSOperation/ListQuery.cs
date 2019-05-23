@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.ViewModell;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.CQRSOperation
 {
-    public abstract class ListQuery<TResponse,TFilter>
+    public abstract class ListQuery<TResponse, TFilter>
     where TResponse : Response
     where TFilter : Filter
     {
@@ -14,7 +14,7 @@ namespace SurviveOnSotka.DataAccess.CQRSOperation
         {
             try
             {
-                return await QueryListItem(filter,options);
+                return await QueryListItem(filter, options);
             }
             catch (Exception e)
             {
@@ -23,10 +23,12 @@ namespace SurviveOnSotka.DataAccess.CQRSOperation
 
             return default;
         }
+
         protected virtual void HandleError(Exception ex)
         {
             throw ex;
         }
+
         protected virtual async Task<ListResponse<TResponse>> QueryListItem(TFilter filter, ListOptions options)
         {
             var query = GetQuery();
@@ -46,7 +48,9 @@ namespace SurviveOnSotka.DataAccess.CQRSOperation
                 TotalItemsCount = totalCount
             };
         }
+
         protected abstract IQueryable<TResponse> ApplyFilter(IQueryable<TResponse> query, TFilter filter);
+
         protected abstract IQueryable<TResponse> GetQuery();
     }
 }

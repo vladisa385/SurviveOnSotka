@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 using SurviveOnSotka.ViewModell;
+using System;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -30,6 +30,7 @@ namespace SurviveOnSotka.Controllers
             UserResponse response = await query.RunAsync(userId);
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
+
         [HttpPost("Register")]
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
@@ -41,7 +42,6 @@ namespace SurviveOnSotka.Controllers
             {
                 UserResponse response = await command.ExecuteAsync(user);
                 return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
-
             }
             catch (CannotCreateUserExeption exception)
             {
@@ -51,9 +51,7 @@ namespace SurviveOnSotka.Controllers
                 }
                 return BadRequest(ModelState);
             }
-
         }
-
 
         [HttpPost("UpdateUser")]
         [ProducesResponseType(201, Type = typeof(UserResponse))]
@@ -68,7 +66,6 @@ namespace SurviveOnSotka.Controllers
             {
                 UserResponse response = await command.ExecuteAsync(user);
                 return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
-
             }
             catch (CannotCreateUserExeption exception)
             {
@@ -78,7 +75,6 @@ namespace SurviveOnSotka.Controllers
                 }
                 return BadRequest(ModelState);
             }
-
         }
 
         [HttpPost("ChangeUserPassword")]
@@ -94,7 +90,6 @@ namespace SurviveOnSotka.Controllers
             {
                 UserResponse response = await command.ExecuteAsync(user);
                 return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
-
             }
             catch (CannotChangePasswordExeption exception)
             {
@@ -104,8 +99,8 @@ namespace SurviveOnSotka.Controllers
                 }
                 return BadRequest(ModelState);
             }
-
         }
+
         [HttpPost("Login")]
         [ProducesResponseType(200, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
@@ -122,9 +117,7 @@ namespace SurviveOnSotka.Controllers
             {
                 return BadRequest(exception.Message);
             }
-
         }
-
 
         [HttpPost("LogOff")]
         [ProducesResponseType(200)]
@@ -154,7 +147,5 @@ namespace SurviveOnSotka.Controllers
                 return BadRequest(exception.Message);
             }
         }
-
-
     }
 }

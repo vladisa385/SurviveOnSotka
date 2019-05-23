@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
 using SurviveOnSotka.ViewModell;
+using System.Threading.Tasks;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -16,7 +16,7 @@ namespace SurviveOnSotka.Controllers
         //[Authorize]
         [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(ListResponse<TagResponse>))]
-        public async Task<IActionResult> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ListQuery<TagResponse,TagFilter> query)
+        public async Task<IActionResult> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ListQuery<TagResponse, TagFilter> query)
         {
             var response = await query.RunAsync(filter, options);
             return Ok(response);
@@ -26,7 +26,7 @@ namespace SurviveOnSotka.Controllers
         //[Authorize(Roles = "admin")]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteTagAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest,TagResponse> command)
+        public async Task<IActionResult> DeleteTagAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, TagResponse> command)
         {
             await command.ExecuteAsync(request);
             return NoContent();

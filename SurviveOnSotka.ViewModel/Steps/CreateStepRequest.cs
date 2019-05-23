@@ -6,6 +6,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Steps
     {
         [Range(0, int.MaxValue)]
         public int NumberStep { get; set; }
+
         [Required, MaxLength(1000)]
         public string Description { get; set; }
     }

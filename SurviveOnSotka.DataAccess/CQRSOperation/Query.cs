@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SurviveOnSotka.ViewModell;
+using System;
 using System.Threading.Tasks;
-using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.DataAccess.CQRSOperation
 {
@@ -25,6 +25,7 @@ namespace SurviveOnSotka.DataAccess.CQRSOperation
         {
             throw ex;
         }
+
         protected abstract Task<TResponse> QueryItem(Guid id);
     }
 }
