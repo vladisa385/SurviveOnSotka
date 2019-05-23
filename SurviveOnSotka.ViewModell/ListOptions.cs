@@ -9,7 +9,7 @@ namespace SurviveOnSotka.ViewModell
     {
         public ListOptions() : this(PageSizeValue.Default) { }
         public ListOptions(PageSizeValue pageSize) : this(pageSize.AsInt32()) { }
-        public ListOptions(int? pageSize) { PageSize = pageSize; }
+        public ListOptions(int? pageSize) => PageSize = pageSize;
 
         public int? PageSize { get; set; }
 
@@ -162,10 +162,8 @@ namespace SurviveOnSotka.ViewModell
     public class WrongSortPropertyException : Exception
     {
         public WrongSortPropertyException(string sortProperty, Exception innerException = null)
-            : base($"Property {sortProperty} does not exists in sorted entity.", innerException)
-        {
+            : base($"Property {sortProperty} does not exists in sorted entity.", innerException) =>
             SortProperty = sortProperty;
-        }
 
         public string SortProperty { get; }
     }

@@ -12,10 +12,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
     {
         private readonly AppDbContext _context;
 
-        public DeleteTagCommand(AppDbContext context, IMapper mapper)
-        {
-            _context = context;
-        }
+        public DeleteTagCommand(AppDbContext context, IMapper mapper) => _context = context;
+
         protected override async Task<TagResponse> Execute(SimpleDeleteRequest request)
         {
             var tagToDelete = await _context.Tags.FirstOrDefaultAsync(t => t.Id == request.Id);

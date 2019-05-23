@@ -19,18 +19,15 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             _mapper = mapper;
         }
 
-        public async Task<RateReviewResponse> RunAsync(Guid reviewId, Guid userId)
-        {
-            var response = await _context.RateReviews
-                .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(p => 
-                    p.ReviewId == reviewId &&
-                    p.UserId == userId);
-            return response;
-        }
 
         protected override Task<RateReviewResponse> QueryItem(Guid id)
         {
+            //var response = await _context.RateReviews
+            //    .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider)
+            //    .FirstOrDefaultAsync(p =>
+            //        p.ReviewId == reviewId &&
+            //        p.UserId == userId);
+            
             throw new NotImplementedException();
         }
     }

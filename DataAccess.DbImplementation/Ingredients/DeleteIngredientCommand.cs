@@ -11,10 +11,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
     public class DeleteIngredientCommand : Command<SimpleDeleteRequest,IngredientResponse>
     {
         private readonly AppDbContext _context;
-        public DeleteIngredientCommand(AppDbContext dbContext)
-        {
-            _context = dbContext;
-        }
+        public DeleteIngredientCommand(AppDbContext dbContext) => _context = dbContext;
 
         protected override async Task<IngredientResponse> Execute(SimpleDeleteRequest request)
         {

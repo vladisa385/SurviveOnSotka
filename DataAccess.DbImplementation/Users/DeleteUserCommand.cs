@@ -12,10 +12,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
     {
         private readonly UserManager<User> _userManager;
 
-        public DeleteUserCommand(UserManager<User> userManager)
-        {
-            _userManager = userManager;
-        }
+        public DeleteUserCommand(UserManager<User> userManager) => _userManager = userManager;
+
         public async Task ExecuteAsync(Guid userId)
         {
 

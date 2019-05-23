@@ -11,10 +11,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
     public class DeleteRecipeCommand : Command<SimpleDeleteRequest,RecipeResponse>
     {
         private readonly AppDbContext _context;
-        public DeleteRecipeCommand( AppDbContext context)
-        {
-            _context = context;
-        }
+        public DeleteRecipeCommand( AppDbContext context) => _context = context;
+
         protected override async Task<RecipeResponse> Execute(SimpleDeleteRequest request)
         {
             var recipeToDelete = await _context.Recipes

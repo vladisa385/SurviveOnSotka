@@ -11,10 +11,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
     public class DeleteRateReviewCommand : Command<SimpleDeleteRequest,RateReviewResponse>
     {
         private readonly AppDbContext _context;
-        public DeleteRateReviewCommand(AppDbContext context)
-        {
-            _context = context;
-        }
+        public DeleteRateReviewCommand(AppDbContext context) => _context = context;
 
         protected override async Task<RateReviewResponse> Execute(SimpleDeleteRequest request)
         {

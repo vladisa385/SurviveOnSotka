@@ -9,10 +9,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
     {
         private readonly SignInManager<User> _signInManager;
 
-        public LogOffUserCommand(SignInManager<User> signInManager)
-        {
-            _signInManager = signInManager;
-        }
+        public LogOffUserCommand(SignInManager<User> signInManager) => _signInManager = signInManager;
 
         public async Task ExecuteAsync()
         {

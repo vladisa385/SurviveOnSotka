@@ -13,10 +13,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
     {
         private readonly AppDbContext _context;
 
-        public DeleteCategoryCommand(AppDbContext dbContext)
-        {
-            _context = dbContext;
-        }
+        public DeleteCategoryCommand(AppDbContext dbContext) => _context = dbContext;
+
         protected override async Task<CategoryResponse> Execute(SimpleDeleteRequest request)
         {
             var categoryToDelete = await _context.Categories

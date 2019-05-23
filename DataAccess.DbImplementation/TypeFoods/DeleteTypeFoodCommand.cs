@@ -12,10 +12,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.TypeFoods
     {
         private readonly AppDbContext _context;
 
-        public DeleteTypeFoodCommand(AppDbContext context)
-        {
-            _context = context;
-        }
+        public DeleteTypeFoodCommand(AppDbContext context) => _context = context;
 
         protected override async Task<TypeFoodResponse> Execute(SimpleDeleteRequest request)
         {

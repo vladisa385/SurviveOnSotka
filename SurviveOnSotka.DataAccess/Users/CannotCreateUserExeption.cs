@@ -9,10 +9,6 @@ namespace SurviveOnSotka.DataAccess.Users
 
 
         public IEnumerable<IdentityError> Errors { get; set; }
-        public CannotCreateUserExeption(IEnumerable<IdentityError> errors) : base("User cannot be created")
-        {
-            Errors = errors;
-        }
-
+        public CannotCreateUserExeption(IEnumerable<IdentityError> errors) : base("User cannot be created") => Errors = errors;
     }
 }
