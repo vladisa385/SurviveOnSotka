@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>keys.pfx</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>keys.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
     <Version>0.0.1</Version>
     <Company>Vladislav Konyukhov</Company>

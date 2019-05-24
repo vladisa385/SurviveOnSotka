@@ -7,13 +7,13 @@ using SurviveOnSotka.ViewModel.Implementanion.Ingredients;
 using SurviveOnSotka.ViewModell;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     [ProducesResponseType(401)]
-    // [Authorize]
     public class IngredientsController : Controller
     {
         [HttpGet("GetList")]
@@ -27,7 +27,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ModelValidation]
         [ProducesResponseType(201, Type = typeof(IngredientResponse))]
@@ -49,7 +50,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ModelValidation]
         [ProducesResponseType(200, Type = typeof(IngredientResponse))]
         [ProducesResponseType(404)]
@@ -63,7 +65,8 @@ namespace SurviveOnSotka.Controllers
 
         [HttpDelete("Delete")]
         [ProducesResponseType(204)]
-        // [Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
         public async Task<IActionResult> DeleteIngredientAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest, IngredientResponse> command)

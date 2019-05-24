@@ -7,6 +7,7 @@ using SurviveOnSotka.ViewModel.Implementanion.Categories;
 using SurviveOnSotka.ViewModell;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -25,7 +26,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ModelValidation]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
@@ -49,7 +51,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ModelValidation]
@@ -63,7 +66,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpDelete("Delete")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]

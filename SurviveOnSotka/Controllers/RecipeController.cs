@@ -7,11 +7,10 @@ using SurviveOnSotka.ViewModel.Implementanion.Recipies;
 using SurviveOnSotka.ViewModell;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SurviveOnSotka.Controllers
 {
-    //[Authorize]
-    [ProducesResponseType(401)]
     [Route("api/[controller]")]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class RecipesController : Controller
@@ -25,6 +24,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(RecipeResponse))]
@@ -45,6 +46,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(RecipeResponse))]
@@ -57,6 +60,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpDelete("Delete")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

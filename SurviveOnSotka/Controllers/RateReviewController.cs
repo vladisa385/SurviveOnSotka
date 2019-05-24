@@ -7,13 +7,13 @@ using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 using SurviveOnSotka.ViewModell;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
-    //[Authorize]
     public class RateReviewsController : Controller
     {
         [HttpGet("GetList")]
@@ -25,6 +25,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(RateReviewResponse))]
@@ -47,6 +49,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(RateReviewResponse))]
@@ -59,6 +63,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpDelete("Delete")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

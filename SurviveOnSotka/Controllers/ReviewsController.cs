@@ -7,15 +7,14 @@ using SurviveOnSotka.ViewModel.Implementanion.Reviews;
 using SurviveOnSotka.ViewModell;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
-    [ProducesResponseType(401)]
     public class ReviewsController : Controller
     {
         [HttpGet("GetList")]
-        // [Authorize]
         [ProducesResponseType(200, Type = typeof(ListResponse<ReviewResponse>))]
         [ProducesResponseType(500, Type = typeof(ErrorDetails))]
         public async Task<IActionResult> GetReviewsListAsync(ReviewFilter review, ListOptions options, [FromServices] ListQuery<ReviewResponse, ReviewFilter> query)
@@ -25,7 +24,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPost("Create")]
-        // [Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201, Type = typeof(ReviewResponse))]
@@ -38,7 +38,6 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{reviewId}", Name = "GetSingleReview")]
-        // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetReviewAsync(Guid reviewId, [FromServices] Query<ReviewResponse> query)
@@ -48,7 +47,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("Update")]
-        // [Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
@@ -62,9 +62,10 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpDelete("Delete")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
-        // [Authorize(Roles = "admin")]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeleteReviewAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest, ReviewResponse> command)

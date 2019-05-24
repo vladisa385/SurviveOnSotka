@@ -5,6 +5,7 @@ using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
 using SurviveOnSotka.ViewModell;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -13,7 +14,6 @@ namespace SurviveOnSotka.Controllers
     public class TagsController : Controller
     {
         [HttpGet("GetList")]
-        //[Authorize]
         [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(ListResponse<TagResponse>))]
         public async Task<IActionResult> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ListQuery<TagResponse, TagFilter> query)
@@ -23,7 +23,8 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpDelete("Delete")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
+        [ProducesResponseType(401)]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
         public async Task<IActionResult> DeleteTagAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, TagResponse> command)
