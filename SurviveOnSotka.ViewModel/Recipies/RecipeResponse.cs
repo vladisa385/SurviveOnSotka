@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using SurviveOnSotka.ViewModel.Implementanion.Categories;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
 {
@@ -22,10 +23,10 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         public string Description { get; set; }
 
         [Required]
-        public int CategoriesCount { get; set; }
+        public ICollection<ReviewResponse> Reviews { get; set; }
 
         [Required]
-        public ICollection<ReviewResponse> Reviews { get; set; }
+        public ICollection<CategoryResponse> Categories { get; set; }
 
         public UserResponse User { get; set; }
 

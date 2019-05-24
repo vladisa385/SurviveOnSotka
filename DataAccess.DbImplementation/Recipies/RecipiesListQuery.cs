@@ -30,10 +30,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
             if (filter.Categories != null)
             {
                 if (filter.Categories.From != null)
-                    query = query.Where(p => p.CategoriesCount >= filter.Categories.From);
+                    query = query.Where(p => p.Categories.Count >= filter.Categories.From);
 
                 if (filter.Categories.To != null)
-                    query = query.Where(p => p.CategoriesCount <= filter.Categories.To);
+                    query = query.Where(p => p.Categories.Count <= filter.Categories.To);
             }
             if (filter.Reviews != null)
             {
