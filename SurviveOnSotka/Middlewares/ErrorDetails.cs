@@ -8,12 +8,12 @@ namespace SurviveOnSotka.Middlewares
     public class ErrorDetails
     {
         public HttpStatusCode StatusCode { get; } = HttpStatusCode.InternalServerError;
-        public string Message { get; } = "Internal Server Error";
+        public string Message { get; }// = "Internal Server Error";
 
         public ErrorDetails(Exception exception)
         {
+            Message = $"{exception.Message} \n innerException: {exception.InnerException?.Message}";
             if (!(exception is BaseCrudException baseCrudException)) return;
-            Message = exception.Message;
             StatusCode = baseCrudException.StatusCode;
         }
 

@@ -26,7 +26,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             //        p.ReviewId == reviewId &&
             //        p.UserId == userId);
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("Сорян,Кирилл,это еще не сделал)");
         }
     }
 }

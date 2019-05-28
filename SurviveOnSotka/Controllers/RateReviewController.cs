@@ -38,7 +38,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpGet("Get/{reviewId}", Name = "GetSingleRateReview")]
-        [ServiceFilter(typeof(InjectUserId))]
+        // [ServiceFilter(typeof(InjectUserId))]
         // [Authorize(Roles = "user")]
         [ProducesResponseType(200, Type = typeof(RateReviewResponse))]
         [ProducesResponseType(401)]
