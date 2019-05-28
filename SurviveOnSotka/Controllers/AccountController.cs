@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using SurviveOnSotka.DataAccess.BaseOperation;
 using SurviveOnSotka.Filters;
+using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion;
 
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
+    [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class AccountController : Controller
     {
         [HttpGet("GetList")]
