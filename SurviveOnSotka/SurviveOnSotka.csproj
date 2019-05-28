@@ -50,8 +50,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccess.DbImplementation\SurviveOnSotka.DataAccess.DbImplementation.csproj" />
-    <ProjectReference Include="..\Db\SurviveOnSotka.Db.csproj" />
-    <ProjectReference Include="..\SurviveOnSotka.DataAccess\SurviveOnSotka.DataAccess.csproj" />
     <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.Implementanion.csproj" />
   </ItemGroup>
 

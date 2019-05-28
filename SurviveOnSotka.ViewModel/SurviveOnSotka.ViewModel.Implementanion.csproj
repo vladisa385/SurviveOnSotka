@@ -15,12 +15,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entities\SurviveOnSotka.Entities.csproj" />
     <ProjectReference Include="..\SurviveOnSotka.ViewModell\SurviveOnSotka.ViewModell.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Ingredients\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
-﻿using SurviveOnSotka.Entities;
-using SurviveOnSotka.ViewModel.Implementanion.Users;
+﻿using SurviveOnSotka.ViewModel.Implementanion.Users;
 using SurviveOnSotka.ViewModell;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
 {
@@ -32,7 +32,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
         public string PathToPhotos { get; set; }
 
         [Required]
-        public ICollection<RateReview> RateReviews { get; set; }
+        public ICollection<RateReviewResponse> RateReviews { get; set; }
 
         public int Likes => RateReviews.Count(u => u.IsCool);
 
