@@ -18,8 +18,7 @@ namespace SurviveOnSotka.Db
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
            : base(options)
-        {
-        }
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

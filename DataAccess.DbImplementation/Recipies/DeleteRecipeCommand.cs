@@ -8,13 +8,13 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {
-    public class DeleteRecipeCommand : Command<SimpleDeleteRequest, RecipeResponse>
+    public class DeleteRecipeCommand : Command<SimpleDeleteRequest, EmptyResponse<RecipeResponse>>
     {
         private readonly AppDbContext _context;
 
         public DeleteRecipeCommand(AppDbContext context) => _context = context;
 
-        protected override async Task<RecipeResponse> Execute(SimpleDeleteRequest request)
+        protected override async Task<EmptyResponse<RecipeResponse>> Execute(SimpleDeleteRequest request)
         {
             var recipeToDelete = await _context.Recipes
                 .Include(t => t.User)
@@ -24,7 +24,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 throw new IllegalAccessException();
             _context.Recipes.Remove(recipeToDelete);
             await _context.SaveChangesAsync();
-            return null;
+            return new EmptyResponse<RecipeResponse>();
         }
     }
 }

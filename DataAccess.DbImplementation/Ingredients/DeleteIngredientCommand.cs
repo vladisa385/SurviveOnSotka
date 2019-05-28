@@ -8,13 +8,13 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
 {
-    public class DeleteIngredientCommand : Command<SimpleDeleteRequest, IngredientResponse>
+    public class DeleteIngredientCommand : Command<SimpleDeleteRequest, EmptyResponse<IngredientResponse>>
     {
         private readonly AppDbContext _context;
 
         public DeleteIngredientCommand(AppDbContext dbContext) => _context = dbContext;
 
-        protected override async Task<IngredientResponse> Execute(SimpleDeleteRequest request)
+        protected override async Task<EmptyResponse<IngredientResponse>> Execute(SimpleDeleteRequest request)
         {
             var ingredientToDelete = await _context.Ingredients
                  .Include(u => u.Recipies)
@@ -26,7 +26,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Ingredients
                 _context.Ingredients.Remove(ingredientToDelete);
                 await _context.SaveChangesAsync();
             }
-            return null;
+            return new EmptyResponse<IngredientResponse>();
         }
     }
 }

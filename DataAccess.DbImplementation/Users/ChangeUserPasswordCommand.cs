@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
@@ -19,7 +17,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
         private readonly IMapper _mapper;
 
 
-        public ChangeUserPasswordCommand(IMapper mapper, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, IHostingEnvironment appEnvironment, AppDbContext context)
+        public ChangeUserPasswordCommand(IMapper mapper, UserManager<User> userManager, AppDbContext context)
         {
             _mapper = mapper;
             _userManager = userManager;

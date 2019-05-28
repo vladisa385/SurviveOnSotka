@@ -9,13 +9,13 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
 {
-    public class DeleteCategoryCommand : Command<SimpleDeleteRequest, CategoryResponse>
+    public class DeleteCategoryCommand : Command<SimpleDeleteRequest, EmptyResponse<CategoryResponse>>
     {
         private readonly AppDbContext _context;
 
         public DeleteCategoryCommand(AppDbContext dbContext) => _context = dbContext;
 
-        protected override async Task<CategoryResponse> Execute(SimpleDeleteRequest request)
+        protected override async Task<EmptyResponse<CategoryResponse>> Execute(SimpleDeleteRequest request)
         {
             var categoryToDelete = await _context.Categories
                 .Include(u => u.Recipies)
@@ -30,7 +30,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Categories
                 _context.Categories.Remove(categoryToDelete);
                 await _context.SaveChangesAsync();
             }
-            return null;
+            return new EmptyResponse<CategoryResponse>();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
@@ -8,13 +7,13 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
 {
-    public class DeleteTagCommand : Command<SimpleDeleteRequest, TagResponse>
+    public class DeleteTagCommand : Command<SimpleDeleteRequest, EmptyResponse<TagResponse>>
     {
         private readonly AppDbContext _context;
 
-        public DeleteTagCommand(AppDbContext context, IMapper mapper) => _context = context;
+        public DeleteTagCommand(AppDbContext context) => _context = context;
 
-        protected override async Task<TagResponse> Execute(SimpleDeleteRequest request)
+        protected override async Task<EmptyResponse<TagResponse>> Execute(SimpleDeleteRequest request)
         {
             var tagToDelete = await _context.Tags.FirstOrDefaultAsync(t => t.Id == request.Id);
             if (tagToDelete != null)
@@ -22,7 +21,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
                 _context.Tags.Remove(tagToDelete);
                 await _context.SaveChangesAsync();
             }
-            return null;
+            return new EmptyResponse<TagResponse>();
         }
     }
 }

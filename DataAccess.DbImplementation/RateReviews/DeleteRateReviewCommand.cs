@@ -8,13 +8,13 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {
-    public class DeleteRateReviewCommand : Command<SimpleDeleteRequest, RateReviewResponse>
+    public class DeleteRateReviewCommand : Command<SimpleDeleteRequest, EmptyResponse<RateReviewResponse>>
     {
         private readonly AppDbContext _context;
 
         public DeleteRateReviewCommand(AppDbContext context) => _context = context;
 
-        protected override async Task<RateReviewResponse> Execute(SimpleDeleteRequest request)
+        protected override async Task<EmptyResponse<RateReviewResponse>> Execute(SimpleDeleteRequest request)
         {
             var rateReviewToDelete = await _context.RateReviews.FirstOrDefaultAsync(p =>
                 p.ReviewId == request.Id &&
@@ -24,7 +24,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
                 throw new IllegalAccessException();
             _context.RateReviews.Remove(rateReviewToDelete);
             await _context.SaveChangesAsync();
-            return null;
+            return new EmptyResponse<RateReviewResponse>();
         }
     }
 }
