@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Users
 {
-    public class CreateUserRequest
+    public class CreateUserRequest : Request
     {
         [Required]
         [Display(Name = "Email")]
@@ -14,10 +15,5 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Users
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Required]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Подтвердить пароль")]
-        public string PasswordConfirm { get; set; }
     }
 }

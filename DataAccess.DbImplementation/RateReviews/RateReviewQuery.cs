@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 using System;
 using System.Threading.Tasks;
+using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 {

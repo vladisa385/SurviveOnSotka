@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.ViewModell;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.ViewModell;
 
-namespace SurviveOnSotka.DataAccess.CQRSOperation
+namespace SurviveOnSotka.DataAccess.BaseOperation
 {
     public abstract class ListQuery<TResponse, TFilter>
     where TResponse : Response

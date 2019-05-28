@@ -1,19 +1,22 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using System.Threading.Tasks;
+using SurviveOnSotka.DataAccess.BaseOperation;
+using SurviveOnSotka.ViewModel.Implementanion;
+using SurviveOnSotka.ViewModel.Implementanion.Users;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
-    public class LogOffUserCommand : ILogOffUserCommand
+    public class LogOffUserCommand : Command<EmptyRequest, EmptyResponse<UserResponse>>
     {
         private readonly SignInManager<User> _signInManager;
 
         public LogOffUserCommand(SignInManager<User> signInManager) => _signInManager = signInManager;
 
-        public async Task ExecuteAsync()
+        protected override async Task<EmptyResponse<UserResponse>> Execute(EmptyRequest request)
         {
             await _signInManager.SignOutAsync();
+            return new EmptyResponse<UserResponse>();
         }
     }
 }

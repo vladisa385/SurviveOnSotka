@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Recipies;
 using System.Linq;
+using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {

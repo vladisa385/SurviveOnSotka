@@ -20,8 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SurviveOnSotka.ViewModell\SurviveOnSotka.ViewModell.csproj" />
-    <ProjectReference Include="..\SurviveOnSotka.ViewModel\SurviveOnSotka.ViewModel.Implementanion.csproj" />
   </ItemGroup>
 
 </Project>

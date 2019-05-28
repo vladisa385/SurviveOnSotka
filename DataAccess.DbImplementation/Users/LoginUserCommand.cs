@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 using System.Threading.Tasks;
+using SurviveOnSotka.DataAccess.BaseOperation;
+using SurviveOnSotka.DataAccess.Exceptions;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
-    public class LoginUserCommand : ILoginUserCommand
+    public class LoginUserCommand : Command<LoginUserRequest, UserResponse>
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
@@ -20,15 +21,15 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             _mapper = mapper;
         }
 
-        public async Task<UserResponse> ExecuteAsync(LoginUserRequest request)
+        protected override async Task<UserResponse> Execute(LoginUserRequest request)
         {
-            var result =
-                await _signInManager.PasswordSignInAsync(request.Email, request.Password, request.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(
+                    request.Email,
+                    request.Password,
+                    request.RememberMe,
+                    false);
             if (!result.Succeeded)
-            {
-                throw new IncorrectPasswordOrEmailExeption();
-            }
-
+                throw new BadCredentialsException("Incorrect user password or email");
             var user = await _userManager.FindByEmailAsync(request.Email);
             return _mapper.Map<User, UserResponse>(user);
         }

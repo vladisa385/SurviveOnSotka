@@ -1,51 +1,34 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using SurviveOnSotka.DataAccess.DbImplementation.Files;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.BaseOperation;
+using SurviveOnSotka.Db;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
-    public class UpdateUserCommand : IUpdateUserCommand
+    public class UpdateUserCommand : Command<UpdateUserRequest, UserResponse>
     {
         private readonly UserManager<User> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
-        private readonly IHostingEnvironment _appEnvironment;
+        private readonly AppDbContext _context;
 
-        public UpdateUserCommand(UserManager<User> userManager,
-            IMapper mapper,
-            IHttpContextAccessor httpContextAccessor,
-            IHostingEnvironment appEnvironment)
+        public UpdateUserCommand(UserManager<User> userManager, IMapper mapper, AppDbContext context)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
-
-            _appEnvironment = appEnvironment;
+            _context = context;
         }
-
-        public async Task<UserResponse> ExecuteAsync(UpdateUserRequest request)
+        protected override async Task<UserResponse> Execute(UpdateUserRequest request)
         {
-            var foundUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-
+            var foundUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.GetUserId());
             foundUser.AboutYourself = request.AboutYourself;
             foundUser.FirstName = request.FirstName;
             foundUser.LastName = request.LastName;
             foundUser.Gender = request.Gender;
-            if (request.Avatar != null)
-            {
-                string basedir = _appEnvironment.WebRootPath + "/Users/";
-                foundUser.PathToAvatar = basedir + request.Avatar.FileName;
-                await CreateFileCommand.ExecuteAsync(request.Avatar, basedir);
-            }
-
             await _userManager.UpdateAsync(foundUser);
-
             return _mapper.Map<User, UserResponse>(foundUser);
         }
     }

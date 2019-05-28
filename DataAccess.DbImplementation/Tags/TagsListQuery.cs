@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.Tags;
 using System.Linq;
+using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Tags
 {

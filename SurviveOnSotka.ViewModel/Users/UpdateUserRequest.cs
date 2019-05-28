@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Users
 {
-    public class UpdateUserRequest
+    public class UpdateUserRequest : Request
     {
         [Display(Name = "Имя")]
         [MinLength(5), MaxLength(40)]

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion;
@@ -8,6 +7,7 @@ using SurviveOnSotka.ViewModell;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.Controllers
 {

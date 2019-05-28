@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Users
 {
-    public class UserResponse
+    public class UserResponse : Response
     {
         [Required]
         public Guid Id { get; set; }

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Users
 {
-    public class LoginUserRequest
+    public class LoginUserRequest : Request
     {
         [Required]
         [Display(Name = "Email")]

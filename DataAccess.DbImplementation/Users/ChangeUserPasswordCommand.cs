@@ -2,37 +2,40 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SurviveOnSotka.DataAccess.BaseOperation;
+using SurviveOnSotka.DataAccess.Exceptions;
+using SurviveOnSotka.Db;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
-    public class ChangeUserPasswordCommand : IChangeUserPasswordCommand
+    public class ChangeUserPasswordCommand : Command<ChangePasswordUserRequest, UserResponse>
     {
         private readonly UserManager<User> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IHostingEnvironment _appEnvironment;
 
-        public ChangeUserPasswordCommand(IMapper mapper, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, IHostingEnvironment appEnvironment)
+
+        public ChangeUserPasswordCommand(IMapper mapper, IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, IHostingEnvironment appEnvironment, AppDbContext context)
         {
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
-            _appEnvironment = appEnvironment;
+            _context = context;
         }
 
-        public async Task<UserResponse> ExecuteAsync(ChangePasswordUserRequest request)
+        protected override async Task<UserResponse> Execute(ChangePasswordUserRequest request)
         {
-            var foundUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            IdentityResult result =
-               await _userManager.ChangePasswordAsync(foundUser, request.OldPassword, request.NewPassword);
+            var foundUser = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == request.GetUserId());
+            var result = await _userManager.ChangePasswordAsync(
+                foundUser,
+                request.OldPassword,
+                request.NewPassword);
             if (!result.Succeeded)
-            {
-                throw new CannotChangePasswordExeption(result.Errors);
-            }
+                throw new UpdateItemException(result.Errors.ToString());
             return _mapper.Map<User, UserResponse>(foundUser);
         }
     }

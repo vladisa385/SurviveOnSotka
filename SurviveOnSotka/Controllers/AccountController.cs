@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 using SurviveOnSotka.ViewModell;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using SurviveOnSotka.DataAccess.BaseOperation;
+using SurviveOnSotka.Filters;
+using SurviveOnSotka.ViewModel.Implementanion;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -14,118 +17,84 @@ namespace SurviveOnSotka.Controllers
         // [Authorize]
         [ProducesResponseType(401)]
         [ProducesResponseType(200, Type = typeof(ListResponse<UserResponse>))]
-        public async Task<IActionResult> GetUsersListAsync(UserFilter user, ListOptions options, [FromServices]IUsersListQuery query)
+        public async Task<IActionResult> GetUsersListAsync(UserFilter filter, ListOptions options, [FromServices]ListQuery<UserResponse, UserFilter> query)
         {
-            var response = await query.RunAsync(user, options);
+            var response = await query.RunAsync(filter, options);
             return Ok(response);
         }
 
         [HttpGet("Get/{userId}", Name = "GetSingleUser")]
-        // [Authorize]
+        //[Authorize]
         [ProducesResponseType(200, Type = typeof(UserResponse))]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetUserAsync(Guid userId, [FromServices] IUserQuery query)
+        public async Task<IActionResult> GetUserAsync(Guid userId, [FromServices] Query<UserResponse> query)
         {
-            UserResponse response = await query.RunAsync(userId);
+            var response = await query.RunAsync(userId);
             return response == null ? (IActionResult)NotFound() : Ok(response);
         }
 
         [HttpPost("Register")]
+        [ModelValidation]
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Register([FromBody]CreateUserRequest user, [FromServices] ICreateUserCommand command)
+        public async Task<IActionResult> Register([FromBody]CreateUserRequest request, [FromServices] Command<CreateUserRequest, UserResponse> command)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            try
-            {
-                UserResponse response = await command.ExecuteAsync(user);
-                return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
-            }
-            catch (CannotCreateUserExeption exception)
-            {
-                foreach (var error in exception.Errors)
-                {
-                    ModelState.AddModelError(exception.Message, error.Description);
-                }
-                return BadRequest(ModelState);
-            }
+            var response = await command.ExecuteAsync(request);
+            return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
         }
 
-        [HttpPost("UpdateUser")]
+        [HttpPut("UpdateUser")]
+        [Authorize]
+        [ServiceFilter(typeof(InjectUserId))]
+        [ModelValidation]
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         // [Authorize]
-        public async Task<IActionResult> UpdateUser([FromBody]UpdateUserRequest user, [FromServices] IUpdateUserCommand command)
+        public async Task<IActionResult> UpdateUser([FromBody]UpdateUserRequest request, [FromServices] Command<UpdateUserRequest, UserResponse> command)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            try
-            {
-                UserResponse response = await command.ExecuteAsync(user);
-                return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
-            }
-            catch (CannotCreateUserExeption exception)
-            {
-                foreach (var error in exception.Errors)
-                {
-                    ModelState.AddModelError(exception.Message, error.Description);
-                }
-                return BadRequest(ModelState);
-            }
+            var response = await command.ExecuteAsync(request);
+            return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
         }
 
-        [HttpPost("ChangeUserPassword")]
+        [HttpPut("ChangeUserPassword")]
+        [Authorize]
+        [ServiceFilter(typeof(InjectUserId))]
+        [ModelValidation]
         [ProducesResponseType(201, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         // [Authorize]
-        public async Task<IActionResult> ChangeUserPassword([FromBody]ChangePasswordUserRequest user, [FromServices] IChangeUserPasswordCommand command)
+        public async Task<IActionResult> ChangeUserPassword([FromBody]ChangePasswordUserRequest request, [FromServices] Command<ChangePasswordUserRequest, UserResponse> command)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            try
-            {
-                UserResponse response = await command.ExecuteAsync(user);
-                return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
-            }
-            catch (CannotChangePasswordExeption exception)
-            {
-                foreach (var error in exception.Errors)
-                {
-                    ModelState.AddModelError(exception.Message, error.Description);
-                }
-                return BadRequest(ModelState);
-            }
+            var response = await command.ExecuteAsync(request);
+            return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
         }
+
+        [HttpGet("IsAuthorized")]
+        [Authorize]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(40)]
+        public IActionResult IsAuthorized() => Ok();
 
         [HttpPost("Login")]
+        [ModelValidation]
         [ProducesResponseType(200, Type = typeof(UserResponse))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Login([FromBody]LoginUserRequest user, [FromServices] ILoginUserCommand command)
+        public async Task<IActionResult> Login([FromBody]LoginUserRequest request, [FromServices] Command<LoginUserRequest, UserResponse> command)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            try
-            {
-                UserResponse response = await command.ExecuteAsync(user);
-                return Ok(response);
-            }
-            catch (IncorrectPasswordOrEmailExeption exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            var response = await command.ExecuteAsync(request);
+            return Ok(response);
         }
 
         [HttpPost("LogOff")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         // [Authorize]
-        public async Task<IActionResult> LogOff([FromServices] ILogOffUserCommand command)
+        public async Task<IActionResult> LogOff(EmptyRequest request, [FromServices] Command<EmptyRequest, EmptyResponse<UserResponse>> command)
         {
-            await command.ExecuteAsync();
+            await command.ExecuteAsync(request);
             return Ok();
         }
 
@@ -135,17 +104,10 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteUserAsync(Guid userId, [FromServices]IDeleteUserCommand command)
+        public async Task<IActionResult> DeleteUserAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, EmptyResponse<UserResponse>> command)
         {
-            try
-            {
-                await command.ExecuteAsync(userId);
-                return NoContent();
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            await command.ExecuteAsync(request);
+            return NoContent();
         }
     }
 }

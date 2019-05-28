@@ -1,9 +1,9 @@
-﻿using SurviveOnSotka.ViewModell;
-using SurviveOnSotka.ViewModell.Requests;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using SurviveOnSotka.ViewModell;
+using SurviveOnSotka.ViewModell.Requests;
 
-namespace SurviveOnSotka.DataAccess.CQRSOperation
+namespace SurviveOnSotka.DataAccess.BaseOperation
 {
     public abstract class Command<TRequest, TResponse>
         where TResponse : Response

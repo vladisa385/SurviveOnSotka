@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.DbImplementation.Categories;
 using SurviveOnSotka.DataAccess.DbImplementation.Ingredients;
 using SurviveOnSotka.DataAccess.DbImplementation.RateReviews;
@@ -14,7 +13,6 @@ using SurviveOnSotka.DataAccess.DbImplementation.Reviews;
 using SurviveOnSotka.DataAccess.DbImplementation.Tags;
 using SurviveOnSotka.DataAccess.DbImplementation.TypeFoods;
 using SurviveOnSotka.DataAccess.DbImplementation.Users;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.Filters;
@@ -29,6 +27,8 @@ using SurviveOnSotka.ViewModel.Implementanion.Tags;
 using SurviveOnSotka.ViewModel.Implementanion.TypeFoods;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Threading.Tasks;
+using SurviveOnSotka.DataAccess.BaseOperation;
+using SurviveOnSotka.ViewModel.Implementanion.Users;
 
 namespace SurviveOnSotka
 {
@@ -129,14 +129,14 @@ namespace SurviveOnSotka
                 .AddScoped<Command<UpdateTypeFoodRequest, TypeFoodResponse>, UpdateTypeFoodCommand>()
                 .AddScoped<Command<SimpleDeleteRequest, TypeFoodResponse>, DeleteTypeFoodCommand>()
 
-                .AddScoped<ICreateUserCommand, CreateUserCommand>()
-                .AddScoped<ILogOffUserCommand, LogOffUserCommand>()
-                .AddScoped<ILoginUserCommand, LoginUserCommand>()
-                .AddScoped<IChangeUserPasswordCommand, ChangeUserPasswordCommand>()
-                .AddScoped<IUpdateUserCommand, UpdateUserCommand>()
-                .AddScoped<IUserQuery, UserQuery>()
-                .AddScoped<IUsersListQuery, UsersListQuery>()
-                .AddScoped<IDeleteUserCommand, DeleteUserCommand>()
+                .AddScoped<Command<CreateUserRequest, UserResponse>, CreateUserCommand>()
+                .AddScoped<Command<EmptyRequest, EmptyResponse<UserResponse>>, LogOffUserCommand>()
+                .AddScoped<Command<LoginUserRequest, UserResponse>, LoginUserCommand>()
+                .AddScoped<Command<ChangePasswordUserRequest, UserResponse>, ChangeUserPasswordCommand>()
+                .AddScoped<Command<UpdateUserRequest, UserResponse>, UpdateUserCommand>()
+                .AddScoped<Query<UserResponse>, UserQuery>()
+                .AddScoped<ListQuery<UserResponse, UserFilter>, UsersListQuery>()
+                .AddScoped<Command<SimpleDeleteRequest, EmptyResponse<UserResponse>>, DeleteUserCommand>()
 
                 .AddScoped<Query<RecipeResponse>, RecipeQuery>()
                 .AddScoped<ListQuery<RecipeResponse, RecipeFilter>, RecipiesListQuery>()

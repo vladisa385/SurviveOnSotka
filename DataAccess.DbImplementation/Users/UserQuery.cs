@@ -2,15 +2,15 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 using System;
 using System.Threading.Tasks;
+using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
-    public class UserQuery : IUserQuery
+    public class UserQuery : Query<UserResponse>
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
@@ -20,15 +20,12 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             _userManager = userManager;
             _mapper = mapper;
         }
-
-        public async Task<UserResponse> RunAsync(Guid userId)
+        protected override async Task<UserResponse> QueryItem(Guid userId)
         {
-            UserResponse response = await _userManager.Users.Include("Recipies")
-                 .Include("Recipies")
-                .Include("Reviews")
-                .Include("CheapPlaces")
-                .Include("RateReviews")
-                 .Include("RateCheapPlaces")
+            var response = await _userManager.Users
+                .Include(u => u.Recipies)
+                .Include(u => u.Reviews)
+                .Include(u => u.RateReviews)
                 .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(p => p.Id == userId);
             return response;

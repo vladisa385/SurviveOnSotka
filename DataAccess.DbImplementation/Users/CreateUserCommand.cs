@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using SurviveOnSotka.DataAccess.Users;
 using SurviveOnSotka.Entities;
 using SurviveOnSotka.ViewModel.Implementanion.Users;
 using System.Threading.Tasks;
+using SurviveOnSotka.DataAccess.BaseOperation;
+using SurviveOnSotka.DataAccess.Exceptions;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Users
 {
-    public class CreateUserCommand : ICreateUserCommand
+    public class CreateUserCommand : Command<CreateUserRequest, UserResponse>
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -23,21 +24,16 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             _mapper = mapper;
         }
 
-        public async Task<UserResponse> ExecuteAsync(CreateUserRequest request)
+        protected override async Task<UserResponse> Execute(CreateUserRequest request)
         {
-            User user = new User
+            var user = new User
             {
                 Email = request.Email,
                 UserName = request.Email,
             };
-
-            // добавляем пользователя
-
             var result = await _userManager.CreateAsync(user, request.Password);
-            // установка куки
             if (!result.Succeeded)
-                throw new CannotCreateUserExeption(result.Errors);
-
+                throw new CreateItemException(result.Errors.ToString());
             await _signInManager.SignInAsync(user, false);
             await _userManager.AddToRoleAsync(user, "user");
             return _mapper.Map<User, UserResponse>(user);

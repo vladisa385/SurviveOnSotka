@@ -1,8 +1,8 @@
-﻿using SurviveOnSotka.ViewModell;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using SurviveOnSotka.ViewModell;
 
-namespace SurviveOnSotka.DataAccess.CQRSOperation
+namespace SurviveOnSotka.DataAccess.BaseOperation
 {
     public abstract class Query<TResponse>
     where TResponse : Response

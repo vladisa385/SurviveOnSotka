@@ -1,8 +1,9 @@
 ﻿using System;
+using SurviveOnSotka.ViewModell;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Users
 {
-    public class UserFilter
+    public class UserFilter : Filter
     {
         public Guid? Id { get; set; }
         public string Email { get; set; }

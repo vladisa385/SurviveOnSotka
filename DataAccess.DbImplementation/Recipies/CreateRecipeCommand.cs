@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.DataAccess.Exceptions;
 using SurviveOnSotka.Db;
 using SurviveOnSotka.Entities;
@@ -9,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
 {

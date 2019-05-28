@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SurviveOnSotka.DataAccess.CQRSOperation;
 using SurviveOnSotka.Filters;
 using SurviveOnSotka.Middlewares;
 using SurviveOnSotka.ViewModel.Implementanion;
@@ -8,6 +7,7 @@ using SurviveOnSotka.ViewModell;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.Controllers
 {
@@ -48,10 +48,10 @@ namespace SurviveOnSotka.Controllers
 
         [HttpPut("Update")]
         [Authorize]
-        [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]

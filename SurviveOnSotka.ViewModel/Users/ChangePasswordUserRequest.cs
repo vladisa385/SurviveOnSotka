@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SurviveOnSotka.ViewModell.Requests;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.Users
 {
-    public class ChangePasswordUserRequest
+    public class ChangePasswordUserRequest : Request
     {
         [Required]
         [DataType(DataType.Password)]
