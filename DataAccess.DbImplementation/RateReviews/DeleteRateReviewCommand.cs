@@ -16,10 +16,10 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
 
         protected override async Task<EmptyResponse<RateReviewResponse>> Execute(SimpleDeleteRequest request)
         {
-            var rateReviewToDelete = await _context.RateReviews.FirstOrDefaultAsync(p =>
-                p.ReviewId == request.Id &&
-                p.UserId == request.GetUserId());
-            if (rateReviewToDelete == null) return null;
+            var rateReviewToDelete = await _context.RateReviews
+                .FirstOrDefaultAsync(p => p.Id == request.Id);
+            if (rateReviewToDelete == null)
+                return null;
             if (!request.IsLegalAccess(rateReviewToDelete.UserId))
                 throw new IllegalAccessException();
             _context.RateReviews.Remove(rateReviewToDelete);

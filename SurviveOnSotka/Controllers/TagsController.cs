@@ -27,7 +27,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteTagAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, TagResponse> command)
+        public async Task<IActionResult> DeleteTagAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, EmptyResponse<TagResponse>> command)
         {
             await command.ExecuteAsync(request);
             return NoContent();

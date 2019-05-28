@@ -69,7 +69,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteIngredientAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest, IngredientResponse> command)
+        public async Task<IActionResult> DeleteIngredientAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest, EmptyResponse<IngredientResponse>> command)
         {
             await command.ExecuteAsync(request);
             return NoContent();

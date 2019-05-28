@@ -23,8 +23,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
         protected override async Task<RateReviewResponse> Execute(UpdateRateReviewRequest request)
         {
             var rateReview = await _context.RateReviews.FirstOrDefaultAsync(u =>
-                u.ReviewId == request.ReviewId &&
-                u.UserId == request.GetUserId());
+                u.Id == request.Id);
             if (rateReview == null)
                 throw new UpdateItemException("RateReview cannot be updated.ReviewId with this id doesn't exist");
             if (!request.IsLegalAccess(rateReview.UserId))

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SurviveOnSotka.Entities
 {
-    public class RateReview
+    public class RateReview : DomainObject
     {
         public Guid ReviewId { get; set; }
         public Guid UserId { get; set; }

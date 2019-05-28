@@ -7,7 +7,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.RateReviews
     public class UpdateRateReviewRequest : Request
     {
         [Required]
-        public Guid ReviewId { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public bool IsCool { get; set; }

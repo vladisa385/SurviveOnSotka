@@ -3,6 +3,8 @@ using SurviveOnSotka.Db;
 using SurviveOnSotka.ViewModel.Implementanion.RateReviews;
 using System;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
@@ -17,16 +19,12 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.RateReviews
             _context = context;
             _mapper = mapper;
         }
-
-        protected override Task<RateReviewResponse> QueryItem(Guid id)
+        protected override async Task<RateReviewResponse> QueryItem(Guid id)
         {
-            //var response = await _context.RateReviews
-            //    .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider)
-            //    .FirstOrDefaultAsync(p =>
-            //        p.ReviewId == reviewId &&
-            //        p.UserId == userId);
-
-            throw new NotImplementedException("Сорян,Кирилл,это еще не сделал)");
+            var response = await _context.RateReviews
+                .ProjectTo<RateReviewResponse>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(u => u.Id == id);
+            return response;
         }
     }
 }

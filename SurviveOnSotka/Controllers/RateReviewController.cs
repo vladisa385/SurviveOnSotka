@@ -68,7 +68,7 @@ namespace SurviveOnSotka.Controllers
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeleteRateReviewAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, RateReviewResponse> command)
+        public async Task<IActionResult> DeleteRateReviewAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, EmptyResponse<RateReviewResponse>> command)
         {
             await command.ExecuteAsync(request);
             return NoContent();
