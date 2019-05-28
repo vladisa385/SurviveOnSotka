@@ -99,7 +99,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         // [Authorize(Roles = "admin")]
-        [HttpDelete("Delete/{userId}")]
+        [HttpDelete("Delete")]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
