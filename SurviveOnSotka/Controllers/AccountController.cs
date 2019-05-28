@@ -75,7 +75,7 @@ namespace SurviveOnSotka.Controllers
         [HttpGet("IsAuthorized")]
         [Authorize]
         [ProducesResponseType(200)]
-        [ProducesResponseType(40)]
+        [ProducesResponseType(401)]
         public IActionResult IsAuthorized() => Ok();
 
         [HttpPost("Login")]
