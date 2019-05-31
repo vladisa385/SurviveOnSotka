@@ -53,13 +53,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
         private async Task CreateIngredients(Recipe recipe)
         {
             foreach (var ingredientToRecipe in recipe.Ingredients)
-            {
-                var ingredient = await _context.Ingredients
-                    .FirstOrDefaultAsync(u => u.Id == ingredientToRecipe.IngredientId);
-                if (ingredient == null)
-                    throw new CreateItemException($"Recipe cannot be created, The ingredient with id {ingredientToRecipe.IngredientId} doesn't exist");
                 ingredientToRecipe.RecipeId = recipe.Id;
-            }
         }
 
         protected override async Task<RecipeResponse> Execute(CreateRecipeRequest request)
@@ -73,6 +67,16 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 await CreateTags(recipe, request.Tags);
             await _context.SaveChangesAsync();
             return _mapper.Map<Recipe, RecipeResponse>(recipe);
+        }
+
+        protected override void HandleError(Exception exception)
+        {
+            switch (exception)
+            {
+                case DbUpdateException _:
+                    throw new CreateItemException("Recipe cannot be created.Ingredient or category in request doesn't exist", exception);
+            }
+            base.HandleError(exception);
         }
     }
 }

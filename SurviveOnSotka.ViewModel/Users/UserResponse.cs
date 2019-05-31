@@ -21,7 +21,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Users
         [MinLength(5), MaxLength(40)]
         public string LastName { get; set; }
 
-        public string PathToAvatar { get; set; }
+        public string Avatar { get; set; }
 
         [Required]
         public bool Gender { get; set; }

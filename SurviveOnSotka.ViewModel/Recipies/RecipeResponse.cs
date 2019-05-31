@@ -26,7 +26,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         public ICollection<ReviewResponse> Reviews { get; set; }
 
         [Required]
-        public ICollection<CategoryResponse> Categories { get; set; }
+        public CategoryResponse Category { get; set; }
 
         public UserResponse User { get; set; }
 

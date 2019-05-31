@@ -13,6 +13,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         public RangeFilter<int> Categories { get; set; }
         public RangeFilter<int> Reviews { get; set; }
         public Guid? UserId { get; set; }
+        public Guid? CategoryId { get; set; }
         public RangeFilter<DateTime> DateCreated { get; set; }
         public RangeFilter<TimeSpan> TimeForCooking { get; set; }
         public RangeFilter<TimeSpan> TimeForPreparetion { get; set; }

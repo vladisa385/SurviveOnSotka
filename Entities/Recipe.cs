@@ -12,7 +12,8 @@ namespace SurviveOnSotka.Entities
         [Required, MinLength(100), MaxLength(1000)]
         public string Description { get; set; }
 
-        public ICollection<RecipeInCategories> Categories { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Category Category { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public Guid? UserId { get; set; }
         public User User { get; set; }

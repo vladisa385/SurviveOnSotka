@@ -47,6 +47,7 @@ namespace SurviveOnSotka.Controllers
         }
 
         [HttpPut("UpdateUser")]
+        [RequestSizeLimit(1000_000_000_000)]
         [Authorize]
         [ServiceFilter(typeof(InjectUserId))]
         [ModelValidation]

@@ -27,14 +27,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
                 query = query.Where(p => p.User.Id == filter.UserId);
             if (filter.Name != null)
                 query = query.Where(p => p.Name.StartsWith(filter.Name));
-            if (filter.Categories != null)
-            {
-                if (filter.Categories.From != null)
-                    query = query.Where(p => p.Categories.Count >= filter.Categories.From);
-
-                if (filter.Categories.To != null)
-                    query = query.Where(p => p.Categories.Count <= filter.Categories.To);
-            }
+            if (filter.CategoryId != null)
+                query = query.Where(p => p.Category.Id == filter.CategoryId);
             if (filter.Reviews != null)
             {
                 if (filter.Reviews.From != null)
@@ -97,7 +91,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Recipies
         protected override IQueryable<RecipeResponse> GetQuery() =>
             _context.Recipes
                 .Include(u => u.Ingredients)
-                .Include(u => u.Categories)
+                .Include(u => u.Category)
                 .Include(u => u.Reviews)
                 .Include(u => u.Steps)
                 .Include(u => u.Tags)

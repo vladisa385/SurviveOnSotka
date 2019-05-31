@@ -40,7 +40,7 @@ namespace SurviveOnSotka
                 .ForMember(d => d.UserName, o => o.MapFrom(src => src.UserName))
                 .ForMember(d => d.FirstName, o => o.MapFrom(src => src.FirstName))
                 .ForMember(d => d.LastName, o => o.MapFrom(src => src.LastName))
-                .ForMember(d => d.PathToAvatar, o => o.MapFrom(src => src.PathToAvatar))
+                .ForMember(d => d.Avatar, o => o.MapFrom(src => src.Avatar))
                 .ForMember(d => d.Gender, o => o.MapFrom(src => src.Gender))
                 .ForMember(d => d.AboutYourself, o => o.MapFrom(src => src.AboutYourself))
                  .ForMember(d => d.LastName, o => o.MapFrom(src => src.LastName))

@@ -28,6 +28,7 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             foundUser.FirstName = request.FirstName;
             foundUser.LastName = request.LastName;
             foundUser.Gender = request.Gender;
+            foundUser.Avatar = request.Avatar;
             await _userManager.UpdateAsync(foundUser);
             return _mapper.Map<User, UserResponse>(foundUser);
         }

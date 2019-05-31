@@ -19,6 +19,8 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         public TimeSpan? TimeForCooking { get; set; }
         public TimeSpan? TimeForPreparetion { get; set; }
 
+        public Guid? CategoryId { get; set; }
+
         public ICollection<CreateIngredientToRecipeRequest> Ingredients { get; set; }
         public ICollection<IFormFile> Photos { get; set; }
 
