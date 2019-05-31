@@ -8,13 +8,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe
         [Required]
         public Guid IngredientId { get; set; }
 
-        [Range(0, int.MaxValue)]
-        public int Amount { get; set; }
+        public string Amount { get; set; }
 
-        [Range(0, int.MaxValue)]
-        public int Price { get; set; }
-
-        [Range(0, int.MaxValue)]
-        public int Weight { get; set; }
     }
 }

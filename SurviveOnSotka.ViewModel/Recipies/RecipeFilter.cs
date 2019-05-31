@@ -19,6 +19,6 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         public RangeFilter<TimeSpan> TimeForPreparetion { get; set; }
         public RangeFilter<int> Rate { get; set; }
         public ICollection<string> Tags { get; set; }
-        public ICollection<IngredientToRecipeFilter> Ingredients { get; set; }
+        public ICollection<Guid> Ingredients { get; set; }
     }
 }
