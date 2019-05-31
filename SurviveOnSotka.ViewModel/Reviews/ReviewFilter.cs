@@ -7,7 +7,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
     {
         public Guid? Id { get; set; }
         public Guid? RecipeId { get; set; }
-        public Guid? AuthorId { get; set; }
+        public Guid? UserId { get; set; }
         public string Text { get; set; }
         public DateTime? DateCreated { get; set; }
         public RangeFilter<int> Rate { get; set; }

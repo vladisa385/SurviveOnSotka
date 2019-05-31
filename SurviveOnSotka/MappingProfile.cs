@@ -65,8 +65,6 @@ namespace SurviveOnSotka
             CreateMap<CreateStepRequest, Step>();
 
             CreateMap<IngredientToRecipe, IngredientToRecipeResponse>();
-            CreateMap<UpdateIngredientToRecipeRequest, IngredientToRecipe>()
-                .ForMember(u => u.RecipeId, pt => pt.Ignore());
             CreateMap<CreateIngredientToRecipeRequest, IngredientToRecipe>()
                    .ForMember(u => u.RecipeId, pt => pt.Ignore());
 

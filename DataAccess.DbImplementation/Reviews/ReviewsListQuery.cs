@@ -35,8 +35,8 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Reviews
             }
             if (filter.DateCreated != null)
                 query = query.Where(p => p.DateCreated >= filter.DateCreated);
-            if (filter.AuthorId != null)
-                query = query.Where(p => p.Author.Id == filter.AuthorId);
+            if (filter.UserId != null)
+                query = query.Where(p => p.User.Id == filter.UserId);
             if (filter.RecipeId != null)
                 query = query.Where(p => p.RecipeId == filter.RecipeId);
             if (filter.DisLikes != null)
