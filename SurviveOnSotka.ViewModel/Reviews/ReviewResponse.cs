@@ -17,7 +17,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
         public Guid RecipeId { get; set; }
 
         [Required]
-        public UserResponse Author { get; set; }
+        public UserResponse UserId { get; set; }
 
         [Required, MinLength(100), MaxLength(2000)]
         public string Text { get; set; }

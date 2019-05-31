@@ -33,7 +33,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         [Required]
         public DateTime DateCreated { get; set; }
 
-        public string PathToPhotos { get; set; }
+        public string Photo { get; set; }
         public TimeSpan TimeForCooking { get; set; }
         public TimeSpan TimeForPreparetion { get; set; }
         public double Rate => Reviews.Count != 0 ? Reviews.Average(u => u.Rate) : 0;

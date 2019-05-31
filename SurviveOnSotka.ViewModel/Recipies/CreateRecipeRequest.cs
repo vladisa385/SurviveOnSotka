@@ -22,7 +22,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         public Guid? CategoryId { get; set; }
 
         public ICollection<CreateIngredientToRecipeRequest> Ingredients { get; set; }
-        public ICollection<IFormFile> Photos { get; set; }
+        public string Photo { get; set; }
 
         [Required]
         public ICollection<CreateStepRequest> Steps { get; set; }

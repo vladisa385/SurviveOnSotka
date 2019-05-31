@@ -23,7 +23,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Recipies
         public TimeSpan? TimeForCooking { get; set; }
         public TimeSpan? TimeForPreparetion { get; set; }
         public ICollection<UpdateIngredientToRecipeRequest> Ingredients { get; set; }
-        public ICollection<IFormFile> Photos { get; set; }
+        public string Photo { get; set; }
         public ICollection<UpdateStepRequest> Steps { get; set; }
         public ICollection<string> Tags { get; set; }
     }

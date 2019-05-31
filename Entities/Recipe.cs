@@ -21,7 +21,7 @@ namespace SurviveOnSotka.Entities
         [Required]
         public DateTime DateCreated { get; set; }
 
-        public string PathToPhotos { get; set; }
+        public string Photo { get; set; }
         public ICollection<TagsInRecipe> Tags { get; set; }
         public TimeSpan? TimeForCooking { get; set; }
         public TimeSpan? TimeForPreparetion { get; set; }

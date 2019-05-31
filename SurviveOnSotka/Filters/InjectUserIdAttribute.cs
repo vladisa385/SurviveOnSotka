@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SurviveOnSotka.Filters
 {
-    public class InjectUserId : ActionFilterAttribute
+    public class InjectUserId : IAsyncActionFilter
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<User> _userManager;
@@ -27,11 +27,12 @@ namespace SurviveOnSotka.Filters
             return result;
         }
 
-        public override void OnActionExecuting(ActionExecutingContext context)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var user = GetCurrentUserAsync().Result;
+            var user = await GetCurrentUserAsync();
             if (context.ActionArguments[_keyName] is Request request)
                 request.SetUserId(user.Id);
+            await next();
         }
     }
 }
