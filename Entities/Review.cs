@@ -22,7 +22,7 @@ namespace SurviveOnSotka.Entities
         [Range(1, 5)]
         public int Rate { get; set; }
 
-        public string PathToPhotos { get; set; }
+        public string Photo { get; set; }
         public ICollection<RateReview> RateReviews { get; set; }
 
         public int Likes => RateReviews?.Count(u => u.IsCool) ?? 0;

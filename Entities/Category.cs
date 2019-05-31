@@ -14,7 +14,7 @@ namespace SurviveOnSotka.Entities
 
         public Guid? ParentCategoryId { get; set; }
         public Category ParentCategory { get; set; }
-        public string PathToIcon { get; set; }
+        public string Icon { get; set; }
         public ICollection<Recipe> Recipies { get; set; }
         public ICollection<Category> Categories { get; set; }
     }

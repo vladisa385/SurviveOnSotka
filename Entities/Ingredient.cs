@@ -15,7 +15,7 @@ namespace SurviveOnSotka.Entities
         [Required]
         public TypeFood TypeFood { get; set; }
 
-        public string PathToIcon { get; set; }
+        public string Icon { get; set; }
         public ICollection<IngredientToRecipe> Recipies { get; set; }
     }
 }

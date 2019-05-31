@@ -28,6 +28,7 @@ namespace SurviveOnSotka.Controllers
         [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
+        [RequestSizeLimit(1000_000_000_000)]
         [ProducesResponseType(201, Type = typeof(RecipeResponse))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateRecipeAsync([FromBody] CreateRecipeRequest request, [FromServices] Command<CreateRecipeRequest, RecipeResponse> command)

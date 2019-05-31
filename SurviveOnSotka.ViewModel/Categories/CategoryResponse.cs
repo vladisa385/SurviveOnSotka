@@ -16,7 +16,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Categories
         public string Descriptrion { get; set; }
 
         public Guid? ParentCategoryId { get; set; }
-        public string PathToIcon { get; set; }
+        public string Icon { get; set; }
 
         [Required]
         public int RecipiesCount { get; set; }

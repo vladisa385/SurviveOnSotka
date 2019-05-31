@@ -9,6 +9,6 @@ namespace SurviveOnSotka.ViewModel.Implementanion.TypeFoods
         [Required, MinLength(5), MaxLength(40)]
         public string Name { get; set; }
 
-        public IFormFile Icon { get; set; }
+        public string Icon { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
         [Range(1, 5)]
         public int Rate { get; set; }
 
-        public string PathToPhotos { get; set; }
+        public string Photo { get; set; }
 
         [Required]
         public ICollection<RateReviewResponse> RateReviews { get; set; }

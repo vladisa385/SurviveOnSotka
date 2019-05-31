@@ -17,6 +17,6 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Reviews
         [Required, Range(1, 5)]
         public int Rate { get; set; }
 
-        public ICollection<IFormFile> Photos { get; set; }
+        public string Photo { get; set; }
     }
 }

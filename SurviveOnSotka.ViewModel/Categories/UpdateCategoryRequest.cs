@@ -17,6 +17,6 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Categories
         public string Descriptrion { get; set; }
 
         public Guid? ParentCategoryId { get; set; }
-        public IFormFile Icon { get; set; }
+        public string Icon { get; set; }
     }
 }
