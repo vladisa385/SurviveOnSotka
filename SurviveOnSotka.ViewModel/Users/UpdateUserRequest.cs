@@ -19,6 +19,6 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Users
         public string AboutYourself { get; set; }
 
         [Display(Name = "Аватар")]
-        public byte[] Avatar { get; set; }
+        public string Avatar { get; set; }
     }
 }
