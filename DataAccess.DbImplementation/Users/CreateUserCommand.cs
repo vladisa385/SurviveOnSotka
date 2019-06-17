@@ -35,7 +35,6 @@ namespace SurviveOnSotka.DataAccess.DbImplementation.Users
             if (!result.Succeeded)
                 throw new CreateItemException(result.Errors.ToString());
             await _signInManager.SignInAsync(user, false);
-            await _userManager.AddToRoleAsync(user, "user");
             return _mapper.Map<User, UserResponse>(user);
         }
     }

@@ -7,11 +7,9 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Users
     public class UpdateUserRequest : Request
     {
         [Display(Name = "Имя")]
-        [MinLength(5), MaxLength(40)]
         public string FirstName { get; set; }
 
         [Display(Name = "Фамилия")]
-        [MinLength(5), MaxLength(40)]
         public string LastName { get; set; }
 
         [Display(Name = "Пол")]
@@ -21,6 +19,6 @@ namespace SurviveOnSotka.ViewModel.Implementanion.Users
         public string AboutYourself { get; set; }
 
         [Display(Name = "Аватар")]
-        public string Avatar { get; set; }
+        public byte[] Avatar { get; set; }
     }
 }

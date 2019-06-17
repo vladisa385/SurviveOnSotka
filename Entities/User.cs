@@ -14,7 +14,7 @@ namespace SurviveOnSotka.Entities
         [MinLength(5), MaxLength(40)]
         public string LastName { get; set; }
 
-        public string Avatar { get; set; }
+        public byte[] Avatar { get; set; }
         public bool Gender { get; set; }
         public string AboutYourself { get; set; }
 
