@@ -12,61 +12,45 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class ReviewsController : Controller
     {
         [HttpGet("GetList")]
-        [ProducesResponseType(200, Type = typeof(ListResponse<ReviewResponse>))]
-        [ProducesResponseType(500, Type = typeof(ErrorDetails))]
-        public async Task<IActionResult> GetReviewsListAsync(ReviewFilter review, ListOptions options, [FromServices] ListQuery<ReviewResponse, ReviewFilter> query)
-        {
-            var response = await query.RunAsync(review, options);
-            return Ok(response);
-        }
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<ListResponse<ReviewResponse>>> GetReviewsListAsync(ReviewFilter review, ListOptions options, [FromServices] ListQuery<ReviewResponse, ReviewFilter> query) =>
+            await query.RunAsync(review, options);
 
         [HttpPost("Create")]
-        [Authorize]
-        [ProducesResponseType(401)]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
-        [ProducesResponseType(201, Type = typeof(ReviewResponse))]
-        [ProducesResponseType(403)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateReviewAsync([FromBody] CreateReviewRequest request, [FromServices] Command<CreateReviewRequest, ReviewResponse> command)
+        public async Task<ActionResult<ReviewResponse>> CreateReviewAsync([FromBody] CreateReviewRequest request, [FromServices] Command<CreateReviewRequest, ReviewResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleReview", new { reviewId = response.Id }, response);
         }
 
         [HttpGet("Get/{reviewId}", Name = "GetSingleReview")]
-        [ProducesResponseType(200, Type = typeof(ReviewResponse))]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetReviewAsync(Guid reviewId, [FromServices] Query<ReviewResponse> query)
-        {
-            var response = await query.RunAsync(reviewId);
-            return response == null ? (IActionResult)NotFound() : Ok(response);
-        }
+        public async Task<ActionResult<ReviewResponse>> GetReviewAsync(Guid reviewId, [FromServices] Query<ReviewResponse> query) =>
+            await query.RunAsync(reviewId) ?? (ActionResult<ReviewResponse>)NotFound();
 
         [HttpPut("Update")]
-        [Authorize]
         [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateReviewAsync([FromBody] UpdateReviewRequest request, [FromServices] Command<UpdateReviewRequest, ReviewResponse> command)
-        {
-            var response = await command.ExecuteAsync(request);
-            return Ok(response);
-        }
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ReviewResponse>> UpdateReviewAsync([FromBody] UpdateReviewRequest request, [FromServices] Command<UpdateReviewRequest, ReviewResponse> command) =>
+            await command.ExecuteAsync(request);
 
         [HttpDelete("Delete")]
-        [Authorize]
-        [ProducesResponseType(401)]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(204)]
-        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeleteReviewAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest, EmptyResponse<ReviewResponse>> command)
         {
