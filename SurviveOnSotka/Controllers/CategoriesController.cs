@@ -12,65 +12,43 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
+    [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class CategoriesController : ControllerBase
     {
         [HttpGet("GetList")]
-        [ProducesResponseType(401)]
-        //[Authorize]
-        [ProducesResponseType(200, Type = typeof(ListResponse<CategoryResponse>))]
-        public async Task<IActionResult> GetCategoriesListAsync(CategoryFilter categoryFilter, ListOptions options, [FromServices] ListQuery<CategoryResponse, CategoryFilter> query)
-        {
-            var response = await query.RunAsync(categoryFilter, options);
-            return Ok(response);
-        }
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<ListResponse<CategoryResponse>>> GetCategoriesListAsync(CategoryFilter categoryFilter, ListOptions options, [FromServices] ListQuery<CategoryResponse, CategoryFilter> query) =>
+            await query.RunAsync(categoryFilter, options);
 
         [HttpPost("Create")]
-        [Authorize]
-        [ProducesResponseType(401)]
         [ModelValidation]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(403)]
-        [ProducesResponseType(201, Type = typeof(CategoryResponse))]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryRequest category, [FromServices] Command<CreateCategoryRequest, CategoryResponse> command)
+        [ProducesResponseType(201)]
+        public async Task<ActionResult<CategoryResponse>> CreateCategoryAsync([FromBody] CreateCategoryRequest category, [FromServices] Command<CreateCategoryRequest, CategoryResponse> command)
         {
             var response = await command.ExecuteAsync(category);
             return CreatedAtRoute("GetSingleCategory", new { categoryId = response.Id }, response);
         }
 
         [HttpGet("Get/{categoryId}", Name = "GetSingleCategory")]
-        //[Authorize]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(200, Type = typeof(CategoryResponse))]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetCategoryAsync(Guid categoryId, [FromServices] Query<CategoryResponse> query)
+        public async Task<ActionResult<CategoryResponse>> GetCategoryAsync(Guid categoryId, [FromServices] Query<CategoryResponse> query)
         {
             var response = await query.RunAsync(categoryId);
-            return response == null ? (IActionResult)NotFound() : Ok(response);
+            return response ?? (ActionResult<CategoryResponse>)NotFound();
         }
 
         [HttpPut("Update")]
-        [Authorize]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(403)]
         [ModelValidation]
-        [ProducesResponseType(200, Type = typeof(CategoryResponse))]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateCategoryAsync([FromBody] UpdateCategoryRequest request, [FromServices] Command<UpdateCategoryRequest, CategoryResponse> command)
-        {
-            var response = await command.ExecuteAsync(request);
-            return Ok(response);
-        }
+        public async Task<ActionResult<CategoryResponse>> UpdateCategoryAsync([FromBody] UpdateCategoryRequest request, [FromServices] Command<UpdateCategoryRequest, CategoryResponse> command) =>
+            await command.ExecuteAsync(request);
 
         [HttpDelete("Delete")]
-        [Authorize]
-        [ProducesResponseType(401)]
         [ProducesResponseType(204)]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(403)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeleteCategoryAsync(SimpleDeleteRequest request, [FromServices] Command<SimpleDeleteRequest, EmptyResponse<CategoryResponse>> command)
         {
