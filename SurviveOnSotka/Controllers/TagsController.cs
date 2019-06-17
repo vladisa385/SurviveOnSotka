@@ -9,24 +9,19 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 
 namespace SurviveOnSotka.Controllers
 {
+    [Route("api/[controller]")]
+    [Authorize]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class TagsController : Controller
     {
         [HttpGet("GetList")]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(200, Type = typeof(ListResponse<TagResponse>))]
-        public async Task<IActionResult> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ListQuery<TagResponse, TagFilter> query)
-        {
-            var response = await query.RunAsync(filter, options);
-            return Ok(response);
-        }
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<ListResponse<TagResponse>>> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ListQuery<TagResponse, TagFilter> query) =>
+            await query.RunAsync(filter, options);
 
         [HttpDelete("Delete")]
-        [Authorize]
-        [ProducesResponseType(401)]
         [ProducesResponseType(204)]
-        [ProducesResponseType(403)]
         public async Task<IActionResult> DeleteTagAsync(SimpleDeleteRequest request, [FromServices]Command<SimpleDeleteRequest, EmptyResponse<TagResponse>> command)
         {
             await command.ExecuteAsync(request);

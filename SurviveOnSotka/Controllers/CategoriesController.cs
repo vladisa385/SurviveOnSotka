@@ -34,11 +34,8 @@ namespace SurviveOnSotka.Controllers
         [HttpGet("Get/{categoryId}", Name = "GetSingleCategory")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<CategoryResponse>> GetCategoryAsync(Guid categoryId, [FromServices] Query<CategoryResponse> query)
-        {
-            var response = await query.RunAsync(categoryId);
-            return response ?? (ActionResult<CategoryResponse>)NotFound();
-        }
+        public async Task<ActionResult<CategoryResponse>> GetCategoryAsync(Guid categoryId, [FromServices] Query<CategoryResponse> query) =>
+            await query.RunAsync(categoryId) ?? (ActionResult<CategoryResponse>)NotFound();
 
         [HttpPut("Update")]
         [ModelValidation]
