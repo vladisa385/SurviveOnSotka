@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SurviveOnSotka.Entities;
 using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SurviveOnSotka.Db
 {
