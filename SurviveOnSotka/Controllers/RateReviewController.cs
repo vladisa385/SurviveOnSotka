@@ -12,6 +12,7 @@ using SurviveOnSotka.DataAccess.BaseOperation;
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class RateReviewsController : Controller
