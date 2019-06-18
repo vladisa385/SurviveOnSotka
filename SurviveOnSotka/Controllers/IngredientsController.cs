@@ -13,20 +13,20 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [Authorize]
+    [ApiController]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class IngredientsController : Controller
     {
         [HttpGet("GetList")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ListResponse<IngredientResponse>>> GetIngredientsListAsync(IngredientFilter ingredient, ListOptions options, [FromServices] ListQuery<IngredientResponse, IngredientFilter> query) =>
+        public async Task<ActionResult<ListResponse<IngredientResponse>>> GetIngredientsListAsync([FromQuery]IngredientFilter ingredient, [FromQuery]ListOptions options, [FromServices] ListQuery<IngredientResponse, IngredientFilter> query) =>
             await query.RunAsync(ingredient, options);
 
         [HttpPost("Create")]
-        [ModelValidation]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<IngredientResponse>> CreateIngredientAsync([FromBody] CreateIngredientRequest ingredient, [FromServices] Command<CreateIngredientRequest, IngredientResponse> command)
+        public async Task<ActionResult<IngredientResponse>> CreateIngredientAsync(CreateIngredientRequest ingredient, [FromServices] Command<CreateIngredientRequest, IngredientResponse> command)
         {
             var response = await command.ExecuteAsync(ingredient);
             return CreatedAtRoute("GetSingleIngredient", new { ingredientId = response.Id }, response);
@@ -39,11 +39,10 @@ namespace SurviveOnSotka.Controllers
             await query.RunAsync(ingredientId) ?? (ActionResult<IngredientResponse>)NotFound();
 
         [HttpPut("Update")]
-        [ModelValidation]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<IngredientResponse>> UpdateIngredientAsync([FromBody] UpdateIngredientRequest request, [FromServices] Command<UpdateIngredientRequest, IngredientResponse> command) =>
+        public async Task<ActionResult<IngredientResponse>> UpdateIngredientAsync(UpdateIngredientRequest request, [FromServices] Command<UpdateIngredientRequest, IngredientResponse> command) =>
             await command.ExecuteAsync(request);
 
         [HttpDelete("Delete")]

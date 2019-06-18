@@ -19,15 +19,14 @@ namespace SurviveOnSotka.Controllers
     {
         [HttpGet("GetList")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ListResponse<ReviewResponse>>> GetReviewsListAsync(ReviewFilter review, ListOptions options, [FromServices] ListQuery<ReviewResponse, ReviewFilter> query) =>
+        public async Task<ActionResult<ListResponse<ReviewResponse>>> GetReviewsListAsync([FromQuery]ReviewFilter review, [FromQuery]ListOptions options, [FromServices] ListQuery<ReviewResponse, ReviewFilter> query) =>
             await query.RunAsync(review, options);
 
         [HttpPost("Create")]
-        [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<ReviewResponse>> CreateReviewAsync([FromBody] CreateReviewRequest request, [FromServices] Command<CreateReviewRequest, ReviewResponse> command)
+        public async Task<ActionResult<ReviewResponse>> CreateReviewAsync(CreateReviewRequest request, [FromServices] Command<CreateReviewRequest, ReviewResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleReview", new { reviewId = response.Id }, response);
@@ -40,12 +39,11 @@ namespace SurviveOnSotka.Controllers
             await query.RunAsync(reviewId) ?? (ActionResult<ReviewResponse>)NotFound();
 
         [HttpPut("Update")]
-        [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200, Type = typeof(ReviewResponse))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<ReviewResponse>> UpdateReviewAsync([FromBody] UpdateReviewRequest request, [FromServices] Command<UpdateReviewRequest, ReviewResponse> command) =>
+        public async Task<ActionResult<ReviewResponse>> UpdateReviewAsync(UpdateReviewRequest request, [FromServices] Command<UpdateReviewRequest, ReviewResponse> command) =>
             await command.ExecuteAsync(request);
 
         [HttpDelete("Delete")]

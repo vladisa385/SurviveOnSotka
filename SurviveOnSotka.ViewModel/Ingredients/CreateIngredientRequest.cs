@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using SurviveOnSotka.ViewModell.Requests;
+﻿using SurviveOnSotka.ViewModell.Requests;
 using System;
 using System.ComponentModel.DataAnnotations;
 

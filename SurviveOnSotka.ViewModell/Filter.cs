@@ -2,5 +2,6 @@
 {
     public class Filter
     {
+        //public ListOptions Options { get; set; }
     }
 }

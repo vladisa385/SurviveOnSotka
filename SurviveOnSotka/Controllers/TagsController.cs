@@ -11,13 +11,14 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [Authorize]
+    [ApiController]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class TagsController : Controller
     {
         [HttpGet("GetList")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ListResponse<TagResponse>>> GetTagsListAsync(TagFilter filter, ListOptions options, [FromServices]ListQuery<TagResponse, TagFilter> query) =>
+        public async Task<ActionResult<ListResponse<TagResponse>>> GetTagsListAsync([FromQuery]TagFilter filter, [FromQuery] ListOptions options, [FromServices]ListQuery<TagResponse, TagFilter> query) =>
             await query.RunAsync(filter, options);
 
         [HttpDelete("Delete")]

@@ -13,22 +13,22 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [Authorize]
+    [ApiController]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class RecipesController : Controller
     {
         [HttpGet("GetList")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ListResponse<RecipeResponse>>> GetRecipesListAsync(RecipeFilter recipe, ListOptions options, [FromServices] ListQuery<RecipeResponse, RecipeFilter> query) =>
+        public async Task<ActionResult<ListResponse<RecipeResponse>>> GetRecipesListAsync([FromQuery]RecipeFilter recipe, [FromQuery] ListOptions options, [FromServices] ListQuery<RecipeResponse, RecipeFilter> query) =>
             await query.RunAsync(recipe, options);
 
         [HttpPost("Create")]
-        [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [RequestSizeLimit(1000_000_000_000)]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<RecipeResponse>> CreateRecipeAsync([FromBody] CreateRecipeRequest request, [FromServices] Command<CreateRecipeRequest, RecipeResponse> command)
+        public async Task<ActionResult<RecipeResponse>> CreateRecipeAsync(CreateRecipeRequest request, [FromServices] Command<CreateRecipeRequest, RecipeResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleRecipe", new { recipeId = response.Id }, response);
@@ -41,12 +41,11 @@ namespace SurviveOnSotka.Controllers
             await query.RunAsync(recipeId) ?? (ActionResult<RecipeResponse>)NotFound();
 
         [HttpPut("Update")]
-        [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<RecipeResponse>> UpdateRecipeAsync([FromBody] UpdateRecipeRequest request, [FromServices] Command<UpdateRecipeRequest, RecipeResponse> command) =>
+        public async Task<ActionResult<RecipeResponse>> UpdateRecipeAsync(UpdateRecipeRequest request, [FromServices] Command<UpdateRecipeRequest, RecipeResponse> command) =>
             await command.ExecuteAsync(request);
 
         [HttpDelete("Delete")]

@@ -12,6 +12,7 @@ using SurviveOnSotka.ViewModel.Implementanion;
 namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class AccountController : Controller
     {
@@ -19,7 +20,7 @@ namespace SurviveOnSotka.Controllers
         [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
-        public async Task<ActionResult<ListResponse<UserResponse>>> GetUsersListAsync(UserFilter filter, ListOptions options, [FromServices]ListQuery<UserResponse, UserFilter> query) =>
+        public async Task<ActionResult<ListResponse<UserResponse>>> GetUsersListAsync([FromQuery]UserFilter filter, [FromQuery]ListOptions options, [FromServices]ListQuery<UserResponse, UserFilter> query) =>
             await query.RunAsync(filter, options);
 
         [HttpGet("Get/{userId}", Name = "GetSingleUser")]
@@ -31,10 +32,9 @@ namespace SurviveOnSotka.Controllers
             await query.RunAsync(userId) ?? (ActionResult<UserResponse>)NotFound();
 
         [HttpPost("Register")]
-        [ModelValidation]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<UserResponse>> Register([FromBody]CreateUserRequest request, [FromServices] Command<CreateUserRequest, UserResponse> command)
+        public async Task<ActionResult<UserResponse>> Register(CreateUserRequest request, [FromServices] Command<CreateUserRequest, UserResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
@@ -43,13 +43,12 @@ namespace SurviveOnSotka.Controllers
         [HttpPut("UpdateUser")]
         [RequestSizeLimit(1000_000_000_000)]
         [Authorize]
-        [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         // [Authorize]
-        public async Task<ActionResult<UserResponse>> UpdateUser([FromBody]UpdateUserRequest request, [FromServices] Command<UpdateUserRequest, UserResponse> command)
+        public async Task<ActionResult<UserResponse>> UpdateUser(UpdateUserRequest request, [FromServices] Command<UpdateUserRequest, UserResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
@@ -58,12 +57,11 @@ namespace SurviveOnSotka.Controllers
         [HttpPut("ChangeUserPassword")]
         [Authorize]
         [ServiceFilter(typeof(InjectUserId))]
-        [ModelValidation]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         // [Authorize]
-        public async Task<ActionResult<UserResponse>> ChangeUserPassword([FromBody]ChangePasswordUserRequest request, [FromServices] Command<ChangePasswordUserRequest, UserResponse> command)
+        public async Task<ActionResult<UserResponse>> ChangeUserPassword(ChangePasswordUserRequest request, [FromServices] Command<ChangePasswordUserRequest, UserResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleUser", new { userId = response.Id }, response);
@@ -76,10 +74,9 @@ namespace SurviveOnSotka.Controllers
         public IActionResult IsAuthorized() => Ok();
 
         [HttpPost("Login")]
-        [ModelValidation]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<UserResponse>> Login([FromBody]LoginUserRequest request, [FromServices] Command<LoginUserRequest, UserResponse> command) =>
+        public async Task<ActionResult<UserResponse>> Login(LoginUserRequest request, [FromServices] Command<LoginUserRequest, UserResponse> command) =>
             await command.ExecuteAsync(request);
 
         [HttpPost("LogOff")]

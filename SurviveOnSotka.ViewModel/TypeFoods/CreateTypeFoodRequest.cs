@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using SurviveOnSotka.ViewModell.Requests;
+﻿using SurviveOnSotka.ViewModell.Requests;
 using System.ComponentModel.DataAnnotations;
 
 namespace SurviveOnSotka.ViewModel.Implementanion.TypeFoods

@@ -13,20 +13,20 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [Authorize]
+    [ApiController]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class TypeFoodsController : Controller
     {
         [HttpGet("GetList")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ListResponse<TypeFoodResponse>>> GetTypeFoodsListAsync(TypeFoodFilter typeFood, ListOptions options, [FromServices]ListQuery<TypeFoodResponse, TypeFoodFilter> query) =>
+        public async Task<ActionResult<ListResponse<TypeFoodResponse>>> GetTypeFoodsListAsync([FromQuery]TypeFoodFilter typeFood, [FromQuery]ListOptions options, [FromServices]ListQuery<TypeFoodResponse, TypeFoodFilter> query) =>
             await query.RunAsync(typeFood, options);
 
         [HttpPost("Create")]
-        [ModelValidation]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<TypeFoodResponse>> CreateTypeFoodAsync([FromBody] CreateTypeFoodRequest typeFood, [FromServices]Command<CreateTypeFoodRequest, TypeFoodResponse> command)
+        public async Task<ActionResult<TypeFoodResponse>> CreateTypeFoodAsync(CreateTypeFoodRequest typeFood, [FromServices]Command<CreateTypeFoodRequest, TypeFoodResponse> command)
         {
             var response = await command.ExecuteAsync(typeFood);
             return CreatedAtRoute("GetSingleTypeFood", new { typeFoodId = response.Id }, response);
@@ -39,11 +39,10 @@ namespace SurviveOnSotka.Controllers
             await query.RunAsync(typeFoodId) ?? (ActionResult<TypeFoodResponse>)NotFound();
 
         [HttpPut("Update/")]
-        [ModelValidation]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<TypeFoodResponse>> UpdateTypeFoodAsync([FromBody] UpdateTypeFoodRequest request, [FromServices] Command<UpdateTypeFoodRequest, TypeFoodResponse> command) =>
+        public async Task<ActionResult<TypeFoodResponse>> UpdateTypeFoodAsync(UpdateTypeFoodRequest request, [FromServices] Command<UpdateTypeFoodRequest, TypeFoodResponse> command) =>
             await command.ExecuteAsync(request);
 
         [HttpDelete("Delete")]

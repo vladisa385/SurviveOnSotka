@@ -1,5 +1,4 @@
-﻿using SurviveOnSotka.ViewModel.Implementanion.IngredientToRecipe;
-using SurviveOnSotka.ViewModell;
+﻿using SurviveOnSotka.ViewModell;
 using System;
 using System.Collections.Generic;
 

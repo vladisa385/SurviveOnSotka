@@ -13,21 +13,21 @@ namespace SurviveOnSotka.Controllers
 {
     [Route("api/[controller]")]
     [Authorize]
+    [ApiController]
     [ProducesResponseType(401)]
     [ProducesResponseType(500, Type = typeof(ErrorDetails))]
     public class RateReviewsController : Controller
     {
         [HttpGet("GetList")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<ListResponse<RateReviewResponse>>> GetRateReviewsListAsync(RateReviewFilter filter, ListOptions options, [FromServices]ListQuery<RateReviewResponse, RateReviewFilter> query) =>
+        public async Task<ActionResult<ListResponse<RateReviewResponse>>> GetRateReviewsListAsync([FromQuery]RateReviewFilter filter, [FromQuery] ListOptions options, [FromServices]ListQuery<RateReviewResponse, RateReviewFilter> query) =>
             await query.RunAsync(filter, options);
 
         [HttpPost("Create")]
-        [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<RateReviewResponse>> CreateRateReviewAsync([FromBody] CreateRateReviewRequest request, [FromServices]Command<CreateRateReviewRequest, RateReviewResponse> command)
+        public async Task<ActionResult<RateReviewResponse>> CreateRateReviewAsync(CreateRateReviewRequest request, [FromServices]Command<CreateRateReviewRequest, RateReviewResponse> command)
         {
             var response = await command.ExecuteAsync(request);
             return CreatedAtRoute("GetSingleRateReview", new { reviewId = response.ReviewId }, response);
@@ -39,12 +39,11 @@ namespace SurviveOnSotka.Controllers
             await query.RunAsync(reviewId) ?? (ActionResult<RateReviewResponse>)NotFound();
 
         [HttpPut("Update")]
-        [ModelValidation]
         [ServiceFilter(typeof(InjectUserId))]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<RateReviewResponse>> UpdateRateReviewAsync([FromBody] UpdateRateReviewRequest request, [FromServices] Command<UpdateRateReviewRequest, RateReviewResponse> command) =>
+        public async Task<ActionResult<RateReviewResponse>> UpdateRateReviewAsync(UpdateRateReviewRequest request, [FromServices] Command<UpdateRateReviewRequest, RateReviewResponse> command) =>
             await command.ExecuteAsync(request);
 
         [HttpDelete("Delete")]
