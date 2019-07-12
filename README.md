@@ -49,8 +49,6 @@ Follow these steps to get your development environment set up:
 * [**Vladislav Konyukhov**](https://github.com/vladisa385)
 * [**Kirill Yashenkov**](https://github.com/MrMagic24)
 
-See also the list of [contributors](https://github.com/vladisa385/ESVS/graphs/contributors) who participated in this project.
-
 ## License
 
 This project is licensed under the MIT License
